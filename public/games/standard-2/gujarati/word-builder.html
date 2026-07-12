@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>શબ્દ બનાવો</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      padding: 24px 16px;
+      font-family: Arial, "Noto Sans Gujarati", sans-serif;
+      color: #1e293b;
+     background: #ffffff;
+    }
+
+    .game {
+      width: 100%;
+      max-width: 850px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: #ede9fe;
+      color: #6d28d9;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    h1 {
+      font-size: clamp(28px, 5vw, 42px);
+    }
+
+    .subtitle {
+      margin-top: 8px;
+      color: #64748b;
+      font-size: 17px;
+    }
+
+    .status-bar {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 22px 0 30px;
+      flex-wrap: wrap;
+    }
+
+    .status {
+      min-width: 135px;
+      padding: 11px 16px;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.88);
+      text-align: center;
+      font-weight: 700;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+    }
+
+    .play-area {
+      width: 100%;
+      text-align: center;
+    }
+
+    .emoji {
+      font-size: 76px;
+      line-height: 1.2;
+    }
+
+    .hint {
+      margin-top: 12px;
+      color: #64748b;
+      font-size: 17px;
+    }
+
+    .answer {
+      min-height: 82px;
+      margin: 26px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .answer-letter {
+      min-width: 58px;
+      padding: 12px 15px;
+      border-radius: 15px;
+      background: #e0e7ff;
+      color: #4338ca;
+      font-size: 26px;
+      font-weight: 800;
+      box-shadow: 0 5px 14px rgba(79, 70, 229, 0.12);
+    }
+
+    .placeholder {
+      color: #94a3b8;
+      font-size: 17px;
+      font-weight: 600;
+    }
+
+    .letters {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      min-height: 70px;
+    }
+
+    .letter {
+      min-width: 65px;
+      min-height: 65px;
+      padding: 10px 14px;
+      border: 2px solid transparent;
+      border-radius: 18px;
+      background: white;
+      color: #1e293b;
+      font-size: 27px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
+      transition: 0.18s ease;
+    }
+
+    .letter:hover {
+      transform: translateY(-3px);
+      border-color: #818cf8;
+    }
+
+    .letter.used {
+      opacity: 0.25;
+      pointer-events: none;
+      transform: scale(0.9);
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 28px;
+      flex-wrap: wrap;
+    }
+
+    .button {
+      padding: 13px 22px;
+      border: 0;
+      border-radius: 15px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .clear {
+      background: #e2e8f0;
+      color: #334155;
+    }
+
+    .check {
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: white;
+      box-shadow: 0 8px 22px rgba(79, 70, 229, 0.2);
+    }
+
+    .message {
+      min-height: 36px;
+      margin-top: 24px;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .finish {
+      padding: 40px 10px;
+      text-align: center;
+    }
+
+    .finish-icon {
+      font-size: 80px;
+    }
+
+    .finish h2 {
+      margin-top: 15px;
+      font-size: 34px;
+    }
+
+    .result-grid {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 25px;
+      flex-wrap: wrap;
+    }
+
+    .result-box {
+      min-width: 150px;
+      padding: 18px;
+      border-radius: 18px;
+      background: white;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.07);
+    }
+
+    .result-value {
+      margin-top: 5px;
+      color: #4f46e5;
+      font-size: 28px;
+      font-weight: 800;
+    }
+
+    .restart {
+      margin-top: 28px;
+      padding: 14px 28px;
+      border: 0;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: white;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-7px); }
+      75% { transform: translateX(7px); }
+    }
+
+    .shake {
+      animation: shake 0.3s ease;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 16px 10px;
+      }
+
+      .emoji {
+        font-size: 62px;
+      }
+
+      .status {
+        min-width: 105px;
+        padding: 9px 10px;
+        font-size: 14px;
+      }
+
+      .letter {
+        min-width: 55px;
+        min-height: 58px;
+        font-size: 23px;
+      }
+
+      .answer-letter {
+        min-width: 50px;
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="game">
+
+    <header class="header">
+      <div class="badge">ધોરણ 2 • ગુજરાતી</div>
+
+      <h1>🧩 શબ્દ બનાવો</h1>
+
+      <p class="subtitle">
+        અક્ષરોને સાચા ક્રમમાં ગોઠવીને શબ્દ બનાવો
+      </p>
+    </header>
+
+    <div class="status-bar">
+      <div class="status">
+        ⭐ સ્કોર:
+        <span id="score">0</span> / 10
+      </div>
+
+      <div class="status">
+        🎯 પ્રશ્ન:
+        <span id="questionNumber">1</span> / 10
+      </div>
+
+      <div class="status">
+        ⏱️ સમય:
+        <span id="timer">00:00</span>
+      </div>
+    </div>
+
+    <section class="play-area" id="playArea">
+
+      <div class="emoji" id="emoji"></div>
+
+      <p class="hint">
+        ચિત્ર અને અક્ષરો જોઈને સાચો શબ્દ બનાવો
+      </p>
+
+      <div class="answer" id="answer">
+        <span class="placeholder">
+          અહીં તમારો શબ્દ બનશે
+        </span>
+      </div>
+
+      <div class="letters" id="letters"></div>
+
+      <div class="actions">
+        <button class="button clear" id="clearButton">
+          ↩ ફરી ગોઠવો
+        </button>
+
+        <button class="button check" id="checkButton">
+          ✓ જવાબ તપાસો
+        </button>
+      </div>
+
+      <div class="message" id="message"></div>
+
+    </section>
+
+  </main>
+
+  <script>
+    const wordBank = [
+      { word: "કમળ", emoji: "🪷" },
+      { word: "ગાય", emoji: "🐄" },
+      { word: "પતંગ", emoji: "🪁" },
+      { word: "મગર", emoji: "🐊" },
+      { word: "સસલું", emoji: "🐇" },
+      { word: "ચકલી", emoji: "🐦" },
+      { word: "જહાજ", emoji: "🚢" },
+      { word: "વાંદરો", emoji: "🐒" },
+      { word: "બકરી", emoji: "🐐" },
+      { word: "કબૂતર", emoji: "🕊️" },
+
+      { word: "હાથી", emoji: "🐘" },
+      { word: "ઘોડો", emoji: "🐎" },
+      { word: "સિંહ", emoji: "🦁" },
+      { word: "વાઘ", emoji: "🐅" },
+      { word: "રીંછ", emoji: "🐻" },
+      { word: "ઊંટ", emoji: "🐪" },
+      { word: "કૂતરો", emoji: "🐕" },
+      { word: "બિલાડી", emoji: "🐈" },
+      { word: "ઉંદર", emoji: "🐁" },
+      { word: "માછલી", emoji: "🐟" },
+
+      { word: "મોર", emoji: "🦚" },
+      { word: "પોપટ", emoji: "🦜" },
+      { word: "ઘુવડ", emoji: "🦉" },
+      { word: "બતક", emoji: "🦆" },
+      { word: "મરઘી", emoji: "🐔" },
+      { word: "કૂકડો", emoji: "🐓" },
+      { word: "મધમાખી", emoji: "🐝" },
+      { word: "પતંગિયું", emoji: "🦋" },
+      { word: "કીડી", emoji: "🐜" },
+      { word: "કાચબો", emoji: "🐢" },
+
+      { word: "સફરજન", emoji: "🍎" },
+      { word: "કેળું", emoji: "🍌" },
+      { word: "કેરી", emoji: "🥭" },
+      { word: "દ્રાક્ષ", emoji: "🍇" },
+      { word: "તરબૂચ", emoji: "🍉" },
+      { word: "નારંગી", emoji: "🍊" },
+      { word: "લીંબુ", emoji: "🍋" },
+      { word: "નાળિયેર", emoji: "🥥" },
+      { word: "અનાનસ", emoji: "🍍" },
+      { word: "જામફળ", emoji: "🍐" },
+
+      { word: "ટામેટું", emoji: "🍅" },
+      { word: "બટાકા", emoji: "🥔" },
+      { word: "ગાજર", emoji: "🥕" },
+      { word: "મરચું", emoji: "🌶️" },
+      { word: "રીંગણ", emoji: "🍆" },
+      { word: "મકાઈ", emoji: "🌽" },
+      { word: "કાકડી", emoji: "🥒" },
+      { word: "ડુંગળી", emoji: "🧅" },
+      { word: "લસણ", emoji: "🧄" },
+      { word: "વટાણા", emoji: "🫛" },
+
+      { word: "ઘર", emoji: "🏠" },
+      { word: "શાળા", emoji: "🏫" },
+      { word: "પુસ્તક", emoji: "📖" },
+      { word: "પેન", emoji: "🖊️" },
+      { word: "પેન્સિલ", emoji: "✏️" },
+      { word: "કાતર", emoji: "✂️" },
+      { word: "ઘડિયાળ", emoji: "🕰️" },
+      { word: "છત્રી", emoji: "☂️" },
+      { word: "ચાવી", emoji: "🔑" },
+      { word: "દીવો", emoji: "🪔" },
+
+      { word: "બસ", emoji: "🚌" },
+      { word: "કાર", emoji: "🚗" },
+      { word: "ટ્રક", emoji: "🚚" },
+      { word: "ટ્રેન", emoji: "🚆" },
+      { word: "સાયકલ", emoji: "🚲" },
+      { word: "રિક્ષા", emoji: "🛺" },
+      { word: "વિમાન", emoji: "✈️" },
+      { word: "હોડી", emoji: "⛵" },
+      { word: "રોકેટ", emoji: "🚀" },
+      { word: "સ્કૂટર", emoji: "🛵" },
+
+      { word: "સૂરજ", emoji: "☀️" },
+      { word: "ચંદ્ર", emoji: "🌙" },
+      { word: "તારો", emoji: "⭐" },
+      { word: "વાદળ", emoji: "☁️" },
+      { word: "વરસાદ", emoji: "🌧️" },
+      { word: "વીજળી", emoji: "⚡" },
+      { word: "મેઘધનુષ", emoji: "🌈" },
+      { word: "પર્વત", emoji: "⛰️" },
+      { word: "નદી", emoji: "🏞️" },
+      { word: "સમુદ્ર", emoji: "🌊" },
+
+      { word: "ફૂલ", emoji: "🌸" },
+      { word: "વૃક્ષ", emoji: "🌳" },
+      { word: "પાન", emoji: "🍃" },
+      { word: "બીજ", emoji: "🌱" },
+      { word: "ગુલાબ", emoji: "🌹" },
+      { word: "સૂર્યમુખી", emoji: "🌻" },
+      { word: "બગીચો", emoji: "🌷" },
+      { word: "જંગલ", emoji: "🌲" },
+      { word: "ઘાસ", emoji: "🌿" },
+      { word: "છોડ", emoji: "🪴" },
+
+      { word: "દડો", emoji: "⚽" },
+      { word: "પતંગ", emoji: "🪁" },
+      { word: "ઢોલ", emoji: "🥁" },
+      { word: "વાંસળી", emoji: "🪈" },
+      { word: "ભેટ", emoji: "🎁" },
+      { word: "મુગટ", emoji: "👑" },
+      { word: "ચશ્માં", emoji: "👓" },
+      { word: "જૂતાં", emoji: "👟" },
+      { word: "ટોપી", emoji: "🧢" },
+      { word: "કેમેરો", emoji: "📷" }
+    ];
+
+    const TOTAL_QUESTIONS = 10;
+
+    let questions = [];
+    let currentQuestion = 0;
+    let score = 0;
+    let selectedLetters = [];
+
+    let seconds = 0;
+    let timerInterval = null;
+
+    const playArea =
+      document.getElementById("playArea");
+
+    const answerElement =
+      document.getElementById("answer");
+
+    const lettersElement =
+      document.getElementById("letters");
+
+    const emojiElement =
+      document.getElementById("emoji");
+
+    const scoreElement =
+      document.getElementById("score");
+
+    const questionNumberElement =
+      document.getElementById("questionNumber");
+
+    const timerElement =
+      document.getElementById("timer");
+
+    const messageElement =
+      document.getElementById("message");
+
+    const clearButton =
+      document.getElementById("clearButton");
+
+    const checkButton =
+      document.getElementById("checkButton");
+
+    function shuffle(array) {
+      const copy = [...array];
+
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(
+          Math.random() * (i + 1)
+        );
+
+        [copy[i], copy[j]] =
+          [copy[j], copy[i]];
+      }
+
+      return copy;
+    }
+
+    function getGujaratiLetters(word) {
+      if (typeof Intl.Segmenter !== "undefined") {
+        const segmenter =
+          new Intl.Segmenter(
+            "gu",
+            { granularity: "grapheme" }
+          );
+
+        return Array.from(
+          segmenter.segment(word),
+          item => item.segment
+        );
+      }
+
+      return Array.from(word);
+    }
+
+    function selectQuestions() {
+      questions =
+        shuffle(wordBank)
+          .slice(0, TOTAL_QUESTIONS);
+    }
+
+    function startTimer() {
+      timerInterval = setInterval(() => {
+        seconds++;
+
+        timerElement.textContent =
+          formatTime(seconds);
+      }, 1000);
+    }
+
+    function stopTimer() {
+      clearInterval(timerInterval);
+    }
+
+    function formatTime(totalSeconds) {
+      const minutes =
+        Math.floor(totalSeconds / 60);
+
+      const remainingSeconds =
+        totalSeconds % 60;
+
+      return (
+        String(minutes).padStart(2, "0") +
+        ":" +
+        String(remainingSeconds).padStart(2, "0")
+      );
+    }
+
+    function loadQuestion() {
+      selectedLetters = [];
+
+      const question =
+        questions[currentQuestion];
+
+      emojiElement.textContent =
+        question.emoji;
+
+      questionNumberElement.textContent =
+        currentQuestion + 1;
+
+      messageElement.textContent = "";
+
+      renderAnswer();
+
+      lettersElement.innerHTML = "";
+
+      const letters =
+        getGujaratiLetters(question.word);
+
+      const shuffledLetters =
+        shuffle(
+          letters.map((letter, index) => ({
+            letter,
+            id: index
+          }))
+        );
+
+      shuffledLetters.forEach((item) => {
+        const button =
+          document.createElement("button");
+
+        button.className = "letter";
+        button.textContent = item.letter;
+
+        button.addEventListener(
+          "click",
+          () => {
+            if (
+              button.classList.contains("used")
+            ) {
+              return;
+            }
+
+            selectedLetters.push({
+              letter: item.letter,
+              button
+            });
+
+            button.classList.add("used");
+
+            renderAnswer();
+          }
+        );
+
+        lettersElement.appendChild(button);
+      });
+    }
+
+    function renderAnswer() {
+      answerElement.innerHTML = "";
+
+      if (selectedLetters.length === 0) {
+        answerElement.innerHTML = `
+          <span class="placeholder">
+            અહીં તમારો શબ્દ બનશે
+          </span>
+        `;
+
+        return;
+      }
+
+      selectedLetters.forEach((item) => {
+        const span =
+          document.createElement("span");
+
+        span.className = "answer-letter";
+        span.textContent = item.letter;
+
+        answerElement.appendChild(span);
+      });
+    }
+
+    function clearAnswer() {
+      selectedLetters.forEach((item) => {
+        item.button.classList.remove("used");
+      });
+
+      selectedLetters = [];
+
+      renderAnswer();
+
+      messageElement.textContent = "";
+    }
+
+    function checkAnswer() {
+      if (selectedLetters.length === 0) {
+        messageElement.textContent =
+          "👆 પહેલા અક્ષરો પસંદ કરો";
+
+        return;
+      }
+
+      const correctWord =
+        questions[currentQuestion].word;
+
+      const userWord =
+        selectedLetters
+          .map(item => item.letter)
+          .join("");
+
+      if (userWord === correctWord) {
+        score++;
+
+        scoreElement.textContent = score;
+
+        messageElement.textContent =
+          "🎉 શાબાશ! સાચો શબ્દ બનાવ્યો.";
+
+        setTimeout(() => {
+          currentQuestion++;
+
+          if (
+            currentQuestion <
+            TOTAL_QUESTIONS
+          ) {
+            loadQuestion();
+          } else {
+            finishGame();
+          }
+        }, 800);
+
+      } else {
+        messageElement.textContent =
+          "❌ શબ્દ સાચો નથી. ફરી પ્રયત્ન કરો.";
+
+        playArea.classList.add("shake");
+
+        setTimeout(() => {
+          playArea.classList.remove("shake");
+        }, 350);
+      }
+    }
+
+    function finishGame() {
+      stopTimer();
+
+      playArea.innerHTML = `
+        <div class="finish">
+
+          <div class="finish-icon">
+            🏆
+          </div>
+
+          <h2>
+            રમત પૂર્ણ!
+          </h2>
+
+          <div class="result-grid">
+
+            <div class="result-box">
+              <div>⭐ સ્કોર</div>
+
+              <div class="result-value">
+                ${score} / ${TOTAL_QUESTIONS}
+              </div>
+            </div>
+
+            <div class="result-box">
+              <div>⏱️ સમય</div>
+
+              <div class="result-value">
+                ${formatTime(seconds)}
+              </div>
+            </div>
+
+          </div>
+
+          <button
+            class="restart"
+            onclick="location.reload()"
+          >
+            🔄 નવા શબ્દો સાથે ફરી રમો
+          </button>
+
+        </div>
+      `;
+    }
+
+    clearButton.addEventListener(
+      "click",
+      clearAnswer
+    );
+
+    checkButton.addEventListener(
+      "click",
+      checkAnswer
+    );
+
+    selectQuestions();
+    loadQuestion();
+    startTimer();
+  </script>
+
+</body>
+</html>

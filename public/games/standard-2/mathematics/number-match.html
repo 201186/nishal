@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>૧ થી ૧૦૦ સંખ્યા જોડો</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      padding: 24px 16px;
+      font-family: Arial, "Noto Sans Gujarati", sans-serif;
+      background: #ffffff;
+      color: #1e293b;
+    }
+
+    .game {
+      width: 100%;
+      max-width: 850px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: #e0e7ff;
+      color: #4338ca;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    h1 {
+      font-size: clamp(28px, 5vw, 42px);
+    }
+
+    .subtitle {
+      margin-top: 8px;
+      color: #64748b;
+      font-size: 17px;
+    }
+
+    .status-bar {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 22px 0 28px;
+      flex-wrap: wrap;
+    }
+
+    .status {
+      min-width: 125px;
+      padding: 11px 14px;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      background: #f8fafc;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .column-title {
+      margin-bottom: 4px;
+      text-align: center;
+      color: #64748b;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .card {
+      width: 100%;
+      min-height: 70px;
+      padding: 12px;
+      border: 2px solid #e2e8f0;
+      border-radius: 17px;
+      background: #ffffff;
+      color: #1e293b;
+      font-size: 21px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.18s ease;
+    }
+
+    .number-card {
+      font-size: 30px;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: #818cf8;
+    }
+
+    .card.selected {
+      border-color: #4f46e5;
+      background: #eef2ff;
+      color: #4338ca;
+    }
+
+    .card.correct {
+      border-color: #22c55e;
+      background: #dcfce7;
+      color: #166534;
+      cursor: default;
+    }
+
+    .card.wrong {
+      border-color: #ef4444;
+      background: #fee2e2;
+      animation: shake 0.3s ease;
+    }
+
+    .message {
+      min-height: 36px;
+      margin-top: 24px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .finish {
+      padding: 40px 10px;
+      text-align: center;
+    }
+
+    .finish-icon {
+      font-size: 80px;
+    }
+
+    .finish h2 {
+      margin-top: 14px;
+      font-size: 34px;
+    }
+
+    .results {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 25px;
+      flex-wrap: wrap;
+    }
+
+    .result {
+      min-width: 150px;
+      padding: 18px;
+      border: 1px solid #e2e8f0;
+      border-radius: 18px;
+      background: #f8fafc;
+    }
+
+    .result-value {
+      margin-top: 6px;
+      color: #4f46e5;
+      font-size: 28px;
+      font-weight: 800;
+    }
+
+    .restart {
+      margin-top: 28px;
+      padding: 14px 28px;
+      border: 0;
+      border-radius: 16px;
+      background: #4f46e5;
+      color: white;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 16px 10px;
+      }
+
+      .board {
+        gap: 9px;
+      }
+
+      .card {
+        min-height: 62px;
+        padding: 8px;
+        font-size: 17px;
+      }
+
+      .number-card {
+        font-size: 25px;
+      }
+
+      .status {
+        min-width: 100px;
+        padding: 9px;
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="game">
+
+    <header class="header">
+      <div class="badge">ધોરણ ૨ • ગણિત</div>
+
+      <h1>🔢 ૧ થી ૧૦૦ સંખ્યા જોડો</h1>
+
+      <p class="subtitle">
+        ગુજરાતી અંકને તેના સાચા શબ્દ સાથે જોડો
+      </p>
+    </header>
+
+    <div class="status-bar">
+      <div class="status">
+        ⭐ સ્કોર:
+        <span id="score">૦</span> / ૧૦૦
+      </div>
+
+      <div class="status">
+        🎯 રાઉન્ડ:
+        <span id="round">૧</span> / ૨૦
+      </div>
+
+      <div class="status">
+        ⏱️ સમય:
+        <span id="timer">૦૦:૦૦</span>
+      </div>
+    </div>
+
+    <section id="gameArea">
+
+      <div class="board">
+
+        <div class="column" id="numbers">
+          <div class="column-title">ગુજરાતી અંક</div>
+        </div>
+
+        <div class="column" id="words">
+          <div class="column-title">સંખ્યાનો શબ્દ</div>
+        </div>
+
+      </div>
+
+      <div class="message" id="message">
+        👆 પહેલા એક અંક પસંદ કરો
+      </div>
+
+    </section>
+
+  </main>
+
+  <script>
+    const numberWords = [
+      "એક", "બે", "ત્રણ", "ચાર", "પાંચ",
+      "છ", "સાત", "આઠ", "નવ", "દસ",
+      "અગિયાર", "બાર", "તેર", "ચૌદ", "પંદર",
+      "સોળ", "સત્તર", "અઢાર", "ઓગણીસ", "વીસ",
+      "એકવીસ", "બાવીસ", "તેવીસ", "ચોવીસ", "પચ્ચીસ",
+      "છવીસ", "સત્તાવીસ", "અઠ્ઠાવીસ", "ઓગણત્રીસ", "ત્રીસ",
+      "એકત્રીસ", "બત્રીસ", "તેત્રીસ", "ચોત્રીસ", "પાંત્રીસ",
+      "છત્રીસ", "સાડત્રીસ", "અડત્રીસ", "ઓગણચાલીસ", "ચાલીસ",
+      "એકતાલીસ", "બેતાલીસ", "ત્રેતાલીસ", "ચુમ્માલીસ", "પિસ્તાલીસ",
+      "છેતાલીસ", "સુડતાલીસ", "અડતાલીસ", "ઓગણપચાસ", "પચાસ",
+      "એકાવન", "બાવન", "ત્રેપન", "ચોપન", "પંચાવન",
+      "છપ્પન", "સત્તાવન", "અઠ્ઠાવન", "ઓગણસાઠ", "સાઠ",
+      "એકસઠ", "બાસઠ", "ત્રેસઠ", "ચોસઠ", "પાંસઠ",
+      "છાસઠ", "સડસઠ", "અડસઠ", "ઓગણસિત્તેર", "સિત્તેર",
+      "એકોતેર", "બોતેર", "ત્રોતેર", "ચુમોતેર", "પંચોતેર",
+      "છોતેર", "સિત્યોતેર", "અઠ્યોતેર", "ઓગણએંસી", "એંસી",
+      "એક્યાસી", "બ્યાસી", "ત્ર્યાસી", "ચોર્યાસી", "પંચ્યાસી",
+      "છ્યાસી", "સિત્યાસી", "અઠ્યાસી", "નેવ્યાસી", "નેવું",
+      "એકાણું", "બાણું", "ત્રાણું", "ચોરાણું", "પંચાણું",
+      "છન્નું", "સત્તાણું", "અઠ્ઠાણું", "નવ્વાણું", "સો"
+    ];
+
+    const gujaratiDigits = [
+      "૦", "૧", "૨", "૩", "૪",
+      "૫", "૬", "૭", "૮", "૯"
+    ];
+
+    function toGujaratiNumber(value) {
+      return String(value)
+        .split("")
+        .map(digit => gujaratiDigits[Number(digit)])
+        .join("");
+    }
+
+    const numberBank = numberWords.map(
+      (word, index) => ({
+        number: index + 1,
+        numeral: toGujaratiNumber(index + 1),
+        word: word
+      })
+    );
+
+    const TOTAL_ROUNDS = 20;
+    const ITEMS_PER_ROUND = 5;
+
+    let gameNumbers = [];
+    let currentRound = 0;
+    let score = 0;
+    let selectedNumber = null;
+
+    let seconds = 0;
+    let timerInterval = null;
+
+    const numbersElement =
+      document.getElementById("numbers");
+
+    const wordsElement =
+      document.getElementById("words");
+
+    const scoreElement =
+      document.getElementById("score");
+
+    const roundElement =
+      document.getElementById("round");
+
+    const timerElement =
+      document.getElementById("timer");
+
+    const messageElement =
+      document.getElementById("message");
+
+    const gameArea =
+      document.getElementById("gameArea");
+
+    function shuffle(array) {
+      const copy = [...array];
+
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(
+          Math.random() * (i + 1)
+        );
+
+        [copy[i], copy[j]] =
+          [copy[j], copy[i]];
+      }
+
+      return copy;
+    }
+
+    function formatTime(totalSeconds) {
+      const minutes =
+        Math.floor(totalSeconds / 60);
+
+      const remainingSeconds =
+        totalSeconds % 60;
+
+      const time =
+        String(minutes).padStart(2, "0") +
+        ":" +
+        String(remainingSeconds).padStart(2, "0");
+
+      return time
+        .split("")
+        .map(character => {
+          if (character === ":") return ":";
+          return gujaratiDigits[Number(character)];
+        })
+        .join("");
+    }
+
+    function startTimer() {
+      timerInterval = setInterval(() => {
+        seconds++;
+
+        timerElement.textContent =
+          formatTime(seconds);
+      }, 1000);
+    }
+
+    function stopTimer() {
+      clearInterval(timerInterval);
+    }
+
+    function startGame() {
+      gameNumbers = shuffle(numberBank);
+
+      loadRound();
+      startTimer();
+    }
+
+    function loadRound() {
+      selectedNumber = null;
+
+      const start =
+        currentRound * ITEMS_PER_ROUND;
+
+      const roundItems =
+        gameNumbers.slice(
+          start,
+          start + ITEMS_PER_ROUND
+        );
+
+      roundElement.textContent =
+        toGujaratiNumber(currentRound + 1);
+
+      numbersElement.innerHTML =
+        '<div class="column-title">ગુજરાતી અંક</div>';
+
+      wordsElement.innerHTML =
+        '<div class="column-title">સંખ્યાનો શબ્દ</div>';
+
+      messageElement.textContent =
+        "👆 પહેલા એક અંક પસંદ કરો";
+
+      const shuffledWords =
+        shuffle(roundItems);
+
+      roundItems.forEach((item) => {
+        const button =
+          document.createElement("button");
+
+        button.className =
+          "card number-card";
+
+        button.textContent =
+          item.numeral;
+
+        button.dataset.id =
+          item.number;
+
+        button.addEventListener(
+          "click",
+          () => selectNumber(button)
+        );
+
+        numbersElement.appendChild(button);
+      });
+
+      shuffledWords.forEach((item) => {
+        const button =
+          document.createElement("button");
+
+        button.className =
+          "card word-card";
+
+        button.textContent =
+          item.word;
+
+        button.dataset.id =
+          item.number;
+
+        button.addEventListener(
+          "click",
+          () => selectWord(button)
+        );
+
+        wordsElement.appendChild(button);
+      });
+    }
+
+    function selectNumber(card) {
+      if (card.classList.contains("correct")) {
+        return;
+      }
+
+      document
+        .querySelectorAll("#numbers .card")
+        .forEach((item) => {
+          if (!item.classList.contains("correct")) {
+            item.classList.remove("selected");
+          }
+        });
+
+      selectedNumber = card;
+
+      card.classList.add("selected");
+
+      messageElement.textContent =
+        "✨ હવે સાચો શબ્દ પસંદ કરો";
+    }
+
+    function selectWord(card) {
+      if (
+        !selectedNumber ||
+        card.classList.contains("correct")
+      ) {
+        return;
+      }
+
+      if (
+        selectedNumber.dataset.id ===
+        card.dataset.id
+      ) {
+        selectedNumber.classList.remove(
+          "selected"
+        );
+
+        selectedNumber.classList.add(
+          "correct"
+        );
+
+        card.classList.add("correct");
+
+        score++;
+
+        scoreElement.textContent =
+          toGujaratiNumber(score);
+
+        selectedNumber = null;
+
+        const completed =
+          document.querySelectorAll(
+            "#words .card.correct"
+          ).length;
+
+        if (completed === ITEMS_PER_ROUND) {
+          messageElement.textContent =
+            "🎉 રાઉન્ડ પૂર્ણ!";
+
+          setTimeout(() => {
+            currentRound++;
+
+            if (currentRound < TOTAL_ROUNDS) {
+              loadRound();
+            } else {
+              finishGame();
+            }
+          }, 700);
+
+        } else {
+          messageElement.textContent =
+            "✅ સાચું! હવે આગળની સંખ્યા જોડો";
+        }
+
+      } else {
+        const wrongNumber =
+          selectedNumber;
+
+        wrongNumber.classList.add("wrong");
+        card.classList.add("wrong");
+
+        messageElement.textContent =
+          "❌ ખોટું જોડકું. ફરી પ્રયત્ન કરો";
+
+        setTimeout(() => {
+          wrongNumber.classList.remove("wrong");
+          card.classList.remove("wrong");
+        }, 450);
+      }
+    }
+
+    function finishGame() {
+      stopTimer();
+
+      gameArea.innerHTML = `
+        <div class="finish">
+
+          <div class="finish-icon">
+            🏆
+          </div>
+
+          <h2>
+            શાબાશ! ૧ થી ૧૦૦ પૂર્ણ
+          </h2>
+
+          <div class="results">
+
+            <div class="result">
+              <div>⭐ સ્કોર</div>
+
+              <div class="result-value">
+                ${toGujaratiNumber(score)} / ૧૦૦
+              </div>
+            </div>
+
+            <div class="result">
+              <div>⏱️ સમય</div>
+
+              <div class="result-value">
+                ${formatTime(seconds)}
+              </div>
+            </div>
+
+          </div>
+
+          <button
+            class="restart"
+            onclick="location.reload()"
+          >
+            🔄 ફરી રમો
+          </button>
+
+        </div>
+      `;
+    }
+
+    startGame();
+  </script>
+
+</body>
+</html>
