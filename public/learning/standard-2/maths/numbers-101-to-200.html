@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>૧૦૧ થી ૨૦૦ સુધીના અંક વાંચતા શીખીએ | નિશાળ</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #f8fafc;
+      color: #334155;
+      font-family: "Noto Sans Gujarati", "Nirmala UI", Arial, sans-serif;
+    }
+
+    .page {
+      max-width: 1200px;
+      min-height: 100vh;
+      margin: auto;
+      background: #ffffff;
+    }
+
+    .hero {
+      padding: 40px 28px;
+      background: linear-gradient(135deg, #eef2ff, #f0fdf4, #fff7ed);
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-size: 24px;
+      font-weight: 900;
+      color: #4f46e5;
+    }
+
+    .pill {
+      padding: 9px 16px;
+      border: 1px solid #c7d2fe;
+      border-radius: 999px;
+      background: #ffffff;
+      color: #4f46e5;
+      font-weight: 800;
+    }
+
+    h1 {
+      margin: 26px 0 10px;
+      font-size: 44px;
+      line-height: 1.3;
+      color: #1e3a5f;
+    }
+
+    .hero p {
+      max-width: 820px;
+      margin: 0;
+      color: #64748b;
+      font-size: 18px;
+      line-height: 1.8;
+    }
+
+    main {
+      padding: 28px;
+    }
+
+    .section {
+      margin-top: 28px;
+      padding: 24px;
+      border-radius: 24px;
+    }
+
+    .section:first-child {
+      margin-top: 0;
+    }
+
+    .section h2 {
+      margin: 0 0 10px;
+      font-size: 26px;
+    }
+
+    .section-desc {
+      margin: 0 0 20px;
+      color: #64748b;
+      font-size: 17px;
+      line-height: 1.8;
+    }
+
+    /* સમજ */
+    .concept {
+      border: 1px solid #bfdbfe;
+      background: #eff6ff;
+    }
+
+    .concept h2 {
+      color: #1d4ed8;
+    }
+
+    .main-example {
+      padding: 24px;
+      border: 1px solid #bfdbfe;
+      border-radius: 18px;
+      background: #ffffff;
+      text-align: center;
+    }
+
+    .main-number {
+      font-size: 48px;
+      font-weight: 900;
+      color: #1e3a8a;
+    }
+
+    .equals {
+      margin: 7px 0;
+      font-size: 24px;
+      font-weight: 900;
+      color: #94a3b8;
+    }
+
+    .main-word {
+      font-size: 29px;
+      font-weight: 900;
+      color: #166534;
+    }
+
+    /* ઉદાહરણો */
+    .examples {
+      border: 1px solid #bbf7d0;
+      background: #f0fdf4;
+    }
+
+    .examples h2 {
+      color: #166534;
+    }
+
+    .example-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .example-card {
+      padding: 18px 10px;
+      border: 1px solid #dcfce7;
+      border-radius: 18px;
+      background: #ffffff;
+      text-align: center;
+    }
+
+    .example-number {
+      font-size: 30px;
+      font-weight: 900;
+      color: #1e3a5f;
+    }
+
+    .example-word {
+      margin-top: 8px;
+      font-size: 18px;
+      font-weight: 800;
+      color: #166534;
+    }
+
+    /* અભ્યાસ */
+    .practice {
+      border: 1px solid #fde68a;
+      background: #fffbeb;
+    }
+
+    .practice h2 {
+      color: #92400e;
+    }
+
+    .questions {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .question {
+      min-height: 82px;
+      padding: 18px;
+      display: flex;
+      align-items: center;
+      border: 1px solid #fde68a;
+      border-radius: 16px;
+      background: #ffffff;
+      color: #334155;
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1.8;
+    }
+
+    .question-number {
+      margin-right: 10px;
+      color: #b45309;
+      font-weight: 900;
+    }
+
+    /* અલગ પ્રકાર */
+    .words-practice {
+      border-color: #ddd6fe;
+      background: #f5f3ff;
+    }
+
+    .words-practice h2 {
+      color: #6d28d9;
+    }
+
+    .words-practice .question {
+      border-color: #ddd6fe;
+    }
+
+    .words-practice .question-number {
+      color: #7c3aed;
+    }
+
+    .sequence-practice {
+      border-color: #bae6fd;
+      background: #f0f9ff;
+    }
+
+    .sequence-practice h2 {
+      color: #0369a1;
+    }
+
+    .sequence-practice .question {
+      border-color: #bae6fd;
+    }
+
+    .sequence-practice .question-number {
+      color: #0284c7;
+    }
+
+    footer {
+      margin-top: 30px;
+      padding: 24px;
+      border-top: 1px solid #e5e7eb;
+      text-align: center;
+      color: #64748b;
+      font-weight: 800;
+    }
+
+    @media (max-width: 750px) {
+      .example-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero {
+        padding: 25px 18px;
+      }
+
+      h1 {
+        font-size: 33px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      main {
+        padding: 16px;
+      }
+
+      .section {
+        padding: 18px;
+        border-radius: 20px;
+      }
+
+      .example-grid,
+      .questions {
+        grid-template-columns: 1fr;
+      }
+
+      .question {
+        min-height: 72px;
+        font-size: 17px;
+      }
+
+      .main-number {
+        font-size: 42px;
+      }
+
+      .main-word {
+        font-size: 25px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+
+    <header class="hero">
+      <div class="top">
+        <div class="brand">નિશાળ ગણિત</div>
+        <div class="pill">ધોરણ 2 • ગણિત</div>
+      </div>
+
+      <h1>૧૦૧ થી ૨૦૦ સુધીના અંક વાંચતા શીખીએ</h1>
+
+      <p>
+        ત્રણ અંકની સંખ્યાઓને ઉદાહરણો દ્વારા સમજીએ, વાંચીએ અને વિવિધ પ્રકારના
+        અભ્યાસ દ્વારા શીખીએ.
+      </p>
+    </header>
+
+    <main>
+
+      <!-- સમજ -->
+      <section class="section concept">
+        <h2>સંખ્યા કેવી રીતે વાંચવી?</h2>
+
+        <p class="section-desc">
+          ૧૦૦ પછી આવતી સંખ્યાઓમાં પહેલા “એકસો” બોલીએ અને પછી બાકીનો અંક વાંચીએ.
+        </p>
+
+        <div class="main-example">
+          <div class="main-number">૧૦૨</div>
+          <div class="equals">=</div>
+          <div class="main-word">એકસો બે</div>
+        </div>
+      </section>
+
+      <!-- ઉદાહરણો -->
+      <section class="section examples">
+        <h2>જુદા જુદા ઉદાહરણો</h2>
+
+        <p class="section-desc">
+          નીચે આપેલી સંખ્યાઓ અને તેમના શબ્દરૂપ ધ્યાનથી વાંચો.
+        </p>
+
+        <div class="example-grid">
+
+          <div class="example-card">
+            <div class="example-number">૧૦૧</div>
+            <div class="example-word">એકસો એક</div>
+          </div>
+
+          <div class="example-card">
+            <div class="example-number">૧૦૫</div>
+            <div class="example-word">એકસો પાંચ</div>
+          </div>
+
+          <div class="example-card">
+            <div class="example-number">૧૧૦</div>
+            <div class="example-word">એકસો દસ</div>
+          </div>
+
+          <div class="example-card">
+            <div class="example-number">૧૨૫</div>
+            <div class="example-word">એકસો પચ્ચીસ</div>
+          </div>
+
+          <div class="example-card">
+            <div class="example-number">૧૪૦</div>
+            <div class="example-word">એકસો ચાલીસ</div>
+          </div>
+
+          <div class="example-card">
+            <div class="example-number">૧૫૦</div>
+            <div class="example-word">એકસો પચાસ</div>
+          </div>
+
+          <div class="example-card">
+            <div class="example-number">૧૭૫</div>
+            <div class="example-word">એકસો પંચોતેર</div>
+          </div>
+
+          <div class="example-card">
+            <div class="example-number">૧૯૯</div>
+            <div class="example-word">એકસો નવ્વાણું</div>
+          </div>
+
+          <div class="example-card">
+            <div class="example-number">૨૦૦</div>
+            <div class="example-word">બસો</div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- અભ્યાસ 1 : 10 પ્રશ્ન -->
+      <section class="section practice">
+        <h2>અભ્યાસ ૧ — ખાલી જગ્યા પૂરો</h2>
+
+        <p class="section-desc">
+          આપેલી સંખ્યાને વાંચો અને ખાલી જગ્યામાં યોગ્ય શબ્દ લખો.
+        </p>
+
+        <div class="questions">
+
+          <div class="question">
+            <span class="question-number">૧.</span>
+            ૧૦૩ = એકસો __________
+          </div>
+
+          <div class="question">
+            <span class="question-number">૨.</span>
+            ૧૦૭ = એકસો __________
+          </div>
+
+          <div class="question">
+            <span class="question-number">૩.</span>
+            ૧૧૨ = એકસો __________
+          </div>
+
+          <div class="question">
+            <span class="question-number">૪.</span>
+            ૧૧૮ = એકસો __________
+          </div>
+
+          <div class="question">
+            <span class="question-number">૫.</span>
+            ૧૨૫ = એકસો __________
+          </div>
+
+          <div class="question">
+            <span class="question-number">૬.</span>
+            ૧૩૦ = એકસો __________
+          </div>
+
+          <div class="question">
+            <span class="question-number">૭.</span>
+            ૧૪૫ = એકસો __________
+          </div>
+
+          <div class="question">
+            <span class="question-number">૮.</span>
+            ૧૬૦ = એકસો __________
+          </div>
+
+          <div class="question">
+            <span class="question-number">૯.</span>
+            ૧૭૫ = એકસો __________
+          </div>
+
+          <div class="question">
+            <span class="question-number">૧૦.</span>
+            ૧૯૦ = એકસો __________
+          </div>
+
+        </div>
+      </section>
+
+      <!-- અભ્યાસ 2 : 8 પ્રશ્ન -->
+      <section class="section practice words-practice">
+        <h2>અભ્યાસ ૨ — અંક અને શબ્દો</h2>
+
+        <p class="section-desc">
+          ક્યાંક અંકને શબ્દોમાં અને ક્યાંક શબ્દને અંકમાં લખો.
+        </p>
+
+        <div class="questions">
+
+          <div class="question">
+            <span class="question-number">૧૧.</span>
+            ૧૨૮ = ______________________
+          </div>
+
+          <div class="question">
+            <span class="question-number">૧૨.</span>
+            ૧૩૬ = ______________________
+          </div>
+
+          <div class="question">
+            <span class="question-number">૧૩.</span>
+            ૧૫૨ = ______________________
+          </div>
+
+          <div class="question">
+            <span class="question-number">૧૪.</span>
+            ૧૯૮ = ______________________
+          </div>
+
+          <div class="question">
+            <span class="question-number">૧૫.</span>
+            એકસો પચાસ = __________
+          </div>
+
+          <div class="question">
+            <span class="question-number">૧૬.</span>
+            એકસો બાવીસ = __________
+          </div>
+
+          <div class="question">
+            <span class="question-number">૧૭.</span>
+            એકસો એંસી = __________
+          </div>
+
+          <div class="question">
+            <span class="question-number">૧૮.</span>
+            બસો = __________
+          </div>
+
+        </div>
+      </section>
+
+      <!-- અભ્યાસ 3 : 7 પ્રશ્ન -->
+      <section class="section practice sequence-practice">
+        <h2>અભ્યાસ ૩ — આગળ, પાછળ અને વચ્ચેનો અંક</h2>
+
+        <p class="section-desc">
+          સંખ્યાક્રમ સમજો અને યોગ્ય અંક લખો.
+        </p>
+
+        <div class="questions">
+
+          <div class="question">
+            <span class="question-number">૧૯.</span>
+            ૧૭૯ પછીનો અંક = __________
+          </div>
+
+          <div class="question">
+            <span class="question-number">૨૦.</span>
+            ૧૫૦ પહેલાંનો અંક = __________
+          </div>
+
+          <div class="question">
+            <span class="question-number">૨૧.</span>
+            ૧૨૮, __________, ૧૩૦
+          </div>
+
+          <div class="question">
+            <span class="question-number">૨૨.</span>
+            __________, ૧૬૫, ૧૬૬
+          </div>
+
+          <div class="question">
+            <span class="question-number">૨૩.</span>
+            ૧૯૮, ૧૯૯, __________
+          </div>
+
+          <div class="question">
+            <span class="question-number">૨૪.</span>
+            ૧૪૦ પછી આવતા બે અંક:
+            __________, __________
+          </div>
+
+          <div class="question">
+            <span class="question-number">૨૫.</span>
+            ૧૮૦ પહેલાં આવતા બે અંક:
+            __________, __________
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+    <footer>
+      નિશાળ • સમજીએ, વાંચીએ અને અભ્યાસ કરીએ
+    </footer>
+
+  </div>
+</body>
+</html>

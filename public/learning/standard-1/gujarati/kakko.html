@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>ગુજરાતી કક્કો | નિશાળ</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #f8fafc;
+      color: #263653;
+      font-family:
+        "Noto Sans Gujarati",
+        "Nirmala UI",
+        Arial,
+        sans-serif;
+    }
+
+    .page {
+      max-width: 1200px;
+      min-height: 100vh;
+      margin: auto;
+      background: #ffffff;
+    }
+
+    /* HERO */
+    .hero {
+      padding: 38px 28px;
+      background: linear-gradient(
+        135deg,
+        #fff7ed,
+        #f0fdf4 48%,
+        #eff6ff
+      );
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-size: 24px;
+      font-weight: 900;
+      color: #166534;
+    }
+
+    .pill {
+      padding: 9px 16px;
+      border: 1px solid #bbf7d0;
+      border-radius: 999px;
+      background: #ffffff;
+      color: #15803d;
+      font-weight: 800;
+    }
+
+    h1 {
+      margin: 26px 0 8px;
+      font-size: 44px;
+      line-height: 1.3;
+      color: #1e3a5f;
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: 0;
+      color: #64748b;
+      font-size: 18px;
+      line-height: 1.8;
+    }
+
+    main {
+      padding: 28px;
+    }
+
+    /* GUIDE */
+    .guide {
+      margin-bottom: 28px;
+      padding: 18px 20px;
+      border: 1px solid #dbeafe;
+      border-radius: 18px;
+      background: #eff6ff;
+      font-size: 17px;
+      line-height: 1.8;
+      color: #334155;
+    }
+
+    /* SECTION TITLE */
+    .section-title {
+      margin: 32px 0 16px;
+      font-size: 27px;
+      color: #334155;
+    }
+
+    /* LETTER GRID */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+    }
+
+    .card {
+      min-height: 190px;
+      padding: 16px 10px;
+      border: 1px solid #e2e8f0;
+      border-radius: 22px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.09);
+    }
+
+    .card:nth-child(6n + 1) {
+      background: #eff6ff;
+    }
+
+    .card:nth-child(6n + 2) {
+      background: #f0fdf4;
+    }
+
+    .card:nth-child(6n + 3) {
+      background: #fff7ed;
+    }
+
+    .card:nth-child(6n + 4) {
+      background: #faf5ff;
+    }
+
+    .card:nth-child(6n + 5) {
+      background: #fff1f2;
+    }
+
+    .card:nth-child(6n + 6) {
+      background: #ecfeff;
+    }
+
+    .symbol {
+      margin-bottom: 8px;
+      font-size: 42px;
+      line-height: 1;
+    }
+
+    .letter {
+      font-size: 45px;
+      line-height: 1.2;
+      font-weight: 900;
+      color: #334155;
+    }
+
+    .word {
+      margin-top: 8px;
+      padding: 5px 13px;
+      border: 1px solid #e2e8f0;
+      border-radius: 999px;
+      background: #ffffff;
+      color: #475569;
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .only-letter {
+      min-height: 190px;
+    }
+
+    /* READING */
+    .reading {
+      margin-top: 36px;
+      padding: 24px;
+      border: 1px solid #bbf7d0;
+      border-radius: 24px;
+      background: linear-gradient(135deg, #f0fdf4, #f0f9ff);
+    }
+
+    .reading h2 {
+      margin: 0 0 16px;
+      color: #166534;
+      font-size: 25px;
+    }
+
+    .reading-box {
+      padding: 20px;
+      border: 1px solid #dcfce7;
+      border-radius: 16px;
+      background: #ffffff;
+      color: #334155;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 2.2;
+    }
+
+    /* PRACTICE */
+    .practice {
+      margin-top: 24px;
+      padding: 24px;
+      border: 1px solid #fde68a;
+      border-radius: 24px;
+      background: #fffbeb;
+    }
+
+    .practice h2 {
+      margin: 0;
+      color: #92400e;
+      font-size: 25px;
+    }
+
+    .tasks {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .task {
+      padding: 16px;
+      border: 1px solid #fde68a;
+      border-radius: 16px;
+      background: #ffffff;
+      color: #475569;
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.7;
+    }
+
+    /* FOOTER */
+    footer {
+      margin-top: 30px;
+      padding: 24px;
+      border-top: 1px solid #e5e7eb;
+      text-align: center;
+      color: #64748b;
+      font-weight: 800;
+    }
+
+    /* TABLET */
+    @media (max-width: 850px) {
+      .grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    /* MOBILE */
+    @media (max-width: 600px) {
+      .hero {
+        padding: 25px 18px;
+      }
+
+      h1 {
+        font-size: 34px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      main {
+        padding: 18px;
+      }
+
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 9px;
+      }
+
+      .card,
+      .only-letter {
+        min-height: 170px;
+        padding: 12px 6px;
+      }
+
+      .symbol {
+        font-size: 38px;
+      }
+
+      .letter {
+        font-size: 40px;
+      }
+
+      .word {
+        font-size: 16px;
+      }
+
+      .section-title {
+        font-size: 23px;
+      }
+
+      .tasks {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+
+    <!-- HERO -->
+    <header class="hero">
+      <div class="top">
+        <div class="brand">નિશાળ ગુજરાતી</div>
+        <div class="pill">ધોરણ 1 • ગુજરાતી</div>
+      </div>
+
+      <h1>ગુજરાતી કક્કો</h1>
+
+      <p>
+        અક્ષર જુઓ, ચિત્ર ઓળખો અને શબ્દ મોટેથી વાંચો.
+      </p>
+    </header>
+
+    <main>
+
+      <!-- GUIDE -->
+      <div class="guide">
+        <strong>કેવી રીતે શીખવું?</strong>
+        પહેલા ચિત્ર ઓળખો, પછી અક્ષર જુઓ અને આખો શબ્દ મોટેથી વાંચો.
+      </div>
+
+      <!-- SWAR -->
+      <h2 class="section-title">સ્વર</h2>
+
+      <section class="grid">
+
+        <div class="card">
+          <div class="symbol">🍍</div>
+          <div class="letter">અ</div>
+          <div class="word">અનાનસ</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">🥭</div>
+          <div class="letter">આ</div>
+          <div class="word">આંબો</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">🧱</div>
+          <div class="letter">ઇ</div>
+          <div class="word">ઇંટ</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">🧱</div>
+          <div class="letter">ઈ</div>
+          <div class="word">ઈંટ</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">🐭</div>
+          <div class="letter">ઉ</div>
+          <div class="word">ઉંદર</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">🐫</div>
+          <div class="letter">ઊ</div>
+          <div class="word">ઊંટ</div>
+        </div>
+<div class="card">
+  <div class="symbol">🧘</div>
+  <div class="letter">ઋ</div>
+  <div class="word">ઋષિ</div>
+</div>
+
+        <div class="card">
+          <div class="symbol">👠</div>
+          <div class="letter">એ</div>
+          <div class="word">એડી</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">👓</div>
+          <div class="letter">ઐ</div>
+          <div class="word">ઐનક</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">🧣</div>
+          <div class="letter">ઓ</div>
+          <div class="word">ઓઢણી</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">💊</div>
+          <div class="letter">ઔ</div>
+          <div class="word">ઔષધ</div>
+        </div>
+
+        <div class="card only-letter">
+          <div class="letter">અં</div>
+        </div>
+
+        <div class="card only-letter">
+          <div class="letter">અઃ</div>
+        </div>
+
+      </section>
+
+      <!-- VYANJAN -->
+      <h2 class="section-title">વ્યંજન</h2>
+
+      <section class="grid">
+
+        <div class="card">
+          <div class="symbol">🪷</div>
+          <div class="letter">ક</div>
+          <div class="word">કમળ</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">🐿️</div>
+          <div class="letter">ખ</div>
+          <div class="word">ખિસકોલી</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">🐄</div>
+          <div class="letter">ગ</div>
+          <div class="word">ગાય</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">🏠</div>
+          <div class="letter">ઘ</div>
+          <div class="word">ઘર</div>
+        </div>
+
+        <div class="card only-letter">
+          <div class="letter">ઙ</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">🥄</div>
+          <div class="letter">ચ</div>
+          <div class="word">ચમચી</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">☂️</div>
+          <div class="letter">છ</div>
+          <div class="word">છત્રી</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">🚢</div>
+          <div class="letter">જ</div>
+          <div class="word">જહાજ</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">🚩</div>
+          <div class="letter">ઝ</div>
+          <div class="word">ઝંડો</div>
+        </div>
+
+        <div class="card only-letter">
+          <div class="letter">ઞ</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">🍅</div>
+          <div class="letter">ટ</div>
+          <div class="word">ટમેટું</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">🥤</div>
+          <div class="letter">ઠ</div>
+          <div class="word">ઠંડું</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">🥁</div>
+          <div class="letter">ડ</div>
+          <div class="word">ડમરુ</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">🥁</div>
+          <div class="letter">ઢ</div>
+          <div class="word">ઢોલ</div>
+        </div>
+
+        <div class="card only-letter">
+          <div class="letter">ણ</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">⚖️</div>
+          <div class="letter">ત</div>
+          <div class="word">તરાજુ</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">🎒</div>
+          <div class="letter">થ</div>
+          <div class="word">થેલો</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">🚪</div>
+          <div class="letter">દ</div>
+          <div class="word">દરવાજો</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">🏹</div>
+          <div class="letter">ધ</div>
+          <div class="word">ધનુષ</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">🚰</div>
+          <div class="letter">ન</div>
+          <div class="word">નળ</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">🪁</div>
+          <div class="letter">પ</div>
+          <div class="word">પતંગ</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">🍎</div>
+          <div class="letter">ફ</div>
+          <div class="word">ફળ</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">🦆</div>
+          <div class="letter">બ</div>
+          <div class="word">બતક</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">🐝</div>
+          <div class="letter">ભ</div>
+          <div class="word">ભમરો</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">🦚</div>
+          <div class="letter">મ</div>
+          <div class="word">મોર</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">🔥</div>
+          <div class="letter">ય</div>
+          <div class="word">યજ્ઞ</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">🛺</div>
+          <div class="letter">ર</div>
+          <div class="word">રિક્ષા</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">🌶️</div>
+          <div class="letter">લ</div>
+          <div class="word">લાલ મરચું</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">🌳</div>
+          <div class="letter">વ</div>
+          <div class="word">વડ</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">🐰</div>
+          <div class="letter">શ</div>
+          <div class="word">શશલું</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">⬡</div>
+          <div class="letter">ષ</div>
+          <div class="word">ષટ્કોણ</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">🐰</div>
+          <div class="letter">સ</div>
+          <div class="word">સસલું</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">🐘</div>
+          <div class="letter">હ</div>
+          <div class="word">હાથી</div>
+        </div>
+
+        <div class="card only-letter">
+          <div class="letter">ળ</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">⚔️</div>
+          <div class="letter">ક્ષ</div>
+          <div class="word">ક્ષત્રિય</div>
+        </div>
+
+        <div class="card">
+          <div class="symbol">💡</div>
+          <div class="letter">જ્ઞ</div>
+          <div class="word">જ્ઞાન</div>
+        </div>
+
+      </section>
+
+      <!-- READING PRACTICE -->
+      <section class="reading">
+        <h2>📖 વાંચન અભ્યાસ</h2>
+
+        <div class="reading-box">
+          અ — અનાનસ &nbsp; • &nbsp;
+          આ — આંબો &nbsp; • &nbsp;
+          ઉ — ઉંદર &nbsp; • &nbsp;
+          ઊ — ઊંટ
+          <br />
+
+          ક — કમળ &nbsp; • &nbsp;
+          ગ — ગાય &nbsp; • &nbsp;
+          ઘ — ઘર &nbsp; • &nbsp;
+          ચ — ચમચી
+          <br />
+
+          છ — છત્રી &nbsp; • &nbsp;
+          જ — જહાજ &nbsp; • &nbsp;
+          પ — પતંગ &nbsp; • &nbsp;
+          મ — મોર
+          <br />
+
+          સ — સસલું &nbsp; • &nbsp;
+          હ — હાથી
+        </div>
+      </section>
+
+      <!-- SWADHYAY -->
+      <section class="practice">
+        <h2>✏️ સ્વાધ્યાય</h2>
+
+        <div class="tasks">
+
+          <div class="task">
+            1. ચિત્ર જોઈને અક્ષર અને શબ્દ મોટેથી બોલો.
+          </div>
+
+          <div class="task">
+            2. બધા સ્વર એક પછી એક મોટેથી વાંચો.
+          </div>
+
+          <div class="task">
+            3. ક થી ઙ અને ચ થી ઞ સુધીના અક્ષરો લખો.
+          </div>
+
+          <div class="task">
+            4. કમળ, ગાય, ઘર, મોર અને હાથીના પહેલા અક્ષર લખો.
+          </div>
+
+          <div class="task">
+            5. તમને ગમતાં કોઈપણ દસ ગુજરાતી અક્ષરો લખો.
+          </div>
+
+          <div class="task">
+            6. કોઈપણ પાંચ ચિત્રો ઓળખીને તેના શબ્દો લખો.
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+    <footer>
+      નિશાળ • અક્ષર ઓળખીએ અને વાંચતા શીખીએ
+    </footer>
+
+  </div>
+</body>
+</html>

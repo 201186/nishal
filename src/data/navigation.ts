@@ -25,6 +25,10 @@ export const navigation: NavigationItem[] = [
     href: "/previous-papers",
   },
   {
+    label: "Learning",
+    href: "/learning",
+  },
+  {
     label: "Games",
     href: "/games",
   },

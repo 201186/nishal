@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>૧ થી ૧૦૦ ગુજરાતી અંક અને શબ્દોમાં | નિશાળ</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: #f8fafc;
+      color: #263653;
+      font-family: "Noto Sans Gujarati", "Nirmala UI", Arial, sans-serif;
+    }
+
+    .page {
+      max-width: 1200px;
+      margin: auto;
+      min-height: 100vh;
+      background: #fff;
+    }
+
+    .hero {
+      padding: 38px 28px;
+      background: linear-gradient(135deg, #eff6ff, #f0fdf4, #fff7ed);
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-size: 24px;
+      font-weight: 900;
+      color: #2563eb;
+    }
+
+    .pill {
+      padding: 9px 16px;
+      border: 1px solid #bfdbfe;
+      border-radius: 999px;
+      background: #fff;
+      color: #2563eb;
+      font-weight: 800;
+    }
+
+    h1 {
+      margin: 26px 0 8px;
+      font-size: 44px;
+      color: #1e3a5f;
+    }
+
+    .hero p {
+      margin: 0;
+      color: #64748b;
+      font-size: 18px;
+      line-height: 1.8;
+    }
+
+    main { padding: 28px; }
+
+    .guide {
+      margin-bottom: 26px;
+      padding: 18px 20px;
+      border: 1px solid #dbeafe;
+      border-radius: 18px;
+      background: #eff6ff;
+      font-size: 17px;
+      line-height: 1.8;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+
+    .card {
+      min-height: 120px;
+      padding: 14px 8px;
+      border: 1px solid #e2e8f0;
+      border-radius: 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .card:nth-child(5n+1) { background: #eff6ff; }
+    .card:nth-child(5n+2) { background: #f0fdf4; }
+    .card:nth-child(5n+3) { background: #fff7ed; }
+    .card:nth-child(5n+4) { background: #faf5ff; }
+    .card:nth-child(5n+5) { background: #fff1f2; }
+
+    .number {
+      font-size: 34px;
+      font-weight: 900;
+      color: #1e3a5f;
+    }
+
+    .word {
+      margin-top: 8px;
+      font-size: 17px;
+      font-weight: 800;
+      color: #475569;
+    }
+
+    .practice {
+      margin-top: 30px;
+      padding: 24px;
+      border: 1px solid #fde68a;
+      border-radius: 24px;
+      background: #fffbeb;
+    }
+
+    .practice h2 {
+      margin-top: 0;
+      color: #92400e;
+    }
+
+    .tasks {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .task {
+      padding: 16px;
+      border: 1px solid #fde68a;
+      border-radius: 16px;
+      background: #fff;
+      font-weight: 700;
+      line-height: 1.7;
+    }
+
+    footer {
+      margin-top: 30px;
+      padding: 24px;
+      border-top: 1px solid #e5e7eb;
+      text-align: center;
+      color: #64748b;
+      font-weight: 800;
+    }
+
+    @media (max-width: 800px) {
+      .grid { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    @media (max-width: 600px) {
+      .hero { padding: 25px 18px; }
+      h1 { font-size: 32px; }
+      main { padding: 18px; }
+
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+      }
+
+      .card { min-height: 110px; }
+      .number { font-size: 30px; }
+      .word { font-size: 16px; }
+      .tasks { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+<div class="page">
+
+  <header class="hero">
+    <div class="top">
+      <div class="brand">નિશાળ ગણિત</div>
+      <div class="pill">ધોરણ 1 • ૧ થી ૧૦૦</div>
+    </div>
+
+    <h1>૧ થી ૧૦૦ ગુજરાતી અંક</h1>
+    <p>ગુજરાતી અંક ઓળખો અને તેને શબ્દોમાં વાંચતા શીખો.</p>
+  </header>
+
+  <main>
+
+    <div class="guide">
+      <strong>કેવી રીતે શીખવું?</strong>
+      પહેલા અંક જુઓ અને પછી તેની નીચે આપેલો શબ્દ મોટેથી વાંચો.
+    </div>
+
+    <section class="grid" id="numbers"></section>
+
+    <section class="practice">
+      <h2>સ્વાધ્યાય</h2>
+
+      <div class="tasks">
+        <div class="task">1. ૧ થી ૧૦૦ સુધીના અંક ક્રમમાં વાંચો.</div>
+        <div class="task">2. ૧૧ થી ૨૦ સુધીના અંક શબ્દોમાં લખો.</div>
+        <div class="task">3. ૨૫, ૩૦, ૪૫, ૫૦ અને ૧૦૦ શબ્દોમાં લખો.</div>
+        <div class="task">4. કોઈપણ દસ અંક પસંદ કરીને તેના શબ્દો લખો.</div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>નિશાળ • અંક ઓળખીએ અને વાંચતા શીખીએ</footer>
+
+</div>
+
+<script>
+  const numbers = [
+    ["૧","એક"],["૨","બે"],["૩","ત્રણ"],["૪","ચાર"],["૫","પાંચ"],
+    ["૬","છ"],["૭","સાત"],["૮","આઠ"],["૯","નવ"],["૧૦","દસ"],
+
+    ["૧૧","અગિયાર"],["૧૨","બાર"],["૧૩","તેર"],["૧૪","ચૌદ"],["૧૫","પંદર"],
+    ["૧૬","સોળ"],["૧૭","સત્તર"],["૧૮","અઢાર"],["૧૯","ઓગણિસ"],["૨૦","વીસ"],
+
+    ["૨૧","એકવીસ"],["૨૨","બાવીસ"],["૨૩","તેવીસ"],["૨૪","ચોવીસ"],["૨૫","પચ્ચીસ"],
+    ["૨૬","છવીસ"],["૨૭","સત્તાવીસ"],["૨૮","અઠ્ઠાવીસ"],["૨૯","ઓગણત્રીસ"],["૩૦","ત્રીસ"],
+
+    ["૩૧","એકત્રીસ"],["૩૨","બત્રીસ"],["૩૩","તેત્રીસ"],["૩૪","ચોત્રીસ"],["૩૫","પાંત્રીસ"],
+    ["૩૬","છત્રીસ"],["૩૭","સડત્રીસ"],["૩૮","અડત્રીસ"],["૩૯","ઓગણચાલીસ"],["૪૦","ચાલીસ"],
+
+    ["૪૧","એકતાલીસ"],["૪૨","બેતાલીસ"],["૪૩","ત્રેતાલીસ"],["૪૪","ચુંમાલીસ"],["૪૫","પિસ્તાલીસ"],
+    ["૪૬","છેતાલીસ"],["૪૭","સુડતાલીસ"],["૪૮","અડતાલીસ"],["૪૯","ઓગણપચાસ"],["૫૦","પચાસ"],
+
+    ["૫૧","એકાવન"],["૫૨","બાવન"],["૫૩","ત્રેપન"],["૫૪","ચોપન"],["૫૫","પંચાવન"],
+    ["૫૬","છપ્પન"],["૫૭","સત્તાવન"],["૫૮","અઠ્ઠાવન"],["૫૯","ઓગણસાઈઠ"],["૬૦","સાઈઠ"],
+
+    ["૬૧","એકસઠ"],["૬૨","બાસઠ"],["૬૩","ત્રેસઠ"],["૬૪","ચોસઠ"],["૬૫","પાંસઠ"],
+    ["૬૬","છાસઠ"],["૬૭","સડસઠ"],["૬૮","અડસઠ"],["૬૯","ઓગણસિત્તેર"],["૭૦","સિત્તેર"],
+
+    ["૭૧","એકોતેર"],["૭૨","બોતેર"],["૭૩","તોતેર"],["૭૪","ચુંમોતેર"],["૭૫","પંચોતેર"],
+    ["૭૬","છોતેર"],["૭૭","સિત્યોતેર"],["૭૮","ઇઠ્યોતેર"],["૭૯","ઓગણાએંસી"],["૮૦","એંસી"],
+
+    ["૮૧","એક્યાસી"],["૮૨","બ્યાસી"],["૮૩","ત્યાસી"],["૮૪","ચોર્યાસી"],["૮૫","પંચાસી"],
+    ["૮૬","છ્યાસી"],["૮૭","સિત્યાસી"],["૮૮","અઠ્યાસી"],["૮૯","નેવ્યાસી"],["૯૦","નેવું"],
+
+    ["૯૧","એકાણું"],["૯૨","બાણું"],["૯૩","ત્રાણું"],["૯૪","ચોરાણું"],["૯૫","પંચાણું"],
+    ["૯૬","છન્નું"],["૯૭","સત્તાણું"],["૯૮","અઠ્ઠાણું"],["૯૯","નવ્વાણું"],["૧૦૦","સો"]
+  ];
+
+  const container = document.getElementById("numbers");
+
+  numbers.forEach(([number, word]) => {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <div class="number">${number}</div>
+      <div class="word">${word}</div>
+    `;
+
+    container.appendChild(card);
+  });
+</script>
+
+</body>
+</html>

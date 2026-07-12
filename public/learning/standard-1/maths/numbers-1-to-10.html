@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>૧ થી ૧૦ ગુજરાતી અંક | નિશાળ</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #f8fafc;
+      color: #263653;
+      font-family: "Noto Sans Gujarati", "Nirmala UI", Arial, sans-serif;
+    }
+
+    .page {
+      max-width: 1200px;
+      min-height: 100vh;
+      margin: auto;
+      background: #ffffff;
+    }
+
+    /* HERO */
+    .hero {
+      padding: 38px 28px;
+      background: linear-gradient(135deg, #eff6ff, #f0fdf4, #fff7ed);
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-size: 24px;
+      font-weight: 900;
+      color: #2563eb;
+    }
+
+    .pill {
+      padding: 9px 16px;
+      border: 1px solid #bfdbfe;
+      border-radius: 999px;
+      background: #ffffff;
+      color: #2563eb;
+      font-weight: 800;
+    }
+
+    h1 {
+      margin: 26px 0 8px;
+      font-size: 44px;
+      line-height: 1.3;
+      color: #1e3a5f;
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: 0;
+      color: #64748b;
+      font-size: 18px;
+      line-height: 1.8;
+    }
+
+    main {
+      padding: 28px;
+    }
+
+    .guide {
+      margin-bottom: 28px;
+      padding: 18px 20px;
+      border: 1px solid #dbeafe;
+      border-radius: 18px;
+      background: #eff6ff;
+      font-size: 17px;
+      line-height: 1.8;
+    }
+
+    /* NUMBER GRID */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+    }
+
+    .card {
+      min-height: 230px;
+      padding: 18px 10px;
+      border: 1px solid #e2e8f0;
+      border-radius: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      box-shadow: 0 5px 16px rgba(15, 23, 42, 0.05);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.09);
+    }
+
+    .card:nth-child(5n + 1) {
+      background: #eff6ff;
+    }
+
+    .card:nth-child(5n + 2) {
+      background: #f0fdf4;
+    }
+
+    .card:nth-child(5n + 3) {
+      background: #fff7ed;
+    }
+
+    .card:nth-child(5n + 4) {
+      background: #faf5ff;
+    }
+
+    .card:nth-child(5n + 5) {
+      background: #fff1f2;
+    }
+
+    .objects {
+      min-height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 3px;
+      margin-bottom: 10px;
+      font-size: 25px;
+      line-height: 1.3;
+    }
+
+    .number {
+      font-size: 58px;
+      line-height: 1;
+      font-weight: 900;
+      color: #1e3a5f;
+    }
+
+    .word {
+      margin-top: 12px;
+      padding: 6px 16px;
+      border: 1px solid #e2e8f0;
+      border-radius: 999px;
+      background: #ffffff;
+      color: #475569;
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    /* READING */
+    .reading {
+      margin-top: 34px;
+      padding: 24px;
+      border: 1px solid #bbf7d0;
+      border-radius: 24px;
+      background: linear-gradient(135deg, #f0fdf4, #f0f9ff);
+    }
+
+    .reading h2 {
+      margin: 0 0 16px;
+      color: #166534;
+    }
+
+    .reading-box {
+      padding: 20px;
+      border: 1px solid #dcfce7;
+      border-radius: 16px;
+      background: #ffffff;
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 2.2;
+    }
+
+    /* PRACTICE */
+    .practice {
+      margin-top: 24px;
+      padding: 24px;
+      border: 1px solid #fde68a;
+      border-radius: 24px;
+      background: #fffbeb;
+    }
+
+    .practice h2 {
+      margin: 0;
+      color: #92400e;
+    }
+
+    .tasks {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .task {
+      padding: 16px;
+      border: 1px solid #fde68a;
+      border-radius: 16px;
+      background: #ffffff;
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.7;
+    }
+
+    footer {
+      margin-top: 30px;
+      padding: 24px;
+      border-top: 1px solid #e5e7eb;
+      text-align: center;
+      color: #64748b;
+      font-weight: 800;
+    }
+
+    @media (max-width: 900px) {
+      .grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero {
+        padding: 25px 18px;
+      }
+
+      h1 {
+        font-size: 34px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      main {
+        padding: 18px;
+      }
+
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 9px;
+      }
+
+      .card {
+        min-height: 205px;
+        padding: 14px 6px;
+      }
+
+      .objects {
+        min-height: 50px;
+        font-size: 20px;
+      }
+
+      .number {
+        font-size: 50px;
+      }
+
+      .word {
+        font-size: 18px;
+      }
+
+      .tasks {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+
+    <header class="hero">
+      <div class="top">
+        <div class="brand">નિશાળ ગણિત</div>
+        <div class="pill">ધોરણ 1 • ૧ થી ૧૦</div>
+      </div>
+
+      <h1>ગુજરાતી અંક ૧ થી ૧૦</h1>
+
+      <p>
+        વસ્તુઓ ગણો, ગુજરાતી અંક ઓળખો અને અંકને શબ્દોમાં વાંચતા શીખો.
+      </p>
+    </header>
+
+    <main>
+
+      <div class="guide">
+        <strong>કેવી રીતે શીખવું?</strong>
+        પહેલા વસ્તુઓ ગણો, પછી અંક જુઓ અને તેનો શબ્દ મોટેથી વાંચો.
+      </div>
+
+      <section class="grid">
+
+        <div class="card">
+          <div class="objects">🍎</div>
+          <div class="number">૧</div>
+          <div class="word">એક</div>
+        </div>
+
+        <div class="card">
+          <div class="objects">⭐ ⭐</div>
+          <div class="number">૨</div>
+          <div class="word">બે</div>
+        </div>
+
+        <div class="card">
+          <div class="objects">🍊 🍊 🍊</div>
+          <div class="number">૩</div>
+          <div class="word">ત્રણ</div>
+        </div>
+
+        <div class="card">
+          <div class="objects">🌸 🌸 🌸 🌸</div>
+          <div class="number">૪</div>
+          <div class="word">ચાર</div>
+        </div>
+
+        <div class="card">
+          <div class="objects">⚽ ⚽ ⚽ ⚽ ⚽</div>
+          <div class="number">૫</div>
+          <div class="word">પાંચ</div>
+        </div>
+
+        <div class="card">
+          <div class="objects">🍓 🍓 🍓 🍓 🍓 🍓</div>
+          <div class="number">૬</div>
+          <div class="word">છ</div>
+        </div>
+
+        <div class="card">
+          <div class="objects">🐟 🐟 🐟 🐟 🐟 🐟 🐟</div>
+          <div class="number">૭</div>
+          <div class="word">સાત</div>
+        </div>
+
+        <div class="card">
+          <div class="objects">🦋 🦋 🦋 🦋 🦋 🦋 🦋 🦋</div>
+          <div class="number">૮</div>
+          <div class="word">આઠ</div>
+        </div>
+
+        <div class="card">
+          <div class="objects">🌟 🌟 🌟 🌟 🌟 🌟 🌟 🌟 🌟</div>
+          <div class="number">૯</div>
+          <div class="word">નવ</div>
+        </div>
+
+        <div class="card">
+          <div class="objects">● ● ● ● ● ● ● ● ● ●</div>
+          <div class="number">૧૦</div>
+          <div class="word">દસ</div>
+        </div>
+
+      </section>
+
+      <section class="reading">
+        <h2>📖 વાંચન અભ્યાસ</h2>
+
+        <div class="reading-box">
+          ૧ — એક &nbsp; • &nbsp;
+          ૨ — બે &nbsp; • &nbsp;
+          ૩ — ત્રણ &nbsp; • &nbsp;
+          ૪ — ચાર &nbsp; • &nbsp;
+          ૫ — પાંચ
+          <br />
+
+          ૬ — છ &nbsp; • &nbsp;
+          ૭ — સાત &nbsp; • &nbsp;
+          ૮ — આઠ &nbsp; • &nbsp;
+          ૯ — નવ &nbsp; • &nbsp;
+          ૧૦ — દસ
+        </div>
+      </section>
+
+      <section class="practice">
+        <h2>✏️ સ્વાધ્યાય</h2>
+
+        <div class="tasks">
+          <div class="task">
+            1. ૧ થી ૧૦ સુધીના અંક ક્રમમાં મોટેથી વાંચો.
+          </div>
+
+          <div class="task">
+            2. ૧, ૩, ૫, ૭ અને ૯ ને શબ્દોમાં લખો.
+          </div>
+
+          <div class="task">
+            3. બે, ચાર, છ, આઠ અને દસના અંક લખો.
+          </div>
+
+          <div class="task">
+            4. ઘરમાંથી કોઈપણ દસ વસ્તુઓ ગણીને જુઓ.
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer>
+      નિશાળ • ગણીએ, ઓળખીએ અને શીખીએ
+    </footer>
+
+  </div>
+</body>
+</html>
