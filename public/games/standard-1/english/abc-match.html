@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ABC Match</title>
+
+  <title>ABC Object Match</title>
 
   <style>
     * {
@@ -12,41 +13,46 @@
       padding: 0;
     }
 
+    html,
     body {
-      min-height: 100vh;
-      padding: 20px;
+      width: 100%;
+    }
+
+    body {
       font-family: Arial, sans-serif;
       background: #f8fafc;
       color: #1e293b;
+      padding: clamp(10px, 2vw, 20px);
     }
 
     .game {
-      width: 100%;
-      max-width: 800px;
+      width: min(100%, 760px);
       margin: 0 auto;
     }
 
     .header {
       text-align: center;
-      margin-bottom: 24px;
+      margin-bottom: clamp(12px, 2vw, 20px);
     }
 
     .header h1 {
-      font-size: clamp(26px, 5vw, 40px);
-      margin-bottom: 8px;
+      font-size: clamp(26px, 3vw, 38px);
+      line-height: 1.2;
     }
 
     .header p {
+      margin-top: 6px;
       color: #64748b;
-      font-size: 17px;
+      font-size: clamp(14px, 1.4vw, 17px);
     }
 
     .score {
       width: fit-content;
-      margin: 20px auto;
-      padding: 10px 20px;
+      margin: clamp(12px, 2vw, 18px) auto;
+      padding: 8px 18px;
+      border-radius: 12px;
       background: white;
-      border-radius: 14px;
+      font-size: clamp(14px, 1.3vw, 17px);
       font-weight: 700;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
     }
@@ -54,30 +60,46 @@
     .board {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 20px;
+      gap: clamp(10px, 2vw, 18px);
     }
 
     .column {
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: clamp(8px, 1.5vw, 12px);
     }
 
     .card {
       width: 100%;
-      min-height: 72px;
-      padding: 14px;
+      min-height: clamp(54px, 7vh, 68px);
       border: 2px solid #e2e8f0;
-      border-radius: 16px;
+      border-radius: 14px;
       background: white;
-      font-size: 22px;
+      padding: 9px 12px;
+      color: #1e293b;
+      font-size: clamp(18px, 2vw, 22px);
       font-weight: 700;
       cursor: pointer;
       transition: 0.2s ease;
     }
 
+    .letter-card {
+      font-size: clamp(24px, 3vw, 32px);
+    }
+
+    .object-card {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .emoji {
+      font-size: clamp(24px, 3vw, 32px);
+    }
+
     .card:hover {
-      transform: translateY(-2px);
+      transform: translateY(-1px);
       border-color: #6366f1;
     }
 
@@ -99,39 +121,113 @@
     }
 
     .message {
-      min-height: 32px;
-      margin-top: 24px;
+      min-height: 28px;
+      margin-top: clamp(14px, 2vw, 20px);
       text-align: center;
-      font-size: 20px;
+      font-size: clamp(16px, 1.8vw, 20px);
       font-weight: 700;
     }
 
     .restart {
       display: none;
-      margin: 20px auto 0;
-      padding: 13px 24px;
+      margin: 14px auto 0;
       border: 0;
-      border-radius: 14px;
+      border-radius: 12px;
+      padding: 11px 22px;
       background: #4f46e5;
       color: white;
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 700;
       cursor: pointer;
     }
 
+    .restart:hover {
+      background: #4338ca;
+    }
+
+    /* Mobile */
     @media (max-width: 600px) {
       body {
-        padding: 12px;
+        padding: 10px;
       }
 
       .board {
-        gap: 10px;
+        gap: 8px;
+      }
+
+      .column {
+        gap: 8px;
       }
 
       .card {
-        min-height: 64px;
-        padding: 10px;
+        min-height: 58px;
+        padding: 8px 6px;
+        font-size: 16px;
+      }
+
+      .letter-card {
+        font-size: 25px;
+      }
+
+      .object-card {
+        gap: 5px;
+      }
+
+      .emoji {
+        font-size: 24px;
+      }
+    }
+
+    /* Laptop / TV / Smart Board */
+    @media (min-width: 700px) and (max-height: 850px) {
+      body {
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+
+      .game {
+        width: min(100%, 700px);
+      }
+
+      .header {
+        margin-bottom: 10px;
+      }
+
+      .header h1 {
+        font-size: 30px;
+      }
+
+      .header p {
+        font-size: 15px;
+      }
+
+      .score {
+        margin: 10px auto;
+        padding: 7px 16px;
+      }
+
+      .column {
+        gap: 8px;
+      }
+
+      .card {
+        min-height: 52px;
+        padding: 7px 10px;
         font-size: 18px;
+      }
+
+      .letter-card {
+        font-size: 25px;
+      }
+
+      .emoji {
+        font-size: 25px;
+      }
+
+      .message {
+        min-height: 24px;
+        margin-top: 12px;
+        font-size: 17px;
       }
     }
   </style>
@@ -142,51 +238,76 @@
   <main class="game">
 
     <div class="header">
-      <h1>🔤 ABC Match</h1>
-      <p>Match the capital letter with the correct small letter</p>
+      <h1>🔤 ABC Object Match</h1>
+      <p>Match each letter with the correct object</p>
     </div>
 
     <div class="score">
-      Score: <span id="score">0</span> / 5
+      Score:
+      <span id="score">0</span>
+      /
+      <span id="total">5</span>
     </div>
 
     <div class="board">
-
-      <div class="column" id="capitalLetters">
-        <button class="card" data-id="a">A</button>
-        <button class="card" data-id="b">B</button>
-        <button class="card" data-id="c">C</button>
-        <button class="card" data-id="d">D</button>
-        <button class="card" data-id="e">E</button>
-      </div>
-
-      <div class="column" id="smallLetters">
-        <button class="card" data-id="c">c</button>
-        <button class="card" data-id="a">a</button>
-        <button class="card" data-id="e">e</button>
-        <button class="card" data-id="b">b</button>
-        <button class="card" data-id="d">d</button>
-      </div>
-
+      <div class="column" id="letters"></div>
+      <div class="column" id="objects"></div>
     </div>
 
     <div class="message" id="message"></div>
 
-    <button class="restart" id="restart">
-      Play Again
+    <button
+      class="restart"
+      id="restart"
+      type="button"
+    >
+      🔄 Play New Game
     </button>
 
   </main>
 
   <script>
-    const capitalCards =
-      document.querySelectorAll("#capitalLetters .card");
+    /* ABC + Emoji + Object */
+    const allPairs = [
+      { letter: "A", emoji: "🍎", word: "Apple" },
+      { letter: "B", emoji: "⚽", word: "Ball" },
+      { letter: "C", emoji: "🐱", word: "Cat" },
+      { letter: "D", emoji: "🐶", word: "Dog" },
+      { letter: "E", emoji: "🐘", word: "Elephant" },
+      { letter: "F", emoji: "🐟", word: "Fish" },
+      { letter: "G", emoji: "🍇", word: "Grapes" },
+      { letter: "H", emoji: "🏠", word: "House" },
+      { letter: "I", emoji: "🍦", word: "Ice Cream" },
+      { letter: "J", emoji: "🧃", word: "Juice" },
+      { letter: "K", emoji: "🪁", word: "Kite" },
+      { letter: "L", emoji: "🦁", word: "Lion" },
+      { letter: "M", emoji: "🐒", word: "Monkey" },
+      { letter: "N", emoji: "🪺", word: "Nest" },
+      { letter: "O", emoji: "🍊", word: "Orange" },
+      { letter: "P", emoji: "🦜", word: "Parrot" },
+      { letter: "Q", emoji: "👸", word: "Queen" },
+      { letter: "R", emoji: "🐇", word: "Rabbit" },
+      { letter: "S", emoji: "☀️", word: "Sun" },
+      { letter: "T", emoji: "🐯", word: "Tiger" },
+      { letter: "U", emoji: "☂️", word: "Umbrella" },
+      { letter: "V", emoji: "🚐", word: "Van" },
+      { letter: "W", emoji: "⌚", word: "Watch" },
+      { letter: "X", emoji: "🎼", word: "Xylophone" },
+      { letter: "Y", emoji: "🪀", word: "Yo-Yo" },
+      { letter: "Z", emoji: "🦓", word: "Zebra" }
+    ];
 
-    const smallCards =
-      document.querySelectorAll("#smallLetters .card");
+    const lettersContainer =
+      document.getElementById("letters");
+
+    const objectsContainer =
+      document.getElementById("objects");
 
     const scoreElement =
       document.getElementById("score");
+
+    const totalElement =
+      document.getElementById("total");
 
     const messageElement =
       document.getElementById("message");
@@ -194,79 +315,177 @@
     const restartButton =
       document.getElementById("restart");
 
-    let selectedCapital = null;
+    const PAIRS_PER_GAME = 5;
+
+    let selectedLetter = null;
     let score = 0;
 
-    capitalCards.forEach((card) => {
-      card.addEventListener("click", () => {
-        if (card.classList.contains("correct")) return;
+    function shuffle(array) {
+      const newArray = [...array];
 
-        capitalCards.forEach((item) => {
-          if (!item.classList.contains("correct")) {
-            item.classList.remove("selected");
+      for (let i = newArray.length - 1; i > 0; i--) {
+        const randomIndex =
+          Math.floor(Math.random() * (i + 1));
+
+        [
+          newArray[i],
+          newArray[randomIndex]
+        ] = [
+          newArray[randomIndex],
+          newArray[i]
+        ];
+      }
+
+      return newArray;
+    }
+
+    function startGame() {
+      score = 0;
+      selectedLetter = null;
+
+      scoreElement.textContent = "0";
+      totalElement.textContent = PAIRS_PER_GAME;
+
+      messageElement.textContent = "";
+      restartButton.style.display = "none";
+
+      lettersContainer.innerHTML = "";
+      objectsContainer.innerHTML = "";
+
+      /* Select random 5 letters */
+      const selectedPairs =
+        shuffle(allPairs).slice(0, PAIRS_PER_GAME);
+
+      const gamePairs =
+        selectedPairs.map((pair, index) => ({
+          ...pair,
+          id: String(index)
+        }));
+
+      /* Letter cards */
+      gamePairs.forEach((pair) => {
+        const button =
+          document.createElement("button");
+
+        button.type = "button";
+        button.className = "card letter-card";
+        button.textContent = pair.letter;
+        button.dataset.id = pair.id;
+
+        lettersContainer.appendChild(button);
+      });
+
+      /* Shuffle object cards */
+      const shuffledObjects = shuffle(gamePairs);
+
+      shuffledObjects.forEach((pair) => {
+        const button =
+          document.createElement("button");
+
+        button.type = "button";
+        button.className = "card object-card";
+        button.dataset.id = pair.id;
+
+        button.innerHTML = `
+          <span class="emoji">${pair.emoji}</span>
+          <span>${pair.word}</span>
+        `;
+
+        objectsContainer.appendChild(button);
+      });
+
+      addGameEvents();
+    }
+
+    function addGameEvents() {
+      const letterCards =
+        document.querySelectorAll("#letters .card");
+
+      const objectCards =
+        document.querySelectorAll("#objects .card");
+
+      /* Select letter */
+      letterCards.forEach((card) => {
+        card.addEventListener("click", () => {
+          if (card.classList.contains("correct")) {
+            return;
+          }
+
+          letterCards.forEach((item) => {
+            if (!item.classList.contains("correct")) {
+              item.classList.remove("selected");
+            }
+          });
+
+          selectedLetter = card;
+          card.classList.add("selected");
+
+          messageElement.textContent =
+            "Now select the correct object";
+        });
+      });
+
+      /* Select object */
+      objectCards.forEach((card) => {
+        card.addEventListener("click", () => {
+          if (
+            !selectedLetter ||
+            card.classList.contains("correct")
+          ) {
+            return;
+          }
+
+          /* Correct */
+          if (
+            selectedLetter.dataset.id ===
+            card.dataset.id
+          ) {
+            selectedLetter.classList.remove("selected");
+            selectedLetter.classList.add("correct");
+
+            card.classList.add("correct");
+
+            score++;
+            scoreElement.textContent = score;
+
+            messageElement.textContent =
+              "✅ Correct!";
+
+            selectedLetter = null;
+
+            if (score === PAIRS_PER_GAME) {
+              messageElement.textContent =
+                "🎉 Excellent! You completed the game.";
+
+              restartButton.style.display = "block";
+            }
+          }
+
+          /* Wrong */
+          else {
+            const wrongLetter = selectedLetter;
+
+            wrongLetter.classList.add("wrong");
+            card.classList.add("wrong");
+
+            messageElement.textContent =
+              "❌ Try again";
+
+            setTimeout(() => {
+              wrongLetter.classList.remove("wrong");
+              card.classList.remove("wrong");
+            }, 500);
           }
         });
-
-        selectedCapital = card;
-        card.classList.add("selected");
-
-        messageElement.textContent =
-          "Now select the matching small letter";
       });
-    });
+    }
 
-    smallCards.forEach((card) => {
-      card.addEventListener("click", () => {
-        if (
-          !selectedCapital ||
-          card.classList.contains("correct")
-        ) {
-          return;
-        }
+    restartButton.addEventListener(
+      "click",
+      startGame
+    );
 
-        if (
-          selectedCapital.dataset.id ===
-          card.dataset.id
-        ) {
-          selectedCapital.classList.remove("selected");
-          selectedCapital.classList.add("correct");
-
-          card.classList.add("correct");
-
-          score++;
-          scoreElement.textContent = score;
-
-          messageElement.textContent =
-            "✅ Correct!";
-
-          selectedCapital = null;
-
-          if (score === 5) {
-            messageElement.textContent =
-              "🎉 Excellent! You completed the game.";
-
-            restartButton.style.display = "block";
-          }
-        } else {
-          const wrongCapital = selectedCapital;
-
-          wrongCapital.classList.add("wrong");
-          card.classList.add("wrong");
-
-          messageElement.textContent =
-            "❌ Try again";
-
-          setTimeout(() => {
-            wrongCapital.classList.remove("wrong");
-            card.classList.remove("wrong");
-          }, 500);
-        }
-      });
-    });
-
-    restartButton.addEventListener("click", () => {
-      location.reload();
-    });
+    startGame();
   </script>
 
 </body>

@@ -131,7 +131,13 @@ export const gameData = [
       {
         title: "ગુજરાતી",
         slug: "gujarati",
-        games: [],
+        games: [{
+  slug: "word-builder",
+  title: "3 અને 4 અક્ષરના શબ્દો બનાવો",
+  type: "Word Builder",
+  isActive: true,
+},],
+        
       },
       {
         title: "ગણિત",

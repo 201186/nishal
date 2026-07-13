@@ -12,32 +12,32 @@
       padding: 0;
     }
 
+    html,
     body {
-      min-height: 100vh;
-      padding: 24px 16px;
+      width: 100%;
+    }
+
+    body {
+      padding: clamp(10px, 2vw, 20px);
       font-family: Arial, "Noto Sans Gujarati", sans-serif;
       color: #1e293b;
-      background:
-        radial-gradient(circle at 10% 10%, #dbeafe 0, transparent 25%),
-        radial-gradient(circle at 90% 20%, #fce7f3 0, transparent 25%),
-        linear-gradient(135deg, #f8fafc, #eef2ff);
+     background: white;
     }
 
     .game {
-      width: 100%;
-      max-width: 850px;
-      margin: auto;
+      width: min(100%, 760px);
+      margin: 0 auto;
     }
 
     .top {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
 
     .badge {
       display: inline-block;
       padding: 7px 14px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       border-radius: 999px;
       background: #ede9fe;
       color: #6d28d9;
@@ -46,91 +46,86 @@
     }
 
     h1 {
-      font-size: clamp(28px, 5vw, 42px);
+      font-size: clamp(27px, 3vw, 38px);
       color: #0f172a;
     }
 
     .subtitle {
-      margin-top: 8px;
+      margin-top: 7px;
       color: #64748b;
-      font-size: 17px;
+      font-size: clamp(14px, 1.5vw, 17px);
     }
 
     .status-bar {
       display: flex;
       justify-content: center;
-      gap: 12px;
-      margin: 22px 0;
+      gap: 10px;
+      margin: 16px 0;
       flex-wrap: wrap;
     }
 
     .status {
-      min-width: 130px;
-      padding: 11px 18px;
+      min-width: 125px;
+      padding: 9px 16px;
       text-align: center;
       border: 1px solid #e2e8f0;
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.9);
+      border-radius: 14px;
+      background: white;
       font-weight: 700;
-      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
     }
 
     .board {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 18px;
+      gap: clamp(8px, 2vw, 16px);
     }
 
     .column {
       display: flex;
       flex-direction: column;
-      gap: 13px;
+      gap: 9px;
     }
 
     .column-title {
+      margin-bottom: 2px;
       text-align: center;
       color: #64748b;
       font-size: 14px;
       font-weight: 700;
-      margin-bottom: 2px;
     }
 
     .card {
-      min-height: 76px;
       width: 100%;
-      padding: 14px;
-      border: 2px solid transparent;
-      border-radius: 20px;
+      min-height: clamp(54px, 7vh, 66px);
+      padding: 9px 12px;
+      border: 2px solid #e2e8f0;
+      border-radius: 14px;
       background: white;
       color: #1e293b;
-      font-size: 23px;
+      font-size: clamp(17px, 2vw, 21px);
       font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 7px 20px rgba(15, 23, 42, 0.07);
-      transition:
-        transform 0.18s ease,
-        border-color 0.18s ease,
-        background 0.18s ease;
+      transition: 0.18s ease;
     }
 
     .card:hover {
-      transform: translateY(-3px);
+      transform: translateY(-1px);
       border-color: #818cf8;
     }
 
     .letter-card {
-      font-size: 30px;
-      background: linear-gradient(135deg, #ffffff, #eef2ff);
+      font-size: clamp(25px, 3vw, 31px);
+      background: #f8faff;
     }
 
     .word-card {
-      background: linear-gradient(135deg, #ffffff, #fdf2f8);
+      background: #fff;
     }
 
     .card.selected {
       border-color: #6366f1;
-      background: #e0e7ff;
-      transform: scale(1.03);
+      background: #eef2ff;
     }
 
     .card.correct {
@@ -138,7 +133,6 @@
       background: #dcfce7;
       color: #166534;
       cursor: default;
-      box-shadow: none;
     }
 
     .card.wrong {
@@ -148,60 +142,121 @@
     }
 
     .message {
-      min-height: 36px;
-      margin-top: 24px;
+      min-height: 28px;
+      margin-top: 16px;
       text-align: center;
-      font-size: 20px;
+      font-size: clamp(16px, 1.8vw, 19px);
       font-weight: 700;
     }
 
     .restart {
       display: none;
-      margin: 18px auto 0;
-      padding: 14px 28px;
+      margin: 14px auto 0;
+      padding: 11px 22px;
       border: 0;
-      border-radius: 16px;
-      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      border-radius: 12px;
+      background: #4f46e5;
       color: white;
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 10px 25px rgba(79, 70, 229, 0.25);
     }
 
     .restart:hover {
-      transform: translateY(-2px);
+      background: #4338ca;
     }
 
     @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-6px); }
-      75% { transform: translateX(6px); }
+      0%, 100% {
+        transform: translateX(0);
+      }
+
+      25% {
+        transform: translateX(-5px);
+      }
+
+      75% {
+        transform: translateX(5px);
+      }
     }
 
     @media (max-width: 600px) {
       body {
-        padding: 16px 10px;
+        padding: 10px;
+      }
+
+      .status-bar {
+        margin: 12px 0;
+      }
+
+      .status {
+        min-width: 105px;
+        padding: 8px 10px;
+        font-size: 14px;
       }
 
       .board {
-        gap: 9px;
+        gap: 7px;
+      }
+
+      .column {
+        gap: 7px;
       }
 
       .card {
-        min-height: 66px;
-        padding: 9px;
-        border-radius: 15px;
-        font-size: 17px;
+        min-height: 56px;
+        padding: 7px 5px;
+        font-size: 16px;
+      }
+
+      .letter-card {
+        font-size: 24px;
+      }
+    }
+
+    @media (min-width: 700px) and (max-height: 850px) {
+      body {
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+
+      .game {
+        width: min(100%, 700px);
+      }
+
+      .top {
+        margin-bottom: 10px;
+      }
+
+      h1 {
+        font-size: 30px;
+      }
+
+      .subtitle {
+        font-size: 15px;
+      }
+
+      .status-bar {
+        margin: 10px 0;
+      }
+
+      .column {
+        gap: 7px;
+      }
+
+      .card {
+        min-height: 50px;
+        padding: 7px 10px;
+        font-size: 18px;
       }
 
       .letter-card {
         font-size: 25px;
       }
 
-      .status {
-        min-width: 110px;
-        padding: 9px 12px;
+      .message {
+        margin-top: 11px;
+        font-size: 17px;
       }
     }
   </style>
@@ -212,43 +267,47 @@
   <main class="game">
 
     <header class="top">
-      <div class="badge">ધોરણ 2 • ગુજરાતી</div>
+      <div class="badge">
+        ધોરણ 2 • ગુજરાતી
+      </div>
+
       <h1>🎯 અક્ષર અને શબ્દ જોડો</h1>
+
       <p class="subtitle">
         અક્ષર પસંદ કરો અને તે અક્ષરથી શરૂ થતો સાચો શબ્દ શોધો
       </p>
     </header>
 
     <div class="status-bar">
+
       <div class="status">
-        ⭐ સ્કોર: <span id="score">0</span> / 5
+        ⭐ સ્કોર:
+        <span id="score">0</span> / 5
       </div>
 
       <div class="status">
-        🎯 બાકી: <span id="remaining">5</span>
+        🎯 બાકી:
+        <span id="remaining">5</span>
       </div>
+
     </div>
 
     <section class="board">
 
-      <div class="column" id="letters">
-        <div class="column-title">અક્ષર પસંદ કરો</div>
+      <div class="column">
+        <div class="column-title">
+          અક્ષર પસંદ કરો
+        </div>
 
-        <button class="card letter-card" data-id="ch">ચ</button>
-        <button class="card letter-card" data-id="j">જ</button>
-        <button class="card letter-card" data-id="p">પ</button>
-        <button class="card letter-card" data-id="v">વ</button>
-        <button class="card letter-card" data-id="s">સ</button>
+        <div class="column" id="letters"></div>
       </div>
 
-      <div class="column" id="words">
-        <div class="column-title">સાચો શબ્દ પસંદ કરો</div>
+      <div class="column">
+        <div class="column-title">
+          સાચો શબ્દ પસંદ કરો
+        </div>
 
-        <button class="card word-card" data-id="v">વાંદરો 🐒</button>
-        <button class="card word-card" data-id="p">પતંગ 🪁</button>
-        <button class="card word-card" data-id="s">સસલું 🐇</button>
-        <button class="card word-card" data-id="ch">ચકલી 🐦</button>
-        <button class="card word-card" data-id="j">જહાજ 🚢</button>
+        <div class="column" id="words"></div>
       </div>
 
     </section>
@@ -257,90 +316,339 @@
       👆 પહેલા એક અક્ષર પસંદ કરો
     </div>
 
-    <button class="restart" id="restart">
-      🔄 ફરી રમો
+    <button
+      class="restart"
+      id="restart"
+      type="button"
+    >
+      🔄 ફરી રમત રમો .
     </button>
 
   </main>
 
   <script>
-    const letterCards = document.querySelectorAll("#letters .card");
-    const wordCards = document.querySelectorAll("#words .card");
+    const allPairs = [
+      { letter: "ક", word: "કમળ", emoji: "🪷" },
+      { letter: "ક", word: "કબૂતર", emoji: "🕊️" },
 
-    const scoreElement = document.getElementById("score");
-    const remainingElement = document.getElementById("remaining");
-    const messageElement = document.getElementById("message");
-    const restartButton = document.getElementById("restart");
+      { letter: "ખ", word: "ખિસકોલી", emoji: "🐿️" },
+
+      { letter: "ગ", word: "ગાય", emoji: "🐄" },
+      { letter: "ગ", word: "ગાજર", emoji: "🥕" },
+
+      { letter: "ઘ", word: "ઘર", emoji: "🏠" },
+      { letter: "ઘ", word: "ઘડિયાળ", emoji: "🕒" },
+
+      { letter: "ચ", word: "ચકલી", emoji: "🐦" },
+      { letter: "ચ", word: "ચમચી", emoji: "🥄" },
+
+      { letter: "છ", word: "છત્રી", emoji: "☂️" },
+
+      { letter: "જ", word: "જહાજ", emoji: "🚢" },
+      { letter: "જ", word: "જામફળ", emoji: "🍈" },
+
+      { letter: "ઝ", word: "ઝરણું", emoji: "💦" },
+
+      { letter: "ટ", word: "ટમેટું", emoji: "🍅" },
+      { letter: "ટ", word: "ટોપી", emoji: "🧢" },
+
+      { letter: "ઠ", word: "ઠેલો", emoji: "🛒" },
+
+      { letter: "ડ", word: "ડમરુ", emoji: "🥁" },
+      { letter: "ડ", word: "ડાળી", emoji: "🌿" },
+
+      { letter: "ઢ", word: "ઢોલ", emoji: "🥁" },
+
+      { letter: "ત", word: "તલવાર", emoji: "⚔️" },
+      { letter: "ત", word: "તરબૂચ", emoji: "🍉" },
+
+      { letter: "થ", word: "થાળી", emoji: "🍽️" },
+
+      { letter: "દ", word: "દડો", emoji: "⚽" },
+      { letter: "દ", word: "દરવાજો", emoji: "🚪" },
+
+      { letter: "ધ", word: "ધનુષ", emoji: "🏹" },
+
+      { letter: "ન", word: "નળ", emoji: "🚰" },
+      { letter: "ન", word: "નાળિયેર", emoji: "🥥" },
+
+      { letter: "પ", word: "પતંગ", emoji: "🪁" },
+      { letter: "પ", word: "પતંગિયું", emoji: "🦋" },
+
+      { letter: "ફ", word: "ફળ", emoji: "🍎" },
+      { letter: "ફ", word: "ફુગ્ગો", emoji: "🎈" },
+
+      { letter: "બ", word: "બકરી", emoji: "🐐" },
+      { letter: "બ", word: "બતક", emoji: "🦆" },
+
+      { letter: "ભ", word: "ભમરો", emoji: "🐝" },
+
+      { letter: "મ", word: "મગર", emoji: "🐊" },
+      { letter: "મ", word: "મકાઈ", emoji: "🌽" },
+
+      { letter: "ર", word: "રથ", emoji: "🛞" },
+      { letter: "ર", word: "રમકડું", emoji: "🧸" },
+
+      { letter: "લ", word: "લીંબુ", emoji: "🍋" },
+      { letter: "લ", word: "લસણ", emoji: "🧄" },
+
+      { letter: "વ", word: "વાઘ", emoji: "🐅" },
+      { letter: "વ", word: "વાંદરો", emoji: "🐒" },
+
+      { letter: "શ", word: "શેરડી", emoji: "🎋" },
+      { letter: "શ", word: "શાક", emoji: "🥬" },
+
+      { letter: "સ", word: "સસલું", emoji: "🐇" },
+      { letter: "સ", word: "સફરજન", emoji: "🍎" },
+
+      { letter: "હ", word: "હરણ", emoji: "🦌" },
+      { letter: "હ", word: "હાથી", emoji: "🐘" },
+
+      { letter: "મ", word: "માછલી", emoji: "🐟" },
+      { letter: "પ", word: "પોપટ", emoji: "🦜" }
+    ];
+
+    const lettersContainer =
+      document.getElementById("letters");
+
+    const wordsContainer =
+      document.getElementById("words");
+
+    const scoreElement =
+      document.getElementById("score");
+
+    const remainingElement =
+      document.getElementById("remaining");
+
+    const messageElement =
+      document.getElementById("message");
+
+    const restartButton =
+      document.getElementById("restart");
+
+    const PAIRS_PER_GAME = 5;
 
     let selectedLetter = null;
     let score = 0;
-    const total = 5;
 
-    letterCards.forEach((card) => {
-      card.addEventListener("click", () => {
-        if (card.classList.contains("correct")) return;
+    function shuffle(array) {
+      const newArray = [...array];
 
-        letterCards.forEach((item) => {
-          if (!item.classList.contains("correct")) {
-            item.classList.remove("selected");
-          }
-        });
+      for (let i = newArray.length - 1; i > 0; i--) {
+        const randomIndex =
+          Math.floor(Math.random() * (i + 1));
 
-        selectedLetter = card;
-        card.classList.add("selected");
+        [
+          newArray[i],
+          newArray[randomIndex]
+        ] = [
+          newArray[randomIndex],
+          newArray[i]
+        ];
+      }
 
-        messageElement.textContent =
-          "✨ હવે સાચો શબ્દ પસંદ કરો";
-      });
-    });
+      return newArray;
+    }
 
-    wordCards.forEach((card) => {
-      card.addEventListener("click", () => {
-        if (!selectedLetter || card.classList.contains("correct")) {
-          return;
+    /*
+      એક gameમાં એક જ અક્ષર repeat ન થાય
+    */
+    function getUniqueRandomPairs() {
+      const shuffledPairs = shuffle(allPairs);
+      const selectedPairs = [];
+      const usedLetters = new Set();
+
+      for (const pair of shuffledPairs) {
+        if (!usedLetters.has(pair.letter)) {
+          selectedPairs.push(pair);
+          usedLetters.add(pair.letter);
         }
 
-        if (selectedLetter.dataset.id === card.dataset.id) {
-          selectedLetter.classList.remove("selected");
-          selectedLetter.classList.add("correct");
-          card.classList.add("correct");
+        if (selectedPairs.length === PAIRS_PER_GAME) {
+          break;
+        }
+      }
 
-          score++;
+      return selectedPairs;
+    }
 
-          scoreElement.textContent = score;
-          remainingElement.textContent = total - score;
+    function startGame() {
+      score = 0;
+      selectedLetter = null;
 
-          selectedLetter = null;
+      scoreElement.textContent = "0";
+      remainingElement.textContent =
+        PAIRS_PER_GAME;
 
-          if (score === total) {
-            messageElement.textContent =
-              "🎉 શાબાશ! તમે બધા સાચા જોડકાં શોધી લીધાં!";
+      messageElement.textContent =
+        "👆 પહેલા એક અક્ષર પસંદ કરો";
 
-            restartButton.style.display = "block";
-          } else {
-            messageElement.textContent =
-              "✅ ખૂબ સરસ! હવે આગળનું જોડકું શોધો";
+      restartButton.style.display = "none";
+
+      lettersContainer.innerHTML = "";
+      wordsContainer.innerHTML = "";
+
+      const selectedPairs =
+        getUniqueRandomPairs();
+
+      const gamePairs =
+        selectedPairs.map((pair, index) => ({
+          ...pair,
+          id: String(index)
+        }));
+
+      /*
+        અક્ષરો પણ random orderમાં
+      */
+      shuffle(gamePairs).forEach((pair) => {
+        const button =
+          document.createElement("button");
+
+        button.type = "button";
+        button.className =
+          "card letter-card";
+
+        button.textContent =
+          pair.letter;
+
+        button.dataset.id =
+          pair.id;
+
+        lettersContainer.appendChild(button);
+      });
+
+      /*
+        શબ્દો અલગ random orderમાં
+      */
+      shuffle(gamePairs).forEach((pair) => {
+        const button =
+          document.createElement("button");
+
+        button.type = "button";
+        button.className =
+          "card word-card";
+
+        button.textContent =
+          `${pair.word} ${pair.emoji}`;
+
+        button.dataset.id =
+          pair.id;
+
+        wordsContainer.appendChild(button);
+      });
+
+      addGameEvents();
+    }
+
+    function addGameEvents() {
+      const letterCards =
+        document.querySelectorAll(
+          "#letters .card"
+        );
+
+      const wordCards =
+        document.querySelectorAll(
+          "#words .card"
+        );
+
+      letterCards.forEach((card) => {
+        card.addEventListener("click", () => {
+          if (
+            card.classList.contains("correct")
+          ) {
+            return;
           }
-        } else {
-          const wrongLetter = selectedLetter;
 
-          wrongLetter.classList.add("wrong");
-          card.classList.add("wrong");
+          letterCards.forEach((item) => {
+            if (
+              !item.classList.contains("correct")
+            ) {
+              item.classList.remove("selected");
+            }
+          });
+
+          selectedLetter = card;
+
+          card.classList.add("selected");
 
           messageElement.textContent =
-            "❌ આ જોડકું સાચું નથી. ફરી પ્રયત્ન કરો";
-
-          setTimeout(() => {
-            wrongLetter.classList.remove("wrong");
-            card.classList.remove("wrong");
-          }, 450);
-        }
+            "✨ હવે સાચો શબ્દ પસંદ કરો";
+        });
       });
-    });
 
-    restartButton.addEventListener("click", () => {
-      location.reload();
-    });
+      wordCards.forEach((card) => {
+        card.addEventListener("click", () => {
+          if (
+            !selectedLetter ||
+            card.classList.contains("correct")
+          ) {
+            return;
+          }
+
+          if (
+            selectedLetter.dataset.id ===
+            card.dataset.id
+          ) {
+            selectedLetter.classList.remove(
+              "selected"
+            );
+
+            selectedLetter.classList.add(
+              "correct"
+            );
+
+            card.classList.add("correct");
+
+            score++;
+
+            scoreElement.textContent = score;
+
+            remainingElement.textContent =
+              PAIRS_PER_GAME - score;
+
+            selectedLetter = null;
+
+            if (score === PAIRS_PER_GAME) {
+              messageElement.textContent =
+                "🎉 શાબાશ! તમે બધા સાચા જોડકાં શોધી લીધાં!";
+
+              restartButton.style.display =
+                "block";
+            } else {
+              messageElement.textContent =
+                "✅ ખૂબ સરસ! હવે આગળનું જોડકું શોધો";
+            }
+          } else {
+            const wrongLetter =
+              selectedLetter;
+
+            wrongLetter.classList.add("wrong");
+
+            card.classList.add("wrong");
+
+            messageElement.textContent =
+              "❌ આ જોડકું સાચું નથી. ફરી પ્રયત્ન કરો";
+
+            setTimeout(() => {
+              wrongLetter.classList.remove(
+                "wrong"
+              );
+
+              card.classList.remove(
+                "wrong"
+              );
+            }, 450);
+          }
+        });
+      });
+    }
+
+    restartButton.addEventListener(
+      "click",
+      startGame
+    );
+
+    startGame();
   </script>
 
 </body>

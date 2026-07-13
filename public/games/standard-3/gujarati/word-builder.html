@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>3 અને 4 અક્ષરના શબ્દો બનાવો</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+    }
+
+   body {
+  padding: clamp(10px, 2vw, 20px);
+  font-family: Arial, "Noto Sans Gujarati", sans-serif;
+  color: #1e293b;
+  background: white;
+}
+
+    .game {
+      width: min(100%, 760px);
+      margin: 0 auto;
+    }
+
+    .top {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .badge {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: #ede9fe;
+      color: #6d28d9;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    h1 {
+      font-size: clamp(27px, 3vw, 38px);
+      color: #0f172a;
+    }
+
+    .subtitle {
+      margin-top: 7px;
+      color: #64748b;
+      font-size: clamp(14px, 1.5vw, 17px);
+    }
+
+    .status-bar {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 16px 0;
+      flex-wrap: wrap;
+    }
+
+    .status {
+      min-width: 120px;
+      padding: 9px 16px;
+      text-align: center;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      background: white;
+      font-weight: 700;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+    }
+
+   .game-card {
+  width: 100%;
+  padding: 0;
+}
+
+    .instruction {
+      text-align: center;
+      color: #64748b;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .answer-area {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  min-height: 72px;
+  margin-top: 20px;
+  padding: 10px;
+  border: 2px dashed #cbd5e1;
+  border-radius: 14px;
+  background: #f8fafc;
+  flex-wrap: wrap;
+}
+
+    .answer-letter {
+      display: flex;
+      min-width: 56px;
+      min-height: 52px;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 14px;
+      border: 2px solid #818cf8;
+      border-radius: 12px;
+      background: #eef2ff;
+      color: #3730a3;
+      font-size: 25px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .letters {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+
+    .letter-button {
+      min-width: 62px;
+      min-height: 58px;
+      padding: 10px 16px;
+      border: 2px solid #e2e8f0;
+      border-radius: 14px;
+      background: white;
+      color: #1e293b;
+      font-size: 26px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.18s ease;
+    }
+
+    .letter-button:hover {
+      border-color: #6366f1;
+      background: #f8faff;
+      transform: translateY(-1px);
+    }
+
+    .letter-button.used {
+      opacity: 0.25;
+      pointer-events: none;
+    }
+
+    .message {
+      min-height: 30px;
+      margin-top: 20px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    .button {
+      border: 0;
+      border-radius: 12px;
+      padding: 11px 20px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .clear-button {
+      background: #e2e8f0;
+      color: #334155;
+    }
+
+    .check-button {
+      background: #4f46e5;
+      color: white;
+    }
+
+    .next-button {
+      display: none;
+      background: #16a34a;
+      color: white;
+    }
+
+    .restart-button {
+      display: none;
+      margin: 18px auto 0;
+      background: #4f46e5;
+      color: white;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      .status {
+        min-width: 105px;
+        padding: 8px 10px;
+        font-size: 14px;
+      }
+
+      .game-card {
+        padding: 16px 10px;
+      }
+
+      .letter-button {
+        min-width: 54px;
+        min-height: 54px;
+        padding: 8px 12px;
+        font-size: 23px;
+      }
+
+      .answer-letter {
+        min-width: 50px;
+        min-height: 48px;
+        font-size: 22px;
+      }
+    }
+
+    @media (min-width: 700px) and (max-height: 850px) {
+      body {
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+
+      .game {
+        width: min(100%, 700px);
+      }
+
+      h1 {
+        font-size: 30px;
+      }
+
+      .status-bar {
+        margin: 10px 0;
+      }
+
+      .game-card {
+        padding: 18px;
+      }
+
+      .answer-area {
+        margin-top: 14px;
+      }
+
+      .letters {
+        margin-top: 16px;
+      }
+
+      .message {
+        margin-top: 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="game">
+
+    <header class="top">
+      <div class="badge">
+        ધોરણ 3 • ગુજરાતી
+      </div>
+
+      <h1>અક્ષરો ગોઠવી શબ્દ બનાવો</h1>
+
+      <p class="subtitle">
+        આપેલા અક્ષરોને સાચા ક્રમમાં ગોઠવી 3 અને 4 અક્ષરના શબ્દો બનાવો
+      </p>
+    </header>
+
+    <div class="status-bar">
+      <div class="status">
+        પ્રશ્ન:
+        <span id="questionNumber">1</span> / 10
+      </div>
+
+      <div class="status">
+        સ્કોર:
+        <span id="score">0</span> / 10
+      </div>
+    </div>
+
+    <section class="game-card">
+
+      <p class="instruction">
+        નીચેના અક્ષરો પસંદ કરીને સાચો શબ્દ બનાવો
+      </p>
+
+      <div
+        class="answer-area"
+        id="answerArea"
+      ></div>
+
+      <div
+        class="letters"
+        id="letters"
+      ></div>
+
+      <div
+        class="message"
+        id="message"
+      >
+        અક્ષરો પસંદ કરો
+      </div>
+
+      <div class="actions">
+
+        <button
+          class="button clear-button"
+          id="clearButton"
+          type="button"
+        >
+          ફરી ગોઠવો
+        </button>
+
+        <button
+          class="button check-button"
+          id="checkButton"
+          type="button"
+        >
+          જવાબ તપાસો
+        </button>
+
+        <button
+          class="button next-button"
+          id="nextButton"
+          type="button"
+        >
+          આગળનો શબ્દ →
+        </button>
+
+      </div>
+
+    </section>
+
+    <button
+      class="button restart-button"
+      id="restartButton"
+      type="button"
+    >
+      નવી રમત રમો
+    </button>
+
+  </main>
+
+  <script>
+    /*
+      100 શબ્દો
+      parts માં શબ્દના અક્ષર-ભાગ અલગ આપેલા છે.
+    */
+
+    const wordBank = [
+      { word: "કમળ", parts: [ "મ", "ક","ળ"] },
+      { word: "નગર", parts: ["ન", "ગ", "ર"] },
+      { word: "મગર", parts: ["મ", "ર","ગ",] },
+      { word: "કલમ", parts: ["લ","ક",  "મ"] },
+      { word: "પવન", parts: ["પ",  "ન","વ",] },
+      { word: "ભવન", parts: [ "વ", "ન","ભ",] },
+      { word: "વજન", parts: ["વ", "જ", "ન"] },
+      { word: "નયન", parts: ["ન", "ય", "ન"] },
+      { word: "ચરણ", parts: ["ચ", "ર", "ણ"] },
+      { word: "શરણ", parts: ["શ", "ર", "ણ"] },
+
+      { word: "ગગન", parts: ["ગ", "ગ", "ન"] },
+      { word: "મદન", parts: ["મ", "દ", "ન"] },
+      { word: "રમત", parts: ["ર", "મ", "ત"] },
+      { word: "જગત", parts: ["જ", "ગ", "ત"] },
+      { word: "સમય", parts: ["સ", "મ", "ય"] },
+      { word: "સફળ", parts: ["સ", "ફ", "ળ"] },
+      { word: "સરળ", parts: ["સ", "ર", "ળ"] },
+      { word: "ગરમ", parts: ["ગ", "ર", "મ"] },
+      { word: "નરમ", parts: ["ન", "ર", "મ"] },
+      { word: "મહેલ", parts: ["મ", "હે", "લ"] },
+
+      { word: "કબૂતર", parts: ["ક", "બૂ", "ત", "ર"] },
+      { word: "અજગર", parts: ["અ", "જ", "ગ", "ર"] },
+      { word: "અનાજ", parts: ["અ", "ના", "જ"] },
+      { word: "અનાર", parts: ["અ", "ના", "ર"] },
+      { word: "આકાશ", parts: ["આ", "કા", "શ"] },
+      { word: "આહાર", parts: ["આ", "હા", "ર"] },
+      { word: "ઇમારત", parts: ["ઇ", "મા", "ર", "ત"] },
+      { word: "ઉપવન", parts: ["ઉ", "પ", "વ", "ન"] },
+      { word: "ઉજાસ", parts: ["ઉ", "જા", "સ"] },
+      { word: "કાગળ", parts: ["કા", "ગ", "ળ"] },
+
+      { word: "કાજળ", parts: ["કા", "જ", "ળ"] },
+      { word: "કાનન", parts: ["કા", "ન", "ન"] },
+      { word: "કપાટ", parts: ["ક", "પા", "ટ"] },
+      { word: "કપાસ", parts: ["ક", "પા", "સ"] },
+      { word: "કસરત", parts: ["ક", "સ", "ર", "ત"] },
+      { word: "કરવત", parts: ["ક", "ર", "વ", "ત"] },
+      { word: "ખબર", parts: ["ખ", "બ", "ર"] },
+      { word: "ખલાસ", parts: ["ખ", "લા", "સ"] },
+      { word: "ગણિત", parts: ["ગ", "ણિ", "ત"] },
+      { word: "ગુલાબ", parts: ["ગુ", "લા", "બ"] },
+
+      { word: "ચમક", parts: ["ચ", "મ", "ક"] },
+      { word: "ચમચી", parts: ["ચ", "મ", "ચી"] },
+      { word: "ચાદર", parts: ["ચા", "દ", "ર"] },
+      { word: "ચિત્ર", parts: ["ચિ", "ત્ર"] },
+      { word: "જગ્યા", parts: ["જ", "ગ્યા"] },
+      { word: "જવાબ", parts: ["જ", "વા", "બ"] },
+      { word: "જલસા", parts: ["જ", "લ", "સા"] },
+      { word: "જાદુ", parts: ["જા", "દુ"] },
+      { word: "ઝરણું", parts: ["ઝ", "ર", "ણું"] },
+      { word: "ટપાલ", parts: ["ટ", "પા", "લ"] },
+
+      { word: "ટમેટું", parts: ["ટ", "મે", "ટું"] },
+      { word: "ડગર", parts: ["ડ", "ગ", "ર"] },
+      { word: "ડમરુ", parts: ["ડ", "મ", "રુ"] },
+      { word: "તપન", parts: ["ત", "પ", "ન"] },
+      { word: "તરસ", parts: ["ત", "ર", "સ"] },
+      { word: "તરફ", parts: ["ત", "ર", "ફ"] },
+      { word: "તાકાત", parts: ["તા", "કા", "ત"] },
+      { word: "દફતર", parts: ["દ", "ફ", "ત", "ર"] },
+      { word: "દવા", parts: ["દ", "વા"] },
+      { word: "દુકાન", parts: ["દુ", "કા", "ન"] },
+
+      { word: "નકલ", parts: ["ન", "ક", "લ"] },
+      { word: "નજર", parts: ["ન", "જ", "ર"] },
+      { word: "નમન", parts: ["ન", "મ", "ન"] },
+      { word: "નિયમ", parts: ["નિ", "ય", "મ"] },
+      { word: "પગરખું", parts: ["પ", "ગ", "ર", "ખું"] },
+      { word: "પલક", parts: ["પ", "લ", "ક"] },
+      { word: "પલંગ", parts: ["પ", "લં", "ગ"] },
+      { word: "પહાડ", parts: ["પ", "હા", "ડ"] },
+      { word: "પાણી", parts: ["પા", "ણી"] },
+      { word: "પાયલ", parts: ["પા", "ય", "લ"] },
+
+      { word: "બતક", parts: ["બ", "ત", "ક"] },
+      { word: "બદલ", parts: ["બ", "દ", "લ"] },
+      { word: "બગીચો", parts: ["બ", "ગી", "ચો"] },
+      { word: "બહાદુર", parts: ["બ", "હા", "દુ", "ર"] },
+      { word: "બાજરી", parts: ["બા", "જ", "રી"] },
+      { word: "ભજન", parts: ["ભ", "જ", "ન"] },
+      { word: "ભમરો", parts: ["ભ", "મ", "રો"] },
+      { word: "મકાન", parts: ["મ", "કા", "ન"] },
+      { word: "મકાઈ", parts: ["મ", "કા", "ઈ"] },
+      { word: "મદદ", parts: ["મ", "દ", "દ"] },
+
+      { word: "મરજી", parts: ["મ", "ર", "જી"] },
+      { word: "મશાલ", parts: ["મ", "શા", "લ"] },
+      { word: "મહેનત", parts: ["મ", "હે", "ન", "ત"] },
+      { word: "રકમ", parts: ["ર", "ક", "મ"] },
+      { word: "રબર", parts: ["ર", "બ", "ર"] },
+      { word: "રતન", parts: ["ર", "ત", "ન"] },
+      { word: "લગન", parts: ["લ", "ગ", "ન"] },
+      { word: "લપસ", parts: ["લ", "પ", "સ"] },
+      { word: "વચન", parts: ["વ", "ચ", "ન"] },
+      { word: "વતન", parts: ["વ", "ત", "ન"] },
+
+      { word: "વરસાદ", parts: ["વ", "ર", "સા", "દ"] },
+      { word: "શરબત", parts: ["શ", "ર", "બ", "ત"] },
+      { word: "શાકભાજી", parts: ["શા", "ક", "ભા", "જી"] },
+      { word: "સફર", parts: ["સ", "ફ", "ર"] },
+      { word: "સવાર", parts: ["સ", "વા", "ર"] },
+      { word: "સમાચાર", parts: ["સ", "મા", "ચા", "ર"] },
+      { word: "હરખ", parts: ["હ", "ર", "ખ"] },
+      { word: "હલનચલન", parts: ["હ", "લ", "ન", "ચલન"] },
+      { word: "હિસાબ", parts: ["હિ", "સા", "બ"] },
+      { word: "હુકમ", parts: ["હુ", "ક", "મ"] }
+    ];
+
+    const QUESTIONS_PER_GAME = 10;
+
+    const lettersContainer =
+      document.getElementById("letters");
+
+    const answerArea =
+      document.getElementById("answerArea");
+
+    const questionNumberElement =
+      document.getElementById("questionNumber");
+
+    const scoreElement =
+      document.getElementById("score");
+
+    const messageElement =
+      document.getElementById("message");
+
+    const clearButton =
+      document.getElementById("clearButton");
+
+    const checkButton =
+      document.getElementById("checkButton");
+
+    const nextButton =
+      document.getElementById("nextButton");
+
+    const restartButton =
+      document.getElementById("restartButton");
+
+    let gameWords = [];
+    let currentQuestion = 0;
+    let score = 0;
+    let selectedParts = [];
+    let currentWord = null;
+
+    function shuffle(array) {
+      const newArray = [...array];
+
+      for (let i = newArray.length - 1; i > 0; i--) {
+        const randomIndex =
+          Math.floor(Math.random() * (i + 1));
+
+        [
+          newArray[i],
+          newArray[randomIndex]
+        ] = [
+          newArray[randomIndex],
+          newArray[i]
+        ];
+      }
+
+      return newArray;
+    }
+
+    function startGame() {
+      gameWords =
+        shuffle(wordBank).slice(
+          0,
+          QUESTIONS_PER_GAME
+        );
+
+      currentQuestion = 0;
+      score = 0;
+
+      scoreElement.textContent = "0";
+
+      restartButton.style.display = "none";
+
+      document.querySelector(
+        ".game-card"
+      ).style.display = "block";
+
+      loadQuestion();
+    }
+
+    function loadQuestion() {
+      currentWord =
+        gameWords[currentQuestion];
+
+      selectedParts = [];
+
+      questionNumberElement.textContent =
+        currentQuestion + 1;
+
+      messageElement.textContent =
+        "અક્ષરો પસંદ કરો";
+
+      nextButton.style.display = "none";
+      checkButton.style.display = "inline-block";
+      clearButton.style.display = "inline-block";
+
+      renderAnswer();
+      renderLetters();
+    }
+
+    function renderLetters() {
+      lettersContainer.innerHTML = "";
+
+      const shuffledParts =
+        shuffle(
+          currentWord.parts.map(
+            (part, index) => ({
+              part,
+              id: index
+            })
+          )
+        );
+
+      shuffledParts.forEach((item) => {
+        const button =
+          document.createElement("button");
+
+        button.type = "button";
+        button.className = "letter-button";
+        button.textContent = item.part;
+        button.dataset.id = item.id;
+
+        button.addEventListener(
+          "click",
+          () => selectPart(button, item)
+        );
+
+        lettersContainer.appendChild(button);
+      });
+    }
+
+    function selectPart(button, item) {
+      if (
+        button.classList.contains("used")
+      ) {
+        return;
+      }
+
+      button.classList.add("used");
+
+      selectedParts.push({
+        part: item.part,
+        id: item.id
+      });
+
+      renderAnswer();
+    }
+
+    function renderAnswer() {
+      answerArea.innerHTML = "";
+
+      selectedParts.forEach(
+        (item, index) => {
+          const button =
+            document.createElement("button");
+
+          button.type = "button";
+          button.className = "answer-letter";
+          button.textContent = item.part;
+
+          button.addEventListener(
+            "click",
+            () => removePart(index, item.id)
+          );
+
+          answerArea.appendChild(button);
+        }
+      );
+    }
+
+    function removePart(index, id) {
+      selectedParts.splice(index, 1);
+
+      const letterButton =
+        document.querySelector(
+          `.letter-button[data-id="${id}"]`
+        );
+
+      if (letterButton) {
+        letterButton.classList.remove("used");
+      }
+
+      renderAnswer();
+    }
+
+    function clearAnswer() {
+      selectedParts = [];
+
+      document
+        .querySelectorAll(".letter-button")
+        .forEach((button) => {
+          button.classList.remove("used");
+        });
+
+      renderAnswer();
+
+      messageElement.textContent =
+        "અક્ષરો ફરીથી ગોઠવો";
+    }
+
+    function checkAnswer() {
+      const userAnswer =
+        selectedParts
+          .map((item) => item.part)
+          .join("");
+
+      if (!userAnswer) {
+        messageElement.textContent =
+          "પહેલા અક્ષરો પસંદ કરો";
+        return;
+      }
+
+      if (userAnswer === currentWord.word) {
+        score++;
+
+        scoreElement.textContent = score;
+
+        messageElement.textContent =
+          `સાચો જવાબ! ${currentWord.word}`;
+
+        checkButton.style.display = "none";
+        clearButton.style.display = "none";
+        nextButton.style.display = "inline-block";
+      } else {
+        messageElement.textContent =
+          "જવાબ સાચો નથી. ફરી પ્રયત્ન કરો";
+      }
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+
+      if (
+        currentQuestion <
+        QUESTIONS_PER_GAME
+      ) {
+        loadQuestion();
+      } else {
+        finishGame();
+      }
+    }
+
+    function finishGame() {
+      document.querySelector(
+        ".game-card"
+      ).style.display = "none";
+
+      document.querySelector(
+        ".top .subtitle"
+      ).textContent =
+        `રમત પૂર્ણ! તમારો સ્કોર ${score} / ${QUESTIONS_PER_GAME}`;
+
+      restartButton.style.display = "block";
+    }
+
+    clearButton.addEventListener(
+      "click",
+      clearAnswer
+    );
+
+    checkButton.addEventListener(
+      "click",
+      checkAnswer
+    );
+
+    nextButton.addEventListener(
+      "click",
+      nextQuestion
+    );
+
+    restartButton.addEventListener(
+      "click",
+      () => {
+        document.querySelector(
+          ".top .subtitle"
+        ).textContent =
+          "આપેલા અક્ષરોને સાચા ક્રમમાં ગોઠવી 3 અને 4 અક્ષરના શબ્દો બનાવો";
+
+        startGame();
+      }
+    );
+
+    startGame();
+  </script>
+
+</body>
+</html>
