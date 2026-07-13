@@ -25,36 +25,56 @@ export default async function StandardPage({
 
   return (
     <MainLayout>
-      <section className="py-16">
-        <div className="mx-auto max-w-7xl px-4">
+      <section className="py-8 sm:py-10 lg:py-12">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
-          <h1 className="mb-2 text-4xl font-bold">
-            {standardData.title}
-          </h1>
+          {/* Header */}
+          <div className="mb-7 sm:mb-9">
+            <h1 className="text-3xl font-bold text-slate-900 sm:text-4xl">
+              {standardData.title}
+            </h1>
 
-          <p className="mb-10 text-slate-600">
-            Choose a subject to start playing.
-          </p>
+            <p className="mt-2 text-sm text-slate-600 sm:text-base">
+              Choose a subject to start playing.
+            </p>
+          </div>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {/* Subject Cards */}
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3 lg:gap-5">
             {standardData.subjects.map((subject) => (
               <Link
                 key={subject.slug}
                 href={`/games/${standardData.slug}/${subject.slug}`}
-                className="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-500 hover:shadow-lg"
+                className="
+                  group
+                  rounded-2xl
+                  border
+                  border-slate-200
+                  bg-white
+                  p-4
+                  shadow-sm
+                  transition-all
+                  duration-300
+                  hover:-translate-y-1
+                  hover:border-blue-500
+                  hover:shadow-lg
+                  sm:p-5
+                "
               >
-                <div className="text-5xl">📚</div>
+                <div className="text-3xl sm:text-4xl">
+                  📚
+                </div>
 
-                <h2 className="mt-4 text-xl font-bold text-slate-900">
+                <h2 className="mt-3 text-lg font-bold text-slate-900 sm:text-xl">
                   {subject.title}
                 </h2>
 
-                <p className="mt-2 text-slate-600">
+                <p className="mt-1.5 text-sm text-slate-600">
                   {subject.games.length} Games
                 </p>
 
-                <div className="mt-6 flex items-center justify-between">
-                  <span className="font-medium text-blue-600">
+                <div className="mt-4 flex items-center justify-between">
+                  <span className="text-sm font-semibold text-blue-600 sm:text-base">
                     Explore
                   </span>
 

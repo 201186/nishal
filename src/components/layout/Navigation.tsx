@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+
 import { navigation } from "@/data/navigation";
 import { cn } from "@/utils/cn";
 
@@ -9,16 +10,19 @@ export default function Navigation() {
   const pathname = usePathname();
 
   return (
-    <nav className="hidden lg:flex items-center gap-8">
+    <nav className="hidden min-w-0 items-center justify-center gap-4 xl:flex 2xl:gap-6">
       {navigation.map((item) => {
-        const active = pathname === item.href;
+        const active =
+          item.href === "/"
+            ? pathname === "/"
+            : pathname.startsWith(item.href);
 
         return (
           <Link
             key={item.href}
             href={item.href}
             className={cn(
-             "group relative text-sm font-medium transition-colors duration-300",
+              "group relative whitespace-nowrap text-[13px] font-semibold transition-colors duration-300 2xl:text-sm",
               active
                 ? "text-blue-600"
                 : "text-slate-600 hover:text-blue-600"

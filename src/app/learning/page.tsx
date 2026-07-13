@@ -55,22 +55,24 @@ const standardStyles = [
 export default function LearningPage() {
   return (
     <div className="min-h-screen bg-slate-50">
-      <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
-        <div className="mb-10 text-center">
-          <span className="inline-block rounded-full bg-violet-100 px-4 py-2 text-sm font-bold text-violet-700">
+      <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-12">
+        {/* Header */}
+        <div className="mb-7 text-center sm:mb-9">
+          <span className="inline-block rounded-full bg-violet-100 px-4 py-1.5 text-sm font-bold text-violet-700">
             📚 નિશાળ Learning
           </span>
 
-          <h1 className="mt-5 text-3xl font-black text-slate-900 sm:text-5xl">
+          <h1 className="mt-4 text-3xl font-black text-slate-900 sm:text-4xl">
             ધોરણ પસંદ કરો
           </h1>
 
-          <p className="mx-auto mt-4 max-w-2xl text-slate-600">
+          <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-slate-600 sm:text-base">
             ધોરણ 1 થી 8 માટે વિષયવાર શૈક્ષણિક સામગ્રી અને પ્રવૃત્તિઓ
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+        {/* Standard Cards */}
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4 lg:gap-5">
           {learningData.map((standard, index) => {
             const style = standardStyles[index];
 
@@ -78,23 +80,25 @@ export default function LearningPage() {
               <Link
                 key={standard.id}
                 href={`/learning/${standard.id}`}
-                className={`group rounded-3xl border p-6 text-center shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg ${style.card}`}
+                className={`group rounded-2xl border p-4 text-center shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg sm:p-5 ${style.card}`}
               >
                 <div
-                  className={`mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl text-3xl ${style.iconBg}`}
+                  className={`mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl text-2xl sm:h-14 sm:w-14 sm:text-3xl ${style.iconBg}`}
                 >
                   {style.icon}
                 </div>
 
-                <h2 className="text-xl font-black text-slate-800">
+                <h2 className="text-lg font-black text-slate-800 sm:text-xl">
                   {standard.name}
                 </h2>
 
-                <p className="mt-2 text-sm text-slate-500">
-                  વિષયો 
+                <p className="mt-1.5 text-xs text-slate-500 sm:text-sm">
+                  વિષયો
                 </p>
 
-                <div className={`mt-5 font-bold ${style.text}`}>
+                <div
+                  className={`mt-3 text-sm font-bold sm:mt-4 ${style.text}`}
+                >
                   શીખવાનું શરૂ કરો →
                 </div>
               </Link>

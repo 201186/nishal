@@ -4,31 +4,34 @@ import { Search } from "lucide-react";
 
 export default function SearchBar() {
   return (
-    <div className="relative hidden lg:block">
+    <div className="relative hidden xl:block">
       <Search
-        className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-        size={18}
+        className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
+        size={17}
       />
 
       <input
         type="text"
-        placeholder="Search notes, MCQ, PDFs..."
+        placeholder="Search..."
         className="
-          h-11
-          w-72
+          h-10
+          w-44
           rounded-full
           border
           border-slate-200
           bg-white
-          pl-11
+          pl-10
           pr-4
           text-sm
           outline-none
           transition-all
           duration-300
+          focus:w-56
           focus:border-blue-500
           focus:ring-4
           focus:ring-blue-100
+          2xl:w-64
+          2xl:focus:w-72
         "
       />
     </div>

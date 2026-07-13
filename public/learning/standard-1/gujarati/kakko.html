@@ -307,6 +307,157 @@
         grid-template-columns: 1fr;
       }
     }
+    /* Normal desktop */
+@media (min-width: 900px) {
+  .page {
+    max-width: 1100px;
+  }
+
+  .hero {
+    padding: 28px 24px;
+  }
+
+  h1 {
+    margin-top: 18px;
+    font-size: 38px;
+  }
+
+  .hero p {
+    font-size: 16px;
+  }
+
+  main {
+    padding: 22px;
+  }
+
+  .guide {
+    margin-bottom: 22px;
+    padding: 14px 18px;
+    font-size: 16px;
+  }
+
+  .section-title {
+    margin: 24px 0 14px;
+    font-size: 24px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+  }
+
+  .card,
+  .only-letter {
+    min-height: 150px;
+    padding: 12px 8px;
+  }
+
+  .symbol {
+    font-size: 34px;
+  }
+
+  .letter {
+    font-size: 38px;
+  }
+
+  .word {
+    margin-top: 6px;
+    font-size: 15px;
+  }
+
+  .reading {
+    margin-top: 28px;
+    padding: 20px;
+  }
+
+  .reading-box {
+    padding: 16px;
+    font-size: 16px;
+    line-height: 2;
+  }
+
+  .practice {
+    padding: 20px;
+  }
+
+  .task {
+    padding: 14px;
+    font-size: 16px;
+  }
+}
+
+/* Short-height laptop / TV / Smart Board */
+@media (min-width: 900px) and (max-height: 850px) {
+  .page {
+    max-width: 1050px;
+  }
+
+  .hero {
+    padding: 20px 24px;
+  }
+
+  .brand {
+    font-size: 20px;
+  }
+
+  .pill {
+    padding: 7px 13px;
+    font-size: 14px;
+  }
+
+  h1 {
+    margin: 14px 0 5px;
+    font-size: 32px;
+  }
+
+  .hero p {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  main {
+    padding: 18px 22px;
+  }
+
+  .guide {
+    margin-bottom: 18px;
+    padding: 12px 16px;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .section-title {
+    margin: 20px 0 12px;
+    font-size: 22px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+  }
+
+  .card,
+  .only-letter {
+    min-height: 125px;
+    border-radius: 16px;
+    padding: 9px 6px;
+  }
+
+  .symbol {
+    margin-bottom: 5px;
+    font-size: 29px;
+  }
+
+  .letter {
+    font-size: 32px;
+  }
+
+  .word {
+    margin-top: 5px;
+    padding: 4px 9px;
+    font-size: 13px;
+  }
+}
   </style>
 </head>
 

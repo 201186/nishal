@@ -13,27 +13,11 @@ export const navigation: NavigationItem[] = [
     href: "/mcq-tests",
   },
   {
-    label: "Notes",
-    href: "/notes",
-  },
-  {
-    label: "PDF",
-    href: "/pdf",
-  },
-  {
-    label: "Previous Papers",
-    href: "/previous-papers",
-  },
-  {
     label: "Learning",
     href: "/learning",
   },
   {
     label: "Games",
     href: "/games",
-  },
-  {
-    label: "Scholarships",
-    href: "/scholarships",
   },
 ];

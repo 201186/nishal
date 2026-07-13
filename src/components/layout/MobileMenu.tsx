@@ -12,7 +12,7 @@ export default function MobileMenu() {
   const pathname = usePathname();
 
   return (
-    <div className="lg:hidden">
+   <div className="xl:hidden">
       {/* Hamburger Button */}
       <button
         type="button"

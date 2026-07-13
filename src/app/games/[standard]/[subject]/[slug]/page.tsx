@@ -42,23 +42,31 @@ export default async function GamePage({ params }: PageProps) {
 
   return (
     <MainLayout>
-      <main className="py-6">
-        <div className="mx-auto max-w-7xl px-4">
-          <header className="mb-4">
-            <h1 className="text-3xl font-bold text-slate-900">
+      <main className="py-4 sm:py-5 lg:py-6">
+        <div className="mx-auto max-w-7xl px-3 sm:px-4 lg:px-6">
+          <header className="mb-3 sm:mb-4">
+            <h1 className="text-2xl font-bold text-slate-900 sm:text-3xl">
               {game.title}
             </h1>
 
-            <p className="mt-1 text-slate-600">
+            <p className="mt-1 text-sm text-slate-600 sm:text-base">
               {standardData.title} • {subjectData.title}
             </p>
           </header>
 
-          {/* Open frameless game area */}
           <iframe
             src={gameUrl}
             title={game.title}
-            className="block h-[900px] w-full overflow-hidden border-0 bg-transparent"
+            className="
+              block
+              h-[700px]
+              w-full
+              overflow-hidden
+              border-0
+              bg-transparent
+              sm:h-[760px]
+              lg:h-[800px]
+            "
             scrolling="no"
             loading="lazy"
             allowFullScreen

@@ -7,22 +7,24 @@ import { DownloadButton, SearchBar } from "@/components/shared";
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/90 backdrop-blur-xl">
       <Container>
-        <div className="flex h-20 items-center justify-between">
+        <div className="flex h-16 items-center justify-between gap-4 xl:h-20">
           {/* Logo */}
-          <Logo />
+          <div className="shrink-0">
+            <Logo />
+          </div>
 
           {/* Desktop Navigation */}
           <Navigation />
 
           {/* Desktop Actions */}
-          <div className="hidden items-center gap-4 lg:flex">
+          <div className="hidden shrink-0 items-center gap-3 xl:flex">
             <SearchBar />
             <DownloadButton />
           </div>
 
-          {/* Mobile Hamburger */}
+          {/* Mobile / Tablet / Compact Screen Menu */}
           <MobileMenu />
         </div>
       </Container>

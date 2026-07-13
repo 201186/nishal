@@ -16,7 +16,6 @@ export default async function ActivityPage({ params }: PageProps) {
     activity: activityId,
   } = await params;
 
-  // Standard શોધો
   const standard = learningData.find(
     (item) => item.id === standardId
   );
@@ -25,7 +24,6 @@ export default async function ActivityPage({ params }: PageProps) {
     notFound();
   }
 
-  // Subject શોધો
   const subject = standard.subjects.find(
     (item) => item.id === subjectId
   );
@@ -34,7 +32,6 @@ export default async function ActivityPage({ params }: PageProps) {
     notFound();
   }
 
-  // Activity શોધો
   const activity = subject.activities.find(
     (item) => item.id === activityId
   );
@@ -43,16 +40,23 @@ export default async function ActivityPage({ params }: PageProps) {
     notFound();
   }
 
-  // public/learning માં રહેલી HTML file
-  const htmlPath = `/learning/${standardId}/${subjectId}/${activityId}.html`;
+  const htmlPath =
+    `/learning/${standardId}/${subjectId}/${activityId}.html`;
 
   return (
-    <div className="w-full bg-white">
+    <main className="w-full bg-white">
       <iframe
         src={htmlPath}
         title={activity.title}
-        className="block min-h-[1400px] w-full border-0"
+        className="
+          block
+          h-[calc(100vh-64px)]
+          min-h-[700px]
+          w-full
+          border-0
+          xl:h-[calc(100vh-80px)]
+        "
       />
-    </div>
+    </main>
   );
 }

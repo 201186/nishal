@@ -34,35 +34,59 @@ export default async function SubjectPage({
 
   return (
     <MainLayout>
-      <section className="py-16">
-        <div className="mx-auto max-w-7xl px-4">
+      <section className="py-8 sm:py-10 lg:py-12">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
-          <h1 className="text-4xl font-bold">
-            {subjectData.title}
-          </h1>
+          {/* Header */}
+          <div className="mb-7 sm:mb-9">
+            <h1 className="text-3xl font-bold text-slate-900 sm:text-4xl">
+              {subjectData.title}
+            </h1>
 
-          <p className="mt-2 mb-10 text-slate-600">
-            Choose a game to start learning.
-          </p>
+            <p className="mt-2 text-sm text-slate-600 sm:text-base">
+              Choose a game to start learning.
+            </p>
+          </div>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {/* Game Cards */}
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
             {subjectData.games.map((game) => (
               <Link
                 key={game.slug}
                 href={`/games/${standard}/${subject}/${game.slug}`}
-                className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+                className="
+                  group
+                  rounded-2xl
+                  border
+                  border-slate-200
+                  bg-white
+                  p-4
+                  shadow-sm
+                  transition-all
+                  duration-300
+                  hover:-translate-y-1
+                  hover:border-blue-400
+                  hover:shadow-lg
+                  sm:p-5
+                "
               >
-                <div className="text-5xl">🎮</div>
+                {/* Icon */}
+                <div className="text-3xl sm:text-4xl">
+                  🎮
+                </div>
 
-                <h2 className="mt-4 text-xl font-bold">
+                {/* Title */}
+                <h2 className="mt-3 text-lg font-bold text-slate-900 sm:text-xl">
                   {game.title}
                 </h2>
 
-                <p className="mt-2 text-slate-600">
+                {/* Type */}
+                <p className="mt-1.5 text-sm text-slate-600">
                   {game.type}
                 </p>
 
-                <span className="mt-6 inline-block font-semibold text-blue-600">
+                {/* Action */}
+                <span className="mt-4 inline-block text-sm font-semibold text-blue-600 sm:text-base">
                   Play Game →
                 </span>
               </Link>
