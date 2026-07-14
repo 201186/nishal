@@ -1,0 +1,2325 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>અવયવ અને અવયવી | ધોરણ 6 ગણિત</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+    }
+
+    html::-webkit-scrollbar,
+    body::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      height: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-y: auto;
+
+      font-family:
+        "Noto Sans Gujarati",
+        "Shruti",
+        Arial,
+        sans-serif;
+
+      background: #ffffff;
+      color: #1f2937;
+    }
+
+    button {
+      font-family: inherit;
+    }
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    .game-header {
+      width: 100%;
+      padding: 28px 20px 24px;
+
+      text-align: center;
+
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .game-header h1 {
+      margin-bottom: 8px;
+
+      color: #111827;
+
+      font-size: 32px;
+      font-weight: 800;
+      line-height: 1.3;
+    }
+
+    .game-header p {
+      color: #64748b;
+
+      font-size: 17px;
+      line-height: 1.6;
+    }
+
+    /* =========================
+       CONTAINER
+    ========================= */
+
+    .container {
+      width: min(1100px, 94%);
+      max-width: 100%;
+
+      margin: 0 auto;
+
+      padding: 28px 0 50px;
+    }
+
+    .section-title {
+      margin-bottom: 15px;
+
+      color: #111827;
+
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    /* =========================
+       MODE BUTTONS
+    ========================= */
+
+    .mode-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+      gap: 12px;
+
+      margin-bottom: 26px;
+    }
+
+    .mode-btn {
+      min-width: 0;
+      min-height: 58px;
+
+      padding: 13px 14px;
+
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+
+      background: #ffffff;
+      color: #334155;
+
+      font-size: 17px;
+      font-weight: 800;
+      line-height: 1.4;
+
+      cursor: pointer;
+
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+
+      transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease,
+        color 0.2s ease;
+    }
+
+    .mode-btn:hover {
+      border-color: #3b82f6;
+      color: #2563eb;
+
+      transform: translateY(-2px);
+    }
+
+    .mode-btn.active {
+      background: #2563eb;
+
+      border-color: #2563eb;
+
+      color: #ffffff;
+    }
+
+    /* =========================
+       INFO BAR
+    ========================= */
+
+    .info-bar {
+      display: grid;
+
+      grid-template-columns:
+        2fr 1fr 1fr 1fr;
+
+      gap: 12px;
+
+      margin-bottom: 20px;
+    }
+
+    .info-box {
+      min-width: 0;
+
+      padding: 15px 12px;
+
+      background: #f8fafc;
+
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+
+      text-align: center;
+    }
+
+    .info-label {
+      display: block;
+
+      margin-bottom: 5px;
+
+      color: #64748b;
+
+      font-size: 13px;
+    }
+
+    .info-value {
+      display: block;
+
+      color: #111827;
+
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .current-mode .info-value {
+      color: #2563eb;
+
+      font-size: 18px;
+    }
+
+    /* =========================
+       PROGRESS
+    ========================= */
+
+    .progress-wrap {
+      margin-bottom: 20px;
+    }
+
+    .progress-info {
+      display: flex;
+
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 12px;
+
+      margin-bottom: 8px;
+
+      color: #64748b;
+
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 10px;
+
+      overflow: hidden;
+
+      background: #e2e8f0;
+
+      border-radius: 999px;
+    }
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+
+      background: #2563eb;
+
+      border-radius: 999px;
+
+      transition: width 0.3s ease;
+    }
+
+    /* =========================
+       QUESTION
+    ========================= */
+
+    .question-card {
+      margin-bottom: 20px;
+
+      padding: 22px 18px;
+
+      background: #eff6ff;
+
+      border: 1px solid #bfdbfe;
+      border-radius: 16px;
+
+      text-align: center;
+    }
+
+    .question-label {
+      margin-bottom: 8px;
+
+      color: #64748b;
+
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .question-text {
+      color: #1d4ed8;
+
+      font-size: 22px;
+      font-weight: 800;
+      line-height: 1.5;
+    }
+
+    .target-number {
+      display: inline-block;
+
+      margin: 0 5px;
+
+      color: #111827;
+
+      font-family: Arial, sans-serif;
+      font-size: 36px;
+      font-weight: 900;
+      vertical-align: middle;
+    }
+
+    /* =========================
+       SELECTION INFO
+    ========================= */
+
+    .selection-info {
+      display: flex;
+
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 12px;
+
+      margin-bottom: 14px;
+    }
+
+    .selection-info span {
+      color: #64748b;
+
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .selected-count {
+      color: #2563eb !important;
+
+      font-family: Arial, sans-serif;
+      font-size: 15px !important;
+      font-weight: 800 !important;
+    }
+
+    /* =========================
+       NUMBER BOARD
+    ========================= */
+
+    .number-board {
+      width: 100%;
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(5, minmax(0, 1fr));
+
+      gap: 12px;
+
+      margin-bottom: 20px;
+    }
+
+    .number-box {
+      width: 100%;
+      min-width: 0;
+      min-height: 82px;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      padding: 10px;
+
+      background: #ffffff;
+
+      border: 3px solid #dbe2ea;
+      border-radius: 15px;
+
+      color: #1f2937;
+
+      font-family: Arial, sans-serif;
+      font-size: 28px;
+      font-weight: 900;
+
+      cursor: pointer;
+
+      user-select: none;
+
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+
+      transition:
+        transform 0.15s ease,
+        border-color 0.15s ease,
+        background 0.15s ease,
+        color 0.15s ease;
+    }
+
+    .number-box:hover:not(:disabled) {
+      transform: translateY(-3px);
+
+      border-color: #60a5fa;
+
+      background: #f8fbff;
+    }
+
+    .number-box.selected {
+      background: #dbeafe;
+
+      border-color: #2563eb;
+
+      color: #1d4ed8;
+
+      transform: translateY(-2px);
+    }
+
+    .number-box.correct {
+      background: #dcfce7;
+
+      border-color: #22c55e;
+
+      color: #15803d;
+    }
+
+    .number-box.wrong {
+      background: #fee2e2;
+
+      border-color: #ef4444;
+
+      color: #b91c1c;
+
+      animation: shake 0.3s;
+    }
+
+    .number-box.missed {
+      background: #fef3c7;
+
+      border-color: #f59e0b;
+
+      color: #b45309;
+    }
+
+    @keyframes shake {
+      0% {
+        transform: translateX(0);
+      }
+
+      25% {
+        transform: translateX(-6px);
+      }
+
+      50% {
+        transform: translateX(6px);
+      }
+
+      75% {
+        transform: translateX(-6px);
+      }
+
+      100% {
+        transform: translateX(0);
+      }
+    }
+
+    /* =========================
+       CHECK BUTTON
+    ========================= */
+
+    .check-wrap {
+      display: flex;
+
+      justify-content: center;
+
+      margin-bottom: 10px;
+    }
+
+    .check-btn {
+      min-width: 220px;
+      min-height: 54px;
+
+      padding: 14px 28px;
+
+      border: none;
+      border-radius: 11px;
+
+      background: #2563eb;
+
+      color: #ffffff;
+
+      font-size: 17px;
+      font-weight: 800;
+
+      cursor: pointer;
+
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .check-btn:hover:not(:disabled) {
+      background: #1d4ed8;
+    }
+
+    .check-btn:disabled {
+      opacity: 0.55;
+
+      cursor: default;
+    }
+
+    /* =========================
+       MESSAGE
+    ========================= */
+
+    .message {
+      min-height: 52px;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1.5;
+
+      text-align: center;
+    }
+
+    .message.success {
+      color: #15803d;
+    }
+
+    .message.error {
+      color: #dc2626;
+    }
+
+    /* =========================
+       NEW GAME
+    ========================= */
+
+    .actions {
+      display: flex;
+
+      justify-content: center;
+
+      margin-top: 10px;
+    }
+
+    .new-game-btn {
+      min-height: 50px;
+
+      padding: 13px 28px;
+
+      border: none;
+      border-radius: 10px;
+
+      background: #111827;
+
+      color: #ffffff;
+
+      font-size: 16px;
+      font-weight: 800;
+
+      cursor: pointer;
+    }
+
+    /* =========================
+       ANSWER POPUP
+    ========================= */
+
+    .answer-popup {
+      position: fixed;
+
+      top: 50%;
+      left: 50%;
+
+      z-index: 3000;
+
+      width: min(330px, 88%);
+
+      padding: 26px 24px;
+
+      border-radius: 22px;
+
+      text-align: center;
+
+      color: #ffffff;
+
+      opacity: 0;
+      visibility: hidden;
+
+      pointer-events: none;
+
+      transform:
+        translate(-50%, -50%)
+        scale(0.7);
+
+      transition:
+        opacity 0.18s ease,
+        transform 0.18s ease,
+        visibility 0.18s ease;
+
+      box-shadow:
+        0 20px 50px
+        rgba(0, 0, 0, 0.25);
+    }
+
+    .answer-popup.show {
+      opacity: 1;
+
+      visibility: visible;
+
+      transform:
+        translate(-50%, -50%)
+        scale(1);
+    }
+
+    .correct-popup {
+      background:
+        linear-gradient(
+          135deg,
+          #22c55e,
+          #15803d
+        );
+    }
+
+    .wrong-popup {
+      background:
+        linear-gradient(
+          135deg,
+          #ef4444,
+          #b91c1c
+        );
+    }
+
+    .popup-icon {
+      width: 68px;
+      height: 68px;
+
+      margin: 0 auto 12px;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 50%;
+
+      background:
+        rgba(255, 255, 255, 0.2);
+
+      font-size: 42px;
+      font-weight: 900;
+    }
+
+    .popup-title {
+      display: block;
+
+      font-size: 25px;
+      font-weight: 900;
+    }
+
+    .popup-subtitle {
+      display: block;
+
+      margin-top: 6px;
+
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    /* =========================
+       RESULT
+    ========================= */
+
+    .result-overlay {
+      position: fixed;
+
+      inset: 0;
+
+      z-index: 6000;
+
+      display: none;
+
+      align-items: center;
+      justify-content: center;
+
+      padding: 20px;
+
+      background: transparent;
+    }
+
+    .result-overlay.show {
+      display: flex;
+    }
+
+    .result-card {
+      width: min(440px, 94%);
+
+      padding: 30px 24px;
+
+      background: #ffffff;
+
+      border: 1px solid #e2e8f0;
+      border-radius: 22px;
+
+      text-align: center;
+
+      box-shadow:
+        0 20px 60px
+        rgba(15, 23, 42, 0.18);
+    }
+
+    .result-icon {
+      width: 70px;
+      height: 70px;
+
+      margin: 0 auto 16px;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      background: #dcfce7;
+
+      border-radius: 50%;
+
+      color: #15803d;
+
+      font-size: 36px;
+      font-weight: 900;
+    }
+
+    .result-card h2 {
+      margin-bottom: 8px;
+
+      color: #15803d;
+
+      font-size: 28px;
+      font-weight: 800;
+    }
+
+    .result-card > p {
+      margin-bottom: 22px;
+
+      color: #64748b;
+
+      font-size: 16px;
+    }
+
+    .result-mode {
+      padding: 12px;
+
+      margin-bottom: 14px;
+
+      background: #eff6ff;
+
+      border-radius: 10px;
+
+      color: #1d4ed8;
+
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .result-stats {
+      display: grid;
+
+      grid-template-columns:
+        repeat(2, 1fr);
+
+      gap: 12px;
+
+      margin-bottom: 22px;
+    }
+
+    .result-stat {
+      padding: 16px 10px;
+
+      background: #f8fafc;
+
+      border-radius: 12px;
+    }
+
+    .result-stat span {
+      display: block;
+
+      margin-bottom: 5px;
+
+      color: #64748b;
+
+      font-size: 13px;
+    }
+
+    .result-stat strong {
+      color: #111827;
+
+      font-size: 24px;
+    }
+
+    .play-again-btn {
+      width: 100%;
+      min-height: 52px;
+
+      padding: 14px;
+
+      border: none;
+      border-radius: 10px;
+
+      background: #2563eb;
+
+      color: #ffffff;
+
+      font-size: 17px;
+      font-weight: 800;
+
+      cursor: pointer;
+    }
+
+    /* =========================
+       LARGE SCREEN
+    ========================= */
+
+    @media (min-width: 1440px) {
+      .container {
+        width: min(1300px, 94%);
+      }
+
+      .game-header h1 {
+        font-size:
+          clamp(34px, 2.2vw, 46px);
+      }
+
+      .number-box {
+        min-height: 100px;
+
+        font-size: 34px;
+      }
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 600px) {
+      .game-header {
+        padding: 20px 14px 18px;
+      }
+
+      .game-header h1 {
+        font-size: 24px;
+      }
+
+      .game-header p {
+        font-size: 14px;
+      }
+
+      .container {
+        width: 94%;
+
+        padding: 18px 0 36px;
+      }
+
+      .section-title {
+        font-size: 18px;
+      }
+
+      .mode-grid {
+        gap: 8px;
+
+        margin-bottom: 18px;
+      }
+
+      .mode-btn {
+        min-height: 54px;
+
+        padding: 9px 6px;
+
+        font-size: 15px;
+      }
+
+      .info-bar {
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
+
+        gap: 8px;
+
+        margin-bottom: 16px;
+      }
+
+      .info-box {
+        padding: 11px 7px;
+      }
+
+      .info-label {
+        font-size: 12px;
+      }
+
+      .info-value {
+        font-size: 20px;
+      }
+
+      .current-mode .info-value {
+        font-size: 15px;
+      }
+
+      .question-card {
+        padding: 16px 10px;
+      }
+
+      .question-text {
+        font-size: 17px;
+      }
+
+      .target-number {
+        font-size: 29px;
+      }
+
+      .number-board {
+        grid-template-columns:
+          repeat(4, minmax(0, 1fr));
+
+        gap: 8px;
+      }
+
+      .number-box {
+        min-height: 64px;
+
+        padding: 6px;
+
+        border-width: 2px;
+        border-radius: 11px;
+
+        font-size: 22px;
+      }
+
+      .check-btn {
+        width: 100%;
+
+        min-width: 0;
+      }
+
+      .new-game-btn {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .number-board {
+        grid-template-columns:
+          repeat(3, minmax(0, 1fr));
+      }
+    }
+  </style>
+</head>
+
+
+<body>
+
+  <header class="game-header">
+    <h1>અવયવ અને અવયવી</h1>
+
+    <p>
+      આપેલી સંખ્યાના સાચા અવયવ અથવા અવયવી પસંદ કરો
+    </p>
+  </header>
+
+
+  <main class="container">
+
+    <h2 class="section-title">
+      શું શોધવું છે?
+    </h2>
+
+
+    <div class="mode-grid">
+
+      <button
+        class="mode-btn active"
+        data-mode="factors"
+        type="button"
+      >
+        અવયવ શોધો
+      </button>
+
+      <button
+        class="mode-btn"
+        data-mode="multiples"
+        type="button"
+      >
+        અવયવી શોધો
+      </button>
+
+    </div>
+
+
+    <div class="info-bar">
+
+      <div class="info-box current-mode">
+        <span class="info-label">
+          શોધવાનું
+        </span>
+
+        <span
+          class="info-value"
+          id="modeName"
+        >
+          અવયવ
+        </span>
+      </div>
+
+
+      <div class="info-box">
+        <span class="info-label">
+          રાઉન્ડ
+        </span>
+
+        <span
+          class="info-value"
+          id="roundScore"
+        >
+          1 / 10
+        </span>
+      </div>
+
+
+      <div class="info-box">
+        <span class="info-label">
+          સાચા
+        </span>
+
+        <span
+          class="info-value"
+          id="correctScore"
+        >
+          0
+        </span>
+      </div>
+
+
+      <div class="info-box">
+        <span class="info-label">
+          ખોટા
+        </span>
+
+        <span
+          class="info-value"
+          id="wrongScore"
+        >
+          0
+        </span>
+      </div>
+
+    </div>
+
+
+    <div class="progress-wrap">
+
+      <div class="progress-info">
+        <span>રમતની પ્રગતિ</span>
+
+        <span id="progressText">
+          0 / 10
+        </span>
+      </div>
+
+      <div class="progress-track">
+        <div
+          class="progress-fill"
+          id="progressFill"
+        ></div>
+      </div>
+
+    </div>
+
+
+    <div class="question-card">
+
+      <div class="question-label">
+        પ્રશ્ન
+      </div>
+
+      <div
+        class="question-text"
+        id="questionText"
+      ></div>
+
+    </div>
+
+
+    <div class="selection-info">
+
+      <span>
+        સાચી બધી સંખ્યાઓ પસંદ કરો
+      </span>
+
+      <span
+        class="selected-count"
+        id="selectedCount"
+      >
+        પસંદ કરેલ: 0
+      </span>
+
+    </div>
+
+
+    <div
+      class="number-board"
+      id="numberBoard"
+    ></div>
+
+
+    <div class="check-wrap">
+
+      <button
+        class="check-btn"
+        id="checkBtn"
+        type="button"
+      >
+        જવાબ તપાસો
+      </button>
+
+    </div>
+
+
+    <div
+      class="message"
+      id="message"
+      aria-live="polite"
+    ></div>
+
+
+    <div class="actions">
+
+      <button
+        class="new-game-btn"
+        id="newGameBtn"
+        type="button"
+      >
+        નવી રમત
+      </button>
+
+    </div>
+
+  </main>
+
+
+  <!-- CORRECT POPUP -->
+
+  <div
+    class="answer-popup correct-popup"
+    id="correctPopup"
+  >
+    <div class="popup-icon">
+      ✓
+    </div>
+
+    <span class="popup-title">
+      ખૂબ સરસ!
+    </span>
+
+    <span class="popup-subtitle">
+      તમે બધી સાચી સંખ્યાઓ પસંદ કરી
+    </span>
+  </div>
+
+
+  <!-- WRONG POPUP -->
+
+  <div
+    class="answer-popup wrong-popup"
+    id="wrongPopup"
+  >
+    <div class="popup-icon">
+      ×
+    </div>
+
+    <span class="popup-title">
+      ફરી પ્રયત્ન કરો
+    </span>
+
+    <span class="popup-subtitle">
+      પસંદ કરેલી સંખ્યાઓ ફરી તપાસો
+    </span>
+  </div>
+
+
+  <!-- RESULT -->
+
+  <div
+    class="result-overlay"
+    id="resultOverlay"
+  >
+
+    <div class="result-card">
+
+      <div class="result-icon">
+        ✓
+      </div>
+
+      <h2>
+        રમત પૂર્ણ
+      </h2>
+
+      <p>
+        તમે બધા 10 રાઉન્ડ પૂર્ણ કર્યા.
+      </p>
+
+
+      <div
+        class="result-mode"
+        id="finalMode"
+      >
+        અવયવ શોધો
+      </div>
+
+
+      <div class="result-stats">
+
+        <div class="result-stat">
+          <span>
+            સાચા રાઉન્ડ
+          </span>
+
+          <strong id="finalCorrect">
+            0
+          </strong>
+        </div>
+
+
+        <div class="result-stat">
+          <span>
+            ખોટા પ્રયત્ન
+          </span>
+
+          <strong id="finalWrong">
+            0
+          </strong>
+        </div>
+
+      </div>
+
+
+      <button
+        class="play-again-btn"
+        id="playAgainBtn"
+        type="button"
+      >
+        ફરીથી રમો
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- SOUNDS -->
+
+  <audio
+    id="correctSound"
+    src="/sounds/correct.mp3"
+    preload="auto"
+  ></audio>
+
+  <audio
+    id="wrongSound"
+    src="/sounds/wrong.mp3"
+    preload="auto"
+  ></audio>
+
+  <audio
+    id="completeSound"
+    src="/sounds/complete.mp3"
+    preload="auto"
+  ></audio>
+
+
+  <script>
+    /* =========================
+       ELEMENTS
+    ========================= */
+
+    const modeButtons =
+      document.querySelectorAll(".mode-btn");
+
+    const modeName =
+      document.getElementById("modeName");
+
+    const roundScore =
+      document.getElementById("roundScore");
+
+    const correctScore =
+      document.getElementById("correctScore");
+
+    const wrongScore =
+      document.getElementById("wrongScore");
+
+    const progressText =
+      document.getElementById("progressText");
+
+    const progressFill =
+      document.getElementById("progressFill");
+
+    const questionText =
+      document.getElementById("questionText");
+
+    const selectedCount =
+      document.getElementById("selectedCount");
+
+    const numberBoard =
+      document.getElementById("numberBoard");
+
+    const checkBtn =
+      document.getElementById("checkBtn");
+
+    const message =
+      document.getElementById("message");
+
+    const correctPopup =
+      document.getElementById("correctPopup");
+
+    const wrongPopup =
+      document.getElementById("wrongPopup");
+
+    const resultOverlay =
+      document.getElementById("resultOverlay");
+
+    const finalMode =
+      document.getElementById("finalMode");
+
+    const finalCorrect =
+      document.getElementById("finalCorrect");
+
+    const finalWrong =
+      document.getElementById("finalWrong");
+
+
+    const correctSound =
+      document.getElementById("correctSound");
+
+    const wrongSound =
+      document.getElementById("wrongSound");
+
+    const completeSound =
+      document.getElementById("completeSound");
+
+
+    /* =========================
+       SETTINGS
+    ========================= */
+
+    const TOTAL_ROUNDS = 10;
+
+    const FACTOR_OPTION_COUNT = 15;
+
+    const MULTIPLE_OPTION_COUNT = 15;
+
+
+    /* =========================
+       STATE
+    ========================= */
+
+    let currentMode = "factors";
+
+    let currentRound = 1;
+
+    let correctCount = 0;
+
+    let wrongCount = 0;
+
+    let targetNumber = 12;
+
+    let options = [];
+
+    let correctAnswers = [];
+
+    let selectedAnswers = [];
+
+    let roundLocked = false;
+
+    let popupTimer = null;
+
+    let nextRoundTimer = null;
+
+
+    /* =========================
+       MODE DATA
+    ========================= */
+
+    const modeData = {
+      factors: {
+        name: "અવયવ",
+
+        buttonName: "અવયવ શોધો"
+      },
+
+      multiples: {
+        name: "અવયવી",
+
+        buttonName: "અવયવી શોધો"
+      }
+    };
+
+
+    /* =========================
+       RANDOM
+    ========================= */
+
+    function randomNumber(min, max) {
+      return (
+        Math.floor(
+          Math.random() *
+          (max - min + 1)
+        ) + min
+      );
+    }
+
+
+    function shuffle(array) {
+      const newArray = [...array];
+
+      for (
+        let i = newArray.length - 1;
+        i > 0;
+        i--
+      ) {
+        const j =
+          Math.floor(
+            Math.random() *
+            (i + 1)
+          );
+
+        [
+          newArray[i],
+          newArray[j]
+        ] = [
+          newArray[j],
+          newArray[i]
+        ];
+      }
+
+      return newArray;
+    }
+
+
+    /* =========================
+       FACTORS
+    ========================= */
+
+    function getFactors(number) {
+      const factors = [];
+
+      for (
+        let i = 1;
+        i <= number;
+        i++
+      ) {
+        if (
+          number % i === 0
+        ) {
+          factors.push(i);
+        }
+      }
+
+      return factors;
+    }
+
+
+    /* =========================
+       CREATE FACTOR ROUND
+    ========================= */
+
+    function createFactorRound() {
+      /*
+        Target range 6 to 40.
+
+        This keeps the number of factors
+        suitable for the selection game.
+      */
+
+      targetNumber =
+        randomNumber(6, 40);
+
+
+      correctAnswers =
+        getFactors(targetNumber);
+
+
+      const optionSet =
+        new Set(correctAnswers);
+
+
+      /*
+        All factors are ALWAYS included.
+
+        Wrong numbers are added until
+        there are at least 15 options.
+      */
+
+      while (
+        optionSet.size <
+        Math.max(
+          FACTOR_OPTION_COUNT,
+          correctAnswers.length + 5
+        )
+      ) {
+        const wrongNumber =
+          randomNumber(
+            1,
+            Math.max(
+              20,
+              targetNumber + 10
+            )
+          );
+
+
+        if (
+          targetNumber %
+          wrongNumber !==
+          0
+        ) {
+          optionSet.add(
+            wrongNumber
+          );
+        }
+      }
+
+
+      options =
+        shuffle(
+          Array.from(optionSet)
+        );
+
+
+      questionText.innerHTML =
+        '<span class="target-number">' +
+        targetNumber +
+        "</span>" +
+        " ના બધા અવયવ પસંદ કરો.";
+    }
+
+
+    /* =========================
+       CREATE MULTIPLE ROUND
+    ========================= */
+
+    function createMultipleRound() {
+      /*
+        Smaller target numbers keep
+        several multiples available
+        in the option range.
+      */
+
+      targetNumber =
+        randomNumber(2, 12);
+
+
+      /*
+        We create 6 correct multiples.
+      */
+
+      correctAnswers = [];
+
+      for (
+        let i = 1;
+        i <= 6;
+        i++
+      ) {
+        correctAnswers.push(
+          targetNumber * i
+        );
+      }
+
+
+      const optionSet =
+        new Set(correctAnswers);
+
+
+      const maxOption =
+        targetNumber * 8;
+
+
+      /*
+        Add wrong numbers that are
+        not multiples of target.
+      */
+
+      while (
+        optionSet.size <
+        MULTIPLE_OPTION_COUNT
+      ) {
+        const wrongNumber =
+          randomNumber(
+            1,
+            maxOption
+          );
+
+
+        if (
+          wrongNumber %
+          targetNumber !==
+          0
+        ) {
+          optionSet.add(
+            wrongNumber
+          );
+        }
+      }
+
+
+      options =
+        shuffle(
+          Array.from(optionSet)
+        );
+
+
+      questionText.innerHTML =
+        '<span class="target-number">' +
+        targetNumber +
+        "</span>" +
+        " ના બધા અવયવી પસંદ કરો.";
+    }
+
+
+    /* =========================
+       CREATE ROUND
+    ========================= */
+
+    function createRound() {
+      roundLocked = false;
+
+      selectedAnswers = [];
+
+      numberBoard.innerHTML = "";
+
+      message.textContent = "";
+
+      message.className = "message";
+
+      checkBtn.disabled = false;
+
+
+      if (
+        currentMode ===
+        "factors"
+      ) {
+        createFactorRound();
+      } else {
+        createMultipleRound();
+      }
+
+
+      options.forEach(
+        function (number) {
+          const button =
+            document.createElement(
+              "button"
+            );
+
+
+          button.type = "button";
+
+          button.className =
+            "number-box";
+
+          button.textContent =
+            number;
+
+          button.dataset.number =
+            number;
+
+
+          button.addEventListener(
+            "click",
+            function () {
+              toggleNumber(
+                number,
+                button
+              );
+            }
+          );
+
+
+          numberBoard.appendChild(
+            button
+          );
+        }
+      );
+
+
+      updateGameInfo();
+
+      updateSelectedCount();
+    }
+
+
+    /* =========================
+       TOGGLE SELECTION
+    ========================= */
+
+    function toggleNumber(
+      number,
+      button
+    ) {
+      if (
+        roundLocked
+      ) {
+        return;
+      }
+
+
+      const index =
+        selectedAnswers.indexOf(
+          number
+        );
+
+
+      if (
+        index === -1
+      ) {
+        selectedAnswers.push(
+          number
+        );
+
+        button.classList.add(
+          "selected"
+        );
+      } else {
+        selectedAnswers.splice(
+          index,
+          1
+        );
+
+        button.classList.remove(
+          "selected"
+        );
+      }
+
+
+      updateSelectedCount();
+    }
+
+
+    /* =========================
+       SELECTED COUNT
+    ========================= */
+
+    function updateSelectedCount() {
+      selectedCount.textContent =
+        "પસંદ કરેલ: " +
+        selectedAnswers.length;
+    }
+
+
+    /* =========================
+       CHECK ANSWER
+    ========================= */
+
+    function checkAnswer() {
+      if (
+        roundLocked
+      ) {
+        return;
+      }
+
+
+      if (
+        selectedAnswers.length === 0
+      ) {
+        message.textContent =
+          "પહેલા સાચી સંખ્યાઓ પસંદ કરો.";
+
+        message.className =
+          "message error";
+
+        return;
+      }
+
+
+      const selectedSorted =
+        [...selectedAnswers]
+          .sort(
+            function (a, b) {
+              return a - b;
+            }
+          );
+
+
+      const correctSorted =
+        [...correctAnswers]
+          .sort(
+            function (a, b) {
+              return a - b;
+            }
+          );
+
+
+      const isCorrect =
+        selectedSorted.length ===
+        correctSorted.length
+        &&
+        selectedSorted.every(
+          function (
+            value,
+            index
+          ) {
+            return (
+              value ===
+              correctSorted[index]
+            );
+          }
+        );
+
+
+      if (
+        isCorrect
+      ) {
+        handleCorrectAnswer();
+      } else {
+        handleWrongAnswer();
+      }
+    }
+
+
+    /* =========================
+       CORRECT
+    ========================= */
+
+    function handleCorrectAnswer() {
+      roundLocked = true;
+
+      correctCount++;
+
+      checkBtn.disabled = true;
+
+
+      const buttons =
+        numberBoard.querySelectorAll(
+          ".number-box"
+        );
+
+
+      buttons.forEach(
+        function (button) {
+          const number =
+            Number(
+              button.dataset.number
+            );
+
+
+          button.disabled = true;
+
+
+          if (
+            correctAnswers.includes(
+              number
+            )
+          ) {
+            button.classList.remove(
+              "selected"
+            );
+
+            button.classList.add(
+              "correct"
+            );
+          }
+        }
+      );
+
+
+      playAudio(
+        correctSound
+      );
+
+
+      showAnswerPopup(
+        "correct"
+      );
+
+
+      message.textContent =
+        currentMode === "factors"
+          ? "ખૂબ સરસ! તમે બધા સાચા અવયવ પસંદ કર્યા."
+          : "ખૂબ સરસ! તમે બધા સાચા અવયવી પસંદ કર્યા.";
+
+
+      message.className =
+        "message success";
+
+
+      updateGameInfo();
+
+
+      if (
+        currentRound >=
+        TOTAL_ROUNDS
+      ) {
+        nextRoundTimer =
+          setTimeout(
+            showResult,
+            1300
+          );
+      } else {
+        nextRoundTimer =
+          setTimeout(
+            function () {
+              currentRound++;
+
+              createRound();
+            },
+            1300
+          );
+      }
+    }
+
+
+    /* =========================
+       WRONG
+    ========================= */
+
+    function handleWrongAnswer() {
+      wrongCount++;
+
+
+      const buttons =
+        numberBoard.querySelectorAll(
+          ".number-box"
+        );
+
+
+      buttons.forEach(
+        function (button) {
+          const number =
+            Number(
+              button.dataset.number
+            );
+
+
+          const isSelected =
+            selectedAnswers.includes(
+              number
+            );
+
+
+          const shouldBeSelected =
+            correctAnswers.includes(
+              number
+            );
+
+
+          button.classList.remove(
+            "wrong",
+            "missed"
+          );
+
+
+          /*
+            Selected wrong number
+          */
+
+          if (
+            isSelected &&
+            !shouldBeSelected
+          ) {
+            button.classList.add(
+              "wrong"
+            );
+          }
+
+
+          /*
+            Correct answer that
+            user forgot to select
+          */
+
+          if (
+            !isSelected &&
+            shouldBeSelected
+          ) {
+            button.classList.add(
+              "missed"
+            );
+          }
+        }
+      );
+
+
+      playAudio(
+        wrongSound
+      );
+
+
+      showAnswerPopup(
+        "wrong"
+      );
+
+
+      message.textContent =
+        "કેટલીક સંખ્યાઓ ખોટી છે અથવા કોઈ સાચી સંખ્યા રહી ગઈ છે. ફરી પસંદ કરો.";
+
+
+      message.className =
+        "message error";
+
+
+      updateGameInfo();
+
+
+      setTimeout(
+        function () {
+          buttons.forEach(
+            function (button) {
+              button.classList.remove(
+                "wrong",
+                "missed"
+              );
+            }
+          );
+        },
+        1100
+      );
+    }
+
+
+    /* =========================
+       AUDIO
+    ========================= */
+
+    function playAudio(audio) {
+      if (!audio) {
+        return;
+      }
+
+      audio.pause();
+
+      audio.currentTime = 0;
+
+      const playPromise =
+        audio.play();
+
+
+      if (
+        playPromise !==
+        undefined
+      ) {
+        playPromise.catch(
+          function () {}
+        );
+      }
+    }
+
+
+    function stopAllSounds() {
+      [
+        correctSound,
+        wrongSound,
+        completeSound
+      ].forEach(
+        function (audio) {
+          if (!audio) {
+            return;
+          }
+
+          audio.pause();
+
+          audio.currentTime = 0;
+        }
+      );
+    }
+
+
+    /* =========================
+       POPUP
+    ========================= */
+
+    function hideAnswerPopups() {
+      correctPopup.classList.remove(
+        "show"
+      );
+
+      wrongPopup.classList.remove(
+        "show"
+      );
+    }
+
+
+    function showAnswerPopup(type) {
+      clearTimeout(
+        popupTimer
+      );
+
+
+      hideAnswerPopups();
+
+
+      const popup =
+        type === "correct"
+          ? correctPopup
+          : wrongPopup;
+
+
+      void popup.offsetWidth;
+
+
+      popup.classList.add(
+        "show"
+      );
+
+
+      popupTimer =
+        setTimeout(
+          function () {
+            popup.classList.remove(
+              "show"
+            );
+          },
+          900
+        );
+    }
+
+
+    /* =========================
+       UPDATE INFO
+    ========================= */
+
+    function updateGameInfo() {
+      const data =
+        modeData[currentMode];
+
+
+      modeName.textContent =
+        data.name;
+
+
+      roundScore.textContent =
+        currentRound +
+        " / " +
+        TOTAL_ROUNDS;
+
+
+      correctScore.textContent =
+        correctCount;
+
+
+      wrongScore.textContent =
+        wrongCount;
+
+
+      const completedRounds =
+        Math.max(
+          0,
+          currentRound - 1
+        );
+
+
+      progressText.textContent =
+        completedRounds +
+        " / " +
+        TOTAL_ROUNDS;
+
+
+      progressFill.style.width =
+        (
+          completedRounds /
+          TOTAL_ROUNDS *
+          100
+        ) +
+        "%";
+    }
+
+
+    /* =========================
+       START NEW GAME
+    ========================= */
+
+    function startNewGame() {
+      clearTimeout(
+        popupTimer
+      );
+
+      clearTimeout(
+        nextRoundTimer
+      );
+
+
+      stopAllSounds();
+
+      hideAnswerPopups();
+
+
+      resultOverlay.classList.remove(
+        "show"
+      );
+
+
+      currentRound = 1;
+
+      correctCount = 0;
+
+      wrongCount = 0;
+
+      roundLocked = false;
+
+
+      createRound();
+    }
+
+
+    /* =========================
+       RESULT
+    ========================= */
+
+    function showResult() {
+      hideAnswerPopups();
+
+
+      finalMode.textContent =
+        modeData[
+          currentMode
+        ].buttonName;
+
+
+      finalCorrect.textContent =
+        correctCount;
+
+
+      finalWrong.textContent =
+        wrongCount;
+
+
+      progressText.textContent =
+        TOTAL_ROUNDS +
+        " / " +
+        TOTAL_ROUNDS;
+
+
+      progressFill.style.width =
+        "100%";
+
+
+      resultOverlay.classList.add(
+        "show"
+      );
+
+
+      playAudio(
+        completeSound
+      );
+    }
+
+
+    /* =========================
+       MODE CHANGE
+    ========================= */
+
+    modeButtons.forEach(
+      function (button) {
+        button.addEventListener(
+          "click",
+          function () {
+            modeButtons.forEach(
+              function (btn) {
+                btn.classList.remove(
+                  "active"
+                );
+              }
+            );
+
+
+            button.classList.add(
+              "active"
+            );
+
+
+            currentMode =
+              button.dataset.mode;
+
+
+            startNewGame();
+          }
+        );
+      }
+    );
+
+
+    /* =========================
+       EVENTS
+    ========================= */
+
+    checkBtn.addEventListener(
+      "click",
+      checkAnswer
+    );
+
+
+    document
+      .getElementById(
+        "newGameBtn"
+      )
+      .addEventListener(
+        "click",
+        startNewGame
+      );
+
+
+    document
+      .getElementById(
+        "playAgainBtn"
+      )
+      .addEventListener(
+        "click",
+        startNewGame
+      );
+
+
+    /* =========================
+       START
+    ========================= */
+
+    startNewGame();
+  </script>
+
+</body>
+</html>

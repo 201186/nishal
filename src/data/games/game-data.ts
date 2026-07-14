@@ -296,6 +296,13 @@ export const gameData = [
           thumbnail: "",
           isActive: true,
         },
+        {
+  title: "અવયવ અને અવયવી",
+  slug: "factors-multiples",
+  type: "interactive",
+  thumbnail: "",
+  isActive: true,
+},
       ],
     },
     {
@@ -323,6 +330,7 @@ export const gameData = [
       slug: "sanskrit",
       games: [],
     },
+  
   ],
 },
 
