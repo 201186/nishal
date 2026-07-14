@@ -260,6 +260,29 @@
   </main>
 
 
+  <!-- ========================================
+       GAME SOUNDS
+  ========================================= -->
+
+  <audio
+    id="correctSound"
+    src="/sounds/correct.mp3"
+    preload="auto"
+  ></audio>
+
+  <audio
+    id="wrongSound"
+    src="/sounds/wrong.mp3"
+    preload="auto"
+  ></audio>
+
+  <audio
+    id="completeSound"
+    src="/sounds/complete.mp3"
+    preload="auto"
+  ></audio>
+
+
   <script>
 
     /* ========================================
@@ -330,7 +353,7 @@
 
 
     /* ========================================
-       Elements
+       ELEMENTS
     ======================================== */
 
     const lettersContainer =
@@ -353,7 +376,21 @@
 
 
     /* ========================================
-       Game Settings
+       SOUND ELEMENTS
+    ======================================== */
+
+    const correctSound =
+      document.getElementById("correctSound");
+
+    const wrongSound =
+      document.getElementById("wrongSound");
+
+    const completeSound =
+      document.getElementById("completeSound");
+
+
+    /* ========================================
+       GAME SETTINGS
     ======================================== */
 
     const PAIRS_PER_GAME = 5;
@@ -364,7 +401,70 @@
 
 
     /* ========================================
-       Shuffle
+       PLAY SOUND
+    ======================================== */
+
+    function playSound(audio) {
+
+      if (!audio) {
+        return;
+      }
+
+      audio.pause();
+
+      audio.currentTime = 0;
+
+      const playPromise =
+        audio.play();
+
+      if (
+        playPromise !==
+        undefined
+      ) {
+
+        playPromise.catch(
+          () => {
+            /*
+              Browser sound block કરે
+              તો game ચાલુ રહેશે.
+            */
+          }
+        );
+
+      }
+
+    }
+
+
+    /* ========================================
+       STOP ALL SOUNDS
+    ======================================== */
+
+    function stopAllSounds() {
+
+      [
+        correctSound,
+        wrongSound,
+        completeSound
+      ].forEach(
+        (audio) => {
+
+          if (!audio) {
+            return;
+          }
+
+          audio.pause();
+
+          audio.currentTime = 0;
+
+        }
+      );
+
+    }
+
+
+    /* ========================================
+       SHUFFLE
     ======================================== */
 
     function shuffle(array) {
@@ -389,6 +489,7 @@
           newArray[randomIndex],
           newArray[i]
         ];
+
       }
 
       return newArray;
@@ -396,35 +497,48 @@
 
 
     /* ========================================
-       Start New Game
+       START NEW GAME
     ======================================== */
 
     function startGame() {
+
+      /* Stop old sounds */
+      stopAllSounds();
+
+
+      /* Reset game */
 
       score = 0;
 
       selectedLetter = null;
 
-      scoreElement.textContent = "0";
+      scoreElement.textContent =
+        "0";
 
       totalElement.textContent =
         PAIRS_PER_GAME;
 
-      messageElement.textContent = "";
+      messageElement.textContent =
+        "";
 
       restartButton.style.display =
         "none";
 
-      lettersContainer.innerHTML = "";
+      lettersContainer.innerHTML =
+        "";
 
-      wordsContainer.innerHTML = "";
+      wordsContainer.innerHTML =
+        "";
 
 
       /* Random 5 pairs */
 
       const selectedPairs =
         shuffle(allPairs)
-          .slice(0, PAIRS_PER_GAME);
+          .slice(
+            0,
+            PAIRS_PER_GAME
+          );
 
 
       /* Add unique ID */
@@ -440,26 +554,32 @@
 
       /* Create Letter Cards */
 
-      gamePairs.forEach((pair) => {
+      gamePairs.forEach(
+        (pair) => {
 
-        const button =
-          document.createElement("button");
+          const button =
+            document.createElement(
+              "button"
+            );
 
-        button.type = "button";
+          button.type =
+            "button";
 
-        button.className = "card";
+          button.className =
+            "card";
 
-        button.textContent =
-          pair.letter;
+          button.textContent =
+            pair.letter;
 
-        button.dataset.id =
-          pair.id;
+          button.dataset.id =
+            pair.id;
 
-        lettersContainer.appendChild(
-          button
-        );
+          lettersContainer.appendChild(
+            button
+          );
 
-      });
+        }
+      );
 
 
       /* Create Random Word Cards */
@@ -467,36 +587,44 @@
       const shuffledWords =
         shuffle(gamePairs);
 
-      shuffledWords.forEach((pair) => {
 
-        const button =
-          document.createElement("button");
+      shuffledWords.forEach(
+        (pair) => {
 
-        button.type = "button";
+          const button =
+            document.createElement(
+              "button"
+            );
 
-        button.className = "card";
+          button.type =
+            "button";
 
-        button.textContent =
-          pair.word;
+          button.className =
+            "card";
 
-        button.dataset.id =
-          pair.id;
+          button.textContent =
+            pair.word;
 
-        wordsContainer.appendChild(
-          button
-        );
+          button.dataset.id =
+            pair.id;
 
-      });
+          wordsContainer.appendChild(
+            button
+          );
+
+        }
+      );
 
 
       /* Add Click Events */
 
       addGameEvents();
+
     }
 
 
     /* ========================================
-       Game Events
+       GAME EVENTS
     ======================================== */
 
     function addGameEvents() {
@@ -512,175 +640,220 @@
         );
 
 
-      /* Letter Click */
+      /* ========================================
+         LETTER CLICK
+      ======================================== */
 
-      letterCards.forEach((card) => {
+      letterCards.forEach(
+        (card) => {
 
-        card.addEventListener(
-          "click",
-          () => {
+          card.addEventListener(
+            "click",
+            () => {
 
-            if (
-              card.classList.contains(
-                "correct"
-              )
-            ) {
-              return;
+              if (
+                card.classList.contains(
+                  "correct"
+                )
+              ) {
+                return;
+              }
+
+
+              letterCards.forEach(
+                (item) => {
+
+                  if (
+                    !item.classList.contains(
+                      "correct"
+                    )
+                  ) {
+
+                    item.classList.remove(
+                      "selected"
+                    );
+
+                  }
+
+                }
+              );
+
+
+              selectedLetter =
+                card;
+
+              card.classList.add(
+                "selected"
+              );
+
+
+              messageElement.textContent =
+                "હવે સાચો શબ્દ પસંદ કરો";
+
             }
+          );
+
+        }
+      );
 
 
-            letterCards.forEach(
-              (item) => {
+      /* ========================================
+         WORD CLICK
+      ======================================== */
+
+      wordCards.forEach(
+        (card) => {
+
+          card.addEventListener(
+            "click",
+            () => {
+
+              if (
+                !selectedLetter ||
+                card.classList.contains(
+                  "correct"
+                )
+              ) {
+                return;
+              }
+
+
+              /* ========================================
+                 CORRECT MATCH
+              ======================================== */
+
+              if (
+                selectedLetter.dataset.id ===
+                card.dataset.id
+              ) {
+
+                selectedLetter.classList.remove(
+                  "selected"
+                );
+
+                selectedLetter.classList.add(
+                  "correct"
+                );
+
+                card.classList.add(
+                  "correct"
+                );
+
+
+                score++;
+
+                scoreElement.textContent =
+                  score;
+
+
+                selectedLetter =
+                  null;
+
+
+                /* ========================================
+                   GAME COMPLETE
+                ======================================== */
 
                 if (
-                  !item.classList.contains(
-                    "correct"
-                  )
+                  score ===
+                  PAIRS_PER_GAME
                 ) {
 
-                  item.classList.remove(
-                    "selected"
+                  /*
+                    Last answer પર correct sound નહીં,
+                    સીધો complete sound play થશે.
+                  */
+
+                  playSound(
+                    completeSound
                   );
+
+
+                  messageElement.textContent =
+                    "🎉 ખૂબ સરસ! તમે રમત પૂર્ણ કરી.";
+
+
+                  restartButton.style.display =
+                    "block";
+
+                }
+
+
+                /* ========================================
+                   NORMAL CORRECT ANSWER
+                ======================================== */
+
+                else {
+
+                  playSound(
+                    correctSound
+                  );
+
+
+                  messageElement.textContent =
+                    "✅ સાચો જવાબ!";
 
                 }
 
               }
-            );
 
 
-            selectedLetter = card;
+              /* ========================================
+                 WRONG MATCH
+              ======================================== */
 
-            card.classList.add(
-              "selected"
-            );
+              else {
 
-
-            messageElement.textContent =
-              "હવે સાચો શબ્દ પસંદ કરો";
-
-          }
-        );
-
-      });
+                playSound(
+                  wrongSound
+                );
 
 
-      /* Word Click */
-
-      wordCards.forEach((card) => {
-
-        card.addEventListener(
-          "click",
-          () => {
-
-            if (
-              !selectedLetter ||
-              card.classList.contains(
-                "correct"
-              )
-            ) {
-              return;
-            }
+                const wrongLetter =
+                  selectedLetter;
 
 
-            /* Correct Match */
+                wrongLetter.classList.add(
+                  "wrong"
+                );
 
-            if (
-              selectedLetter.dataset.id ===
-              card.dataset.id
-            ) {
+                card.classList.add(
+                  "wrong"
+                );
 
-              selectedLetter.classList.remove(
-                "selected"
-              );
-
-              selectedLetter.classList.add(
-                "correct"
-              );
-
-              card.classList.add(
-                "correct"
-              );
-
-
-              score++;
-
-              scoreElement.textContent =
-                score;
-
-
-              messageElement.textContent =
-                "✅ સાચો જવાબ!";
-
-
-              selectedLetter = null;
-
-
-              /* Game Complete */
-
-              if (
-                score ===
-                PAIRS_PER_GAME
-              ) {
 
                 messageElement.textContent =
-                  "🎉 ખૂબ સરસ! તમે રમત પૂર્ણ કરી.";
+                  "❌ ફરી પ્રયત્ન કરો";
 
-                restartButton.style.display =
-                  "block";
+
+                setTimeout(
+                  () => {
+
+                    wrongLetter.classList.remove(
+                      "wrong"
+                    );
+
+                    card.classList.remove(
+                      "wrong"
+                    );
+
+                  },
+                  500
+                );
 
               }
 
             }
+          );
 
-
-            /* Wrong Match */
-
-            else {
-
-              const wrongLetter =
-                selectedLetter;
-
-
-              wrongLetter.classList.add(
-                "wrong"
-              );
-
-              card.classList.add(
-                "wrong"
-              );
-
-
-              messageElement.textContent =
-                "❌ ફરી પ્રયત્ન કરો";
-
-
-              setTimeout(
-                () => {
-
-                  wrongLetter.classList.remove(
-                    "wrong"
-                  );
-
-                  card.classList.remove(
-                    "wrong"
-                  );
-
-                },
-                500
-              );
-
-            }
-
-          }
-        );
-
-      });
+        }
+      );
 
     }
 
 
     /* ========================================
-       New Game Button
+       NEW GAME BUTTON
     ======================================== */
 
     restartButton.addEventListener(
@@ -690,7 +863,7 @@
 
 
     /* ========================================
-       Start First Game
+       START FIRST GAME
     ======================================== */
 
     startGame();

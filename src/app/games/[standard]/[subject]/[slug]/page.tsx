@@ -59,15 +59,16 @@ export default async function GamePage({ params }: PageProps) {
             title={game.title}
             className="
               block
-              h-[700px]
+              h-[85vh]
+              min-h-[700px]
               w-full
-              overflow-hidden
               border-0
               bg-transparent
-              sm:h-[760px]
-              lg:h-[800px]
+              sm:h-[80vh]
+              sm:min-h-[760px]
+              lg:min-h-[800px]
             "
-            scrolling="no"
+            scrolling="yes"
             loading="lazy"
             allowFullScreen
           />

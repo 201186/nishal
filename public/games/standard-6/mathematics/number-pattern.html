@@ -585,30 +585,7 @@
        RESULT MODAL
     ========================= */
 
-   /* =====================================================
-   RESULT MODAL - NO BLUR, NO DARK BACKGROUND
-====================================================== */
-
-.result-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 6000;
-
-  display: none;
-  align-items: center;
-  justify-content: center;
-
-  padding: 20px;
-
-  /* પાછળની game normal જ દેખાશે */
-  background: transparent;
-
-  /* કોઈ blur નહીં */
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-}
-
-.result-overlay.show {
+    .result-overlay.show {
   display: flex;
 }
 
@@ -626,6 +603,20 @@
 
   box-shadow:
     0 20px 60px rgba(15, 23, 42, 0.18);
+}
+
+.result-card {
+  width: min(440px, 94%);
+  padding: 30px 24px;
+
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 22px;
+
+  text-align: center;
+
+  box-shadow:
+    0 20px 60px rgba(15, 23, 42, 0.12);
 }
 
     .result-card {
