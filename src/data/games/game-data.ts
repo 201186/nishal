@@ -142,10 +142,32 @@ export const gameData = [
         ],
       },
       {
-        title: "ગણિત",
-        slug: "mathematics",
-        games: [],
-      },
+  title: "ગણિત",
+  slug: "mathematics",
+  games: [
+    {
+      title: "એકી અને બેકી સંખ્યાઓ",
+      slug: "odd-even-numbers",
+      type: "interactive",
+      thumbnail: "",
+      isActive: true,
+    },
+    {
+      title: "મોટી અને નાની સંખ્યા",
+      slug: "big-small-number",
+      type: "interactive",
+      thumbnail: "",
+      isActive: true,
+    },
+    {
+  title: "ચડતો અને ઉતરતો ક્રમ",
+  slug: "ascending-descending-order",
+  type: "interactive",
+  thumbnail: "",
+  isActive: true,
+},
+  ],
+},
       {
         title: "પર્યાવરણ",
         slug: "environment",
@@ -237,112 +259,126 @@ export const gameData = [
   },
 
   // =========================
-  // STANDARD 6
-  // =========================
-  {
-    standard: "standard-6",
-    title: "Standard 6",
-    slug: "standard-6",
-    subjects: [
-      {
-        title: "ગુજરાતી",
-        slug: "gujarati",
-        games: [],
-      },
-      {
-        title: "ગણિત",
-        slug: "mathematics",
-        games: [
-          {
-            title: "સંખ્યા પેટર્ન શોધો",
-            slug: "number-pattern",
-            type: "pattern",
-            thumbnail: "",
-            isActive: true,
-          },
-          {
-            title: "ખૂણાઓ સાથે રમો",
-            slug: "angle-game",
-            type: "interactive",
-            thumbnail: "",
-            isActive: true,
-          },
-        ],
-      },
-      {
-        title: "વિજ્ઞાન",
-        slug: "science",
-        games: [],
-      },
-      {
-        title: "સામાજિક વિજ્ઞાન",
-        slug: "social-science",
-        games: [],
-      },
-      {
-        title: "English",
-        slug: "english",
-        games: [],
-      },
-      {
-        title: "Hindi",
-        slug: "hindi",
-        games: [],
-      },
-      {
-        title: "Sanskrit",
-        slug: "sanskrit",
-        games: [],
-      },
-    ],
-  },
+// STANDARD 6
+// =========================
+{
+  standard: "standard-6",
+  title: "Standard 6",
+  slug: "standard-6",
+  subjects: [
+    {
+      title: "ગુજરાતી",
+      slug: "gujarati",
+      games: [],
+    },
+    {
+      title: "ગણિત",
+      slug: "mathematics",
+      games: [
+        {
+          title: "સંખ્યા પેટર્ન શોધો",
+          slug: "number-pattern",
+          type: "pattern",
+          thumbnail: "",
+          isActive: true,
+        },
+        {
+          title: "ખૂણાઓ સાથે રમો",
+          slug: "angle-game",
+          type: "interactive",
+          thumbnail: "",
+          isActive: true,
+        },
+        {
+          title: "પૂર્ણાંક સંખ્યાઓનો ચડતો અને ઉતરતો ક્રમ",
+          slug: "integer-order",
+          type: "interactive",
+          thumbnail: "",
+          isActive: true,
+        },
+      ],
+    },
+    {
+      title: "વિજ્ઞાન",
+      slug: "science",
+      games: [],
+    },
+    {
+      title: "સામાજિક વિજ્ઞાન",
+      slug: "social-science",
+      games: [],
+    },
+    {
+      title: "English",
+      slug: "english",
+      games: [],
+    },
+    {
+      title: "Hindi",
+      slug: "hindi",
+      games: [],
+    },
+    {
+      title: "Sanskrit",
+      slug: "sanskrit",
+      games: [],
+    },
+  ],
+},
 
   // =========================
-  // STANDARD 7
-  // =========================
-  {
-    standard: "standard-7",
-    title: "Standard 7",
-    slug: "standard-7",
-    subjects: [
-      {
-        title: "ગુજરાતી",
-        slug: "gujarati",
-        games: [],
-      },
-      {
-        title: "ગણિત",
-        slug: "mathematics",
-        games: [],
-      },
-      {
-        title: "વિજ્ઞાન",
-        slug: "science",
-        games: [],
-      },
-      {
-        title: "સામાજિક વિજ્ઞાન",
-        slug: "social-science",
-        games: [],
-      },
-      {
-        title: "English",
-        slug: "english",
-        games: [],
-      },
-      {
-        title: "Hindi",
-        slug: "hindi",
-        games: [],
-      },
-      {
-        title: "Sanskrit",
-        slug: "sanskrit",
-        games: [],
-      },
-    ],
-  },
-
+// STANDARD 7
+// =========================
+{
+  standard: "standard-7",
+  title: "Standard 7",
+  slug: "standard-7",
+  subjects: [
+    {
+      title: "ગુજરાતી",
+      slug: "gujarati",
+      games: [],
+    },
+    {
+      title: "ગણિત",
+      slug: "mathematics",
+      games: [
+        {
+          title: "પૂર્ણાંક સંખ્યાઓનો ચડતો અને ઉતરતો ક્રમ",
+          slug: "integer-order",
+          type: "interactive",
+          thumbnail: "",
+          isActive: true,
+        },
+      ],
+    },
+    {
+      title: "વિજ્ઞાન",
+      slug: "science",
+      games: [],
+    },
+    {
+      title: "સામાજિક વિજ્ઞાન",
+      slug: "social-science",
+      games: [],
+    },
+    {
+      title: "English",
+      slug: "english",
+      games: [],
+    },
+    {
+      title: "Hindi",
+      slug: "hindi",
+      games: [],
+    },
+    {
+      title: "Sanskrit",
+      slug: "sanskrit",
+      games: [],
+    },
+  ],
+},
   // =========================
   // STANDARD 8
   // =========================

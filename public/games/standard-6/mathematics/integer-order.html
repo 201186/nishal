@@ -1,0 +1,2395 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>પૂર્ણાંક સંખ્યાઓનો ચડતો અને ઉતરતો ક્રમ</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* =========================
+       HIDE SCROLLBAR
+       SCROLLING STILL WORKS
+    ========================= */
+
+    html,
+    body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+    }
+
+    html::-webkit-scrollbar,
+    body::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      height: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-y: auto;
+
+      font-family:
+        "Noto Sans Gujarati",
+        "Shruti",
+        Arial,
+        sans-serif;
+
+      background: #ffffff;
+      color: #1f2937;
+    }
+
+    button {
+      font-family: inherit;
+    }
+
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    .game-header {
+      width: 100%;
+
+      padding: 28px 20px 24px;
+
+      text-align: center;
+
+      background: #ffffff;
+
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .game-header h1 {
+      margin-bottom: 8px;
+
+      color: #111827;
+
+      font-size: 32px;
+      font-weight: 800;
+      line-height: 1.3;
+    }
+
+    .game-header p {
+      color: #64748b;
+
+      font-size: 17px;
+      line-height: 1.6;
+    }
+
+
+    /* =========================
+       MAIN CONTAINER
+    ========================= */
+
+    .container {
+      width: min(1100px, 94%);
+      max-width: 100%;
+
+      margin: 0 auto;
+
+      padding: 28px 0 50px;
+    }
+
+    .section-title {
+      margin-bottom: 15px;
+
+      color: #111827;
+
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+
+    /* =========================
+       MODE BUTTONS
+    ========================= */
+
+    .mode-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+      gap: 12px;
+
+      margin-bottom: 26px;
+    }
+
+    .mode-btn {
+      min-width: 0;
+      min-height: 58px;
+
+      padding: 13px 14px;
+
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+
+      background: #ffffff;
+      color: #334155;
+
+      font-size: 17px;
+      font-weight: 800;
+      line-height: 1.4;
+
+      cursor: pointer;
+
+      touch-action: manipulation;
+
+      -webkit-tap-highlight-color: transparent;
+
+      transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease,
+        color 0.2s ease;
+    }
+
+    .mode-btn:hover {
+      border-color: #3b82f6;
+
+      color: #2563eb;
+
+      transform: translateY(-2px);
+    }
+
+    .mode-btn.active {
+      background: #2563eb;
+
+      border-color: #2563eb;
+
+      color: #ffffff;
+    }
+
+
+    /* =========================
+       INFO BAR
+    ========================= */
+
+    .info-bar {
+      display: grid;
+
+      grid-template-columns:
+        2fr 1fr 1fr 1fr;
+
+      gap: 12px;
+
+      margin-bottom: 20px;
+    }
+
+    .info-box {
+      min-width: 0;
+
+      padding: 15px 12px;
+
+      background: #f8fafc;
+
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+
+      text-align: center;
+    }
+
+    .info-label {
+      display: block;
+
+      margin-bottom: 5px;
+
+      color: #64748b;
+
+      font-size: 13px;
+    }
+
+    .info-value {
+      display: block;
+
+      color: #111827;
+
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .current-mode .info-value {
+      color: #2563eb;
+
+      font-size: 18px;
+    }
+
+
+    /* =========================
+       PROGRESS
+    ========================= */
+
+    .progress-wrap {
+      margin-bottom: 20px;
+    }
+
+    .progress-info {
+      display: flex;
+
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 12px;
+
+      margin-bottom: 8px;
+
+      color: #64748b;
+
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 10px;
+
+      overflow: hidden;
+
+      background: #e2e8f0;
+
+      border-radius: 999px;
+    }
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+
+      background: #2563eb;
+
+      border-radius: 999px;
+
+      transition: width 0.3s ease;
+    }
+
+
+    /* =========================
+       INSTRUCTION
+    ========================= */
+
+    .instruction {
+      padding: 15px 18px;
+
+      margin-bottom: 20px;
+
+      background: #eff6ff;
+
+      border: 1px solid #bfdbfe;
+      border-radius: 12px;
+
+      color: #1d4ed8;
+
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1.6;
+
+      text-align: center;
+    }
+
+
+    /* =========================
+       SELECTED ORDER
+    ========================= */
+
+    .selected-area {
+      margin-bottom: 20px;
+
+      padding: 16px;
+
+      background: #f8fafc;
+
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+    }
+
+    .selected-title {
+      margin-bottom: 12px;
+
+      color: #64748b;
+
+      font-size: 14px;
+      font-weight: 700;
+
+      text-align: center;
+    }
+
+    .selected-order {
+      min-height: 72px;
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+      gap: 10px;
+    }
+
+    .selected-slot {
+      min-width: 0;
+      min-height: 72px;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      background: #ffffff;
+
+      border: 2px dashed #cbd5e1;
+      border-radius: 12px;
+
+      color: #94a3b8;
+
+      font-family: Arial, sans-serif;
+      font-size: 25px;
+      font-weight: 900;
+    }
+
+    .selected-slot.filled {
+      background: #eff6ff;
+
+      border-style: solid;
+      border-color: #60a5fa;
+
+      color: #1d4ed8;
+    }
+
+
+    /* =========================
+       NUMBER BOARD
+    ========================= */
+
+    .number-board {
+      width: 100%;
+      min-width: 0;
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+      gap: 16px;
+    }
+
+    .number-box {
+      position: relative;
+
+      width: 100%;
+      min-width: 0;
+      min-height: 120px;
+
+      padding: 16px 10px;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      background: #ffffff;
+
+      border: 3px solid #dbe2ea;
+      border-radius: 18px;
+
+      color: #1f2937;
+
+      font-family: Arial, sans-serif;
+      font-size: 40px;
+      font-weight: 900;
+
+      cursor: pointer;
+
+      user-select: none;
+
+      touch-action: manipulation;
+
+      -webkit-tap-highlight-color: transparent;
+
+      transition:
+        transform 0.15s ease,
+        border-color 0.15s ease,
+        background 0.15s ease,
+        color 0.15s ease;
+    }
+
+    .number-box:hover:not(:disabled) {
+      transform: translateY(-4px);
+
+      border-color: #60a5fa;
+
+      background: #f8fbff;
+    }
+
+    .number-box.selected {
+      background: #eff6ff;
+
+      border-color: #3b82f6;
+
+      color: #2563eb;
+
+      opacity: 0.55;
+
+      cursor: default;
+    }
+
+    .number-box.correct {
+      background: #dcfce7;
+
+      border-color: #22c55e;
+
+      color: #15803d;
+    }
+
+    .number-box.wrong {
+      background: #fee2e2;
+
+      border-color: #ef4444;
+
+      color: #b91c1c;
+
+      animation: shake 0.3s;
+    }
+
+
+    /* =========================
+       SHAKE
+    ========================= */
+
+    @keyframes shake {
+      0% {
+        transform: translateX(0);
+      }
+
+      25% {
+        transform: translateX(-6px);
+      }
+
+      50% {
+        transform: translateX(6px);
+      }
+
+      75% {
+        transform: translateX(-6px);
+      }
+
+      100% {
+        transform: translateX(0);
+      }
+    }
+
+
+    /* =========================
+       MESSAGE
+    ========================= */
+
+    .message {
+      min-height: 52px;
+
+      margin-top: 20px;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      font-size: 19px;
+      font-weight: 800;
+      line-height: 1.5;
+
+      text-align: center;
+    }
+
+    .message.success {
+      color: #15803d;
+    }
+
+    .message.error {
+      color: #dc2626;
+    }
+
+
+    /* =========================
+       ACTION
+    ========================= */
+
+    .actions {
+      display: flex;
+
+      justify-content: center;
+
+      margin-top: 12px;
+    }
+
+    .new-game-btn {
+      min-height: 50px;
+
+      padding: 13px 28px;
+
+      border: none;
+      border-radius: 10px;
+
+      background: #111827;
+
+      color: #ffffff;
+
+      font-size: 16px;
+      font-weight: 800;
+
+      cursor: pointer;
+
+      touch-action: manipulation;
+
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .new-game-btn:hover {
+      background: #000000;
+    }
+
+
+    /* =========================
+       ANSWER POPUP
+    ========================= */
+
+    .answer-popup {
+      position: fixed;
+
+      top: 50%;
+      left: 50%;
+
+      z-index: 3000;
+
+      width: min(330px, 88%);
+
+      padding: 26px 24px;
+
+      border-radius: 22px;
+
+      text-align: center;
+
+      color: #ffffff;
+
+      opacity: 0;
+      visibility: hidden;
+
+      pointer-events: none;
+
+      transform:
+        translate(-50%, -50%)
+        scale(0.7);
+
+      transition:
+        opacity 0.18s ease,
+        transform 0.18s ease,
+        visibility 0.18s ease;
+
+      box-shadow:
+        0 20px 50px
+        rgba(0, 0, 0, 0.25);
+    }
+
+    .answer-popup.show {
+      opacity: 1;
+
+      visibility: visible;
+
+      transform:
+        translate(-50%, -50%)
+        scale(1);
+    }
+
+    .correct-popup {
+      background:
+        linear-gradient(
+          135deg,
+          #22c55e,
+          #15803d
+        );
+    }
+
+    .wrong-popup {
+      background:
+        linear-gradient(
+          135deg,
+          #ef4444,
+          #b91c1c
+        );
+    }
+
+    .popup-icon {
+      width: 68px;
+      height: 68px;
+
+      margin: 0 auto 12px;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 50%;
+
+      background:
+        rgba(255, 255, 255, 0.2);
+
+      font-size: 42px;
+      font-weight: 900;
+    }
+
+    .popup-title {
+      display: block;
+
+      font-size: 25px;
+      font-weight: 900;
+      line-height: 1.3;
+    }
+
+    .popup-subtitle {
+      display: block;
+
+      margin-top: 6px;
+
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.5;
+
+      opacity: 0.95;
+    }
+
+
+    /* =========================
+       RESULT MODAL
+    ========================= */
+
+    .result-overlay {
+      position: fixed;
+
+      inset: 0;
+
+      z-index: 6000;
+
+      display: none;
+
+      align-items: center;
+      justify-content: center;
+
+      padding: 20px;
+
+      background: transparent;
+    }
+
+    .result-overlay.show {
+      display: flex;
+    }
+
+    .result-card {
+      width: min(440px, 94%);
+
+      padding: 30px 24px;
+
+      background: #ffffff;
+
+      border: 1px solid #e2e8f0;
+      border-radius: 22px;
+
+      text-align: center;
+
+      box-shadow:
+        0 20px 60px
+        rgba(15, 23, 42, 0.18);
+    }
+
+    .result-icon {
+      width: 70px;
+      height: 70px;
+
+      margin: 0 auto 16px;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      background: #dcfce7;
+
+      border-radius: 50%;
+
+      color: #15803d;
+
+      font-size: 36px;
+      font-weight: 900;
+    }
+
+    .result-card h2 {
+      margin-bottom: 8px;
+
+      color: #15803d;
+
+      font-size: 28px;
+      font-weight: 800;
+    }
+
+    .result-card > p {
+      margin-bottom: 22px;
+
+      color: #64748b;
+
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .result-mode {
+      padding: 12px;
+
+      margin-bottom: 14px;
+
+      background: #eff6ff;
+
+      border-radius: 10px;
+
+      color: #1d4ed8;
+
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .result-stats {
+      display: grid;
+
+      grid-template-columns:
+        repeat(2, 1fr);
+
+      gap: 12px;
+
+      margin-bottom: 22px;
+    }
+
+    .result-stat {
+      padding: 16px 10px;
+
+      background: #f8fafc;
+
+      border-radius: 12px;
+    }
+
+    .result-stat span {
+      display: block;
+
+      margin-bottom: 5px;
+
+      color: #64748b;
+
+      font-size: 13px;
+    }
+
+    .result-stat strong {
+      color: #111827;
+
+      font-size: 24px;
+    }
+
+    .play-again-btn {
+      width: 100%;
+
+      min-height: 52px;
+
+      padding: 14px;
+
+      border: none;
+      border-radius: 10px;
+
+      background: #2563eb;
+
+      color: #ffffff;
+
+      font-size: 17px;
+      font-weight: 800;
+
+      cursor: pointer;
+
+      touch-action: manipulation;
+
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .play-again-btn:hover {
+      background: #1d4ed8;
+    }
+
+
+    /* =========================
+       LARGE SCREEN
+    ========================= */
+
+    @media (min-width: 1440px) {
+
+      .game-header {
+        padding: 30px 24px 26px;
+      }
+
+      .game-header h1 {
+        font-size:
+          clamp(34px, 2.2vw, 46px);
+      }
+
+      .game-header p {
+        font-size:
+          clamp(18px, 1.2vw, 22px);
+      }
+
+      .container {
+        width: min(1300px, 94%);
+
+        padding-top: 32px;
+      }
+
+      .section-title {
+        font-size: 24px;
+      }
+
+      .mode-btn {
+        min-height: 66px;
+
+        font-size: 20px;
+      }
+
+      .instruction {
+        font-size: 22px;
+      }
+
+      .number-box {
+        min-height: 150px;
+
+        font-size: 52px;
+      }
+
+      .selected-slot {
+        min-height: 86px;
+
+        font-size: 32px;
+      }
+    }
+
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 600px) {
+
+      .game-header {
+        padding: 20px 14px 18px;
+      }
+
+      .game-header h1 {
+        font-size: 24px;
+      }
+
+      .game-header p {
+        font-size: 14px;
+      }
+
+      .container {
+        width: 94%;
+
+        padding: 18px 0 36px;
+      }
+
+      .section-title {
+        margin-bottom: 12px;
+
+        font-size: 18px;
+      }
+
+      .mode-grid {
+        gap: 8px;
+
+        margin-bottom: 18px;
+      }
+
+      .mode-btn {
+        min-height: 54px;
+
+        padding: 9px 6px;
+
+        font-size: 15px;
+      }
+
+      .info-bar {
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
+
+        gap: 8px;
+
+        margin-bottom: 16px;
+      }
+
+      .info-box {
+        padding: 11px 7px;
+      }
+
+      .info-label {
+        font-size: 12px;
+      }
+
+      .info-value {
+        font-size: 20px;
+      }
+
+      .current-mode .info-value {
+        font-size: 15px;
+      }
+
+      .instruction {
+        padding: 12px 10px;
+
+        margin-bottom: 14px;
+
+        font-size: 16px;
+      }
+
+      .selected-area {
+        padding: 10px;
+
+        margin-bottom: 14px;
+      }
+
+      .selected-order {
+        gap: 6px;
+      }
+
+      .selected-slot {
+        min-height: 58px;
+
+        border-radius: 9px;
+
+        font-size: 20px;
+      }
+
+      .number-board {
+        gap: 8px;
+      }
+
+      .number-box {
+        min-height: 78px;
+
+        padding: 6px;
+
+        border-width: 2px;
+        border-radius: 12px;
+
+        font-size: 27px;
+      }
+
+      .message {
+        min-height: 44px;
+
+        margin-top: 14px;
+
+        font-size: 16px;
+      }
+
+      .new-game-btn {
+        width: 100%;
+
+        min-height: 50px;
+      }
+
+      .answer-popup {
+        width: min(310px, 88%);
+
+        padding: 22px 18px;
+      }
+
+      .result-card {
+        padding: 26px 18px;
+      }
+    }
+
+
+    /* =========================
+       VERY SMALL MOBILE
+    ========================= */
+
+    @media (max-width: 380px) {
+
+      .number-box {
+        min-height: 68px;
+
+        font-size: 23px;
+      }
+
+      .selected-slot {
+        min-height: 52px;
+
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+
+
+<body>
+
+  <header class="game-header">
+
+    <h1>
+      પૂર્ણાંક સંખ્યાઓનો ચડતો અને ઉતરતો ક્રમ
+    </h1>
+
+    <p>
+      પૂર્ણાંક સંખ્યાઓને સાચા ક્રમમાં પસંદ કરો
+    </p>
+
+  </header>
+
+
+  <main class="container">
+
+    <h2 class="section-title">
+      કયો ક્રમ બનાવવો છે?
+    </h2>
+
+
+    <div class="mode-grid">
+
+      <button
+        class="mode-btn active"
+        data-mode="ascending"
+        type="button"
+      >
+        ચડતો ક્રમ
+      </button>
+
+
+      <button
+        class="mode-btn"
+        data-mode="descending"
+        type="button"
+      >
+        ઉતરતો ક્રમ
+      </button>
+
+    </div>
+
+
+    <div class="info-bar">
+
+      <div class="info-box current-mode">
+
+        <span class="info-label">
+          બનાવવાનો ક્રમ
+        </span>
+
+        <span
+          class="info-value"
+          id="modeName"
+        >
+          ચડતો ક્રમ
+        </span>
+
+      </div>
+
+
+      <div class="info-box">
+
+        <span class="info-label">
+          રાઉન્ડ
+        </span>
+
+        <span
+          class="info-value"
+          id="roundScore"
+        >
+          1 / 10
+        </span>
+
+      </div>
+
+
+      <div class="info-box">
+
+        <span class="info-label">
+          સાચા
+        </span>
+
+        <span
+          class="info-value"
+          id="correctScore"
+        >
+          0
+        </span>
+
+      </div>
+
+
+      <div class="info-box">
+
+        <span class="info-label">
+          ખોટા
+        </span>
+
+        <span
+          class="info-value"
+          id="wrongScore"
+        >
+          0
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <div class="progress-wrap">
+
+      <div class="progress-info">
+
+        <span>
+          રમતની પ્રગતિ
+        </span>
+
+        <span id="progressText">
+          0 / 10
+        </span>
+
+      </div>
+
+
+      <div class="progress-track">
+
+        <div
+          class="progress-fill"
+          id="progressFill"
+        ></div>
+
+      </div>
+
+    </div>
+
+
+    <div
+      class="instruction"
+      id="instruction"
+    >
+      સૌથી નાની પૂર્ણાંક સંખ્યાથી શરૂઆત કરીને ચડતા ક્રમમાં સંખ્યાઓ પસંદ કરો.
+    </div>
+
+
+    <div class="selected-area">
+
+      <div class="selected-title">
+        તમારો ક્રમ
+      </div>
+
+      <div
+        class="selected-order"
+        id="selectedOrder"
+      ></div>
+
+    </div>
+
+
+    <div
+      class="number-board"
+      id="numberBoard"
+    ></div>
+
+
+    <div
+      class="message"
+      id="message"
+      aria-live="polite"
+    ></div>
+
+
+    <div class="actions">
+
+      <button
+        class="new-game-btn"
+        id="newGameBtn"
+        type="button"
+      >
+        નવી રમત
+      </button>
+
+    </div>
+
+  </main>
+
+
+  <!-- CORRECT POPUP -->
+
+  <div
+    class="answer-popup correct-popup"
+    id="correctPopup"
+    role="status"
+  >
+
+    <div class="popup-icon">
+      ✓
+    </div>
+
+    <span class="popup-title">
+      ખૂબ સરસ!
+    </span>
+
+    <span class="popup-subtitle">
+      સાચો ક્રમ
+    </span>
+
+  </div>
+
+
+  <!-- WRONG POPUP -->
+
+  <div
+    class="answer-popup wrong-popup"
+    id="wrongPopup"
+    role="status"
+  >
+
+    <div class="popup-icon">
+      ×
+    </div>
+
+    <span class="popup-title">
+      ફરી પ્રયત્ન કરો
+    </span>
+
+    <span class="popup-subtitle">
+      આ પૂર્ણાંક સંખ્યા અત્યારે સાચી નથી
+    </span>
+
+  </div>
+
+
+  <!-- RESULT MODAL -->
+
+  <div
+    class="result-overlay"
+    id="resultOverlay"
+  >
+
+    <div class="result-card">
+
+      <div class="result-icon">
+        ✓
+      </div>
+
+      <h2>
+        રમત પૂર્ણ
+      </h2>
+
+      <p>
+        તમે બધા 10 રાઉન્ડ પૂર્ણ કર્યા.
+      </p>
+
+
+      <div
+        class="result-mode"
+        id="finalMode"
+      >
+        ચડતો ક્રમ
+      </div>
+
+
+      <div class="result-stats">
+
+        <div class="result-stat">
+
+          <span>
+            સાચા રાઉન્ડ
+          </span>
+
+          <strong id="finalCorrect">
+            0
+          </strong>
+
+        </div>
+
+
+        <div class="result-stat">
+
+          <span>
+            ખોટા પ્રયત્ન
+          </span>
+
+          <strong id="finalWrong">
+            0
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <button
+        class="play-again-btn"
+        id="playAgainBtn"
+        type="button"
+      >
+        ફરીથી રમો
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- SOUNDS -->
+
+  <audio
+    id="correctSound"
+    src="/sounds/correct.mp3"
+    preload="auto"
+  ></audio>
+
+  <audio
+    id="wrongSound"
+    src="/sounds/wrong.mp3"
+    preload="auto"
+  ></audio>
+
+  <audio
+    id="completeSound"
+    src="/sounds/complete.mp3"
+    preload="auto"
+  ></audio>
+
+
+  <script>
+
+    /* =========================
+       ELEMENTS
+    ========================= */
+
+    const modeButtons =
+      document.querySelectorAll(".mode-btn");
+
+    const numberBoard =
+      document.getElementById("numberBoard");
+
+    const selectedOrder =
+      document.getElementById("selectedOrder");
+
+    const modeName =
+      document.getElementById("modeName");
+
+    const roundScore =
+      document.getElementById("roundScore");
+
+    const correctScore =
+      document.getElementById("correctScore");
+
+    const wrongScore =
+      document.getElementById("wrongScore");
+
+    const instruction =
+      document.getElementById("instruction");
+
+    const message =
+      document.getElementById("message");
+
+    const progressText =
+      document.getElementById("progressText");
+
+    const progressFill =
+      document.getElementById("progressFill");
+
+    const correctPopup =
+      document.getElementById("correctPopup");
+
+    const wrongPopup =
+      document.getElementById("wrongPopup");
+
+    const resultOverlay =
+      document.getElementById("resultOverlay");
+
+    const finalMode =
+      document.getElementById("finalMode");
+
+    const finalCorrect =
+      document.getElementById("finalCorrect");
+
+    const finalWrong =
+      document.getElementById("finalWrong");
+
+
+    /* =========================
+       AUDIO
+    ========================= */
+
+    const correctSound =
+      document.getElementById("correctSound");
+
+    const wrongSound =
+      document.getElementById("wrongSound");
+
+    const completeSound =
+      document.getElementById("completeSound");
+
+
+    /* =========================
+       SETTINGS
+    ========================= */
+
+    const TOTAL_ROUNDS = 10;
+
+    const NUMBERS_PER_ROUND = 4;
+
+    const MIN_INTEGER = -100;
+
+    const MAX_INTEGER = 100;
+
+
+    /* =========================
+       GAME STATE
+    ========================= */
+
+    let currentMode =
+      "ascending";
+
+    let currentRound =
+      1;
+
+    let correctCount =
+      0;
+
+    let wrongCount =
+      0;
+
+    let currentNumbers =
+      [];
+
+    let correctOrder =
+      [];
+
+    let selectedNumbers =
+      [];
+
+    let roundLocked =
+      false;
+
+    let popupTimer =
+      null;
+
+    let nextRoundTimer =
+      null;
+
+
+    /* =========================
+       MODE DATA
+    ========================= */
+
+    const modeData = {
+
+      ascending: {
+
+        name:
+          "ચડતો ક્રમ",
+
+        instruction:
+          "સૌથી નાની પૂર્ણાંક સંખ્યાથી શરૂઆત કરીને ચડતા ક્રમમાં સંખ્યાઓ પસંદ કરો.",
+
+        wrongMessage:
+          "હજુ નાની પૂર્ણાંક સંખ્યા શોધો."
+
+      },
+
+
+      descending: {
+
+        name:
+          "ઉતરતો ક્રમ",
+
+        instruction:
+          "સૌથી મોટી પૂર્ણાંક સંખ્યાથી શરૂઆત કરીને ઉતરતા ક્રમમાં સંખ્યાઓ પસંદ કરો.",
+
+        wrongMessage:
+          "હજુ મોટી પૂર્ણાંક સંખ્યા શોધો."
+
+      }
+
+    };
+
+
+    /* =========================
+       SHUFFLE
+    ========================= */
+
+    function shuffle(array) {
+
+      const newArray =
+        [...array];
+
+
+      for (
+        let i =
+          newArray.length - 1;
+
+        i > 0;
+
+        i--
+      ) {
+
+        const j =
+          Math.floor(
+            Math.random() *
+            (i + 1)
+          );
+
+
+        [
+          newArray[i],
+          newArray[j]
+        ] = [
+          newArray[j],
+          newArray[i]
+        ];
+
+      }
+
+
+      return newArray;
+
+    }
+
+
+    /* =========================
+       RANDOM INTEGER
+       -100 TO 100
+    ========================= */
+
+    function getRandomInteger() {
+
+      return (
+        Math.floor(
+          Math.random() *
+          (
+            MAX_INTEGER -
+            MIN_INTEGER +
+            1
+          )
+        ) +
+        MIN_INTEGER
+      );
+
+    }
+
+
+    /* =========================
+       GENERATE 4 UNIQUE
+       INTEGERS
+    ========================= */
+
+    function generateRoundNumbers() {
+
+      const numbers =
+        new Set();
+
+
+      while (
+        numbers.size <
+        NUMBERS_PER_ROUND
+      ) {
+
+        numbers.add(
+          getRandomInteger()
+        );
+
+      }
+
+
+      return shuffle(
+        Array.from(numbers)
+      );
+
+    }
+
+
+    /* =========================
+       AUDIO
+    ========================= */
+
+    function playAudio(audio) {
+
+      if (!audio) {
+        return;
+      }
+
+
+      audio.pause();
+
+      audio.currentTime = 0;
+
+
+      const playPromise =
+        audio.play();
+
+
+      if (
+        playPromise !==
+        undefined
+      ) {
+
+        playPromise.catch(
+          function () {}
+        );
+
+      }
+
+    }
+
+
+    function stopAllSounds() {
+
+      [
+        correctSound,
+        wrongSound,
+        completeSound
+      ].forEach(
+        function (audio) {
+
+          if (!audio) {
+            return;
+          }
+
+
+          audio.pause();
+
+          audio.currentTime = 0;
+
+        }
+      );
+
+    }
+
+
+    /* =========================
+       POPUPS
+    ========================= */
+
+    function hideAnswerPopups() {
+
+      correctPopup.classList.remove(
+        "show"
+      );
+
+      wrongPopup.classList.remove(
+        "show"
+      );
+
+    }
+
+
+    function showAnswerPopup(type) {
+
+      clearTimeout(
+        popupTimer
+      );
+
+
+      hideAnswerPopups();
+
+
+      const popup =
+        type === "correct"
+          ? correctPopup
+          : wrongPopup;
+
+
+      void popup.offsetWidth;
+
+
+      popup.classList.add(
+        "show"
+      );
+
+
+      popupTimer =
+        setTimeout(
+          function () {
+
+            popup.classList.remove(
+              "show"
+            );
+
+          },
+
+          900
+        );
+
+    }
+
+
+    /* =========================
+       START NEW GAME
+    ========================= */
+
+    function startNewGame() {
+
+      clearTimeout(
+        popupTimer
+      );
+
+      clearTimeout(
+        nextRoundTimer
+      );
+
+
+      stopAllSounds();
+
+      hideAnswerPopups();
+
+
+      resultOverlay.classList.remove(
+        "show"
+      );
+
+
+      currentRound = 1;
+
+      correctCount = 0;
+
+      wrongCount = 0;
+
+      roundLocked = false;
+
+
+      message.textContent = "";
+
+      message.className =
+        "message";
+
+
+      createRound();
+
+    }
+
+
+    /* =========================
+       CREATE ROUND
+    ========================= */
+
+    function createRound() {
+
+      roundLocked = false;
+
+      selectedNumbers = [];
+
+
+      numberBoard.innerHTML = "";
+
+      selectedOrder.innerHTML = "";
+
+
+      message.textContent = "";
+
+      message.className =
+        "message";
+
+
+      const data =
+        modeData[currentMode];
+
+
+      modeName.textContent =
+        data.name;
+
+
+      instruction.textContent =
+        data.instruction;
+
+
+      currentNumbers =
+        generateRoundNumbers();
+
+
+      /* =========================
+         CREATE CORRECT ORDER
+      ========================= */
+
+      if (
+        currentMode ===
+        "ascending"
+      ) {
+
+        correctOrder =
+          [...currentNumbers]
+            .sort(
+              function (a, b) {
+
+                return a - b;
+
+              }
+            );
+
+      }
+
+      else {
+
+        correctOrder =
+          [...currentNumbers]
+            .sort(
+              function (a, b) {
+
+                return b - a;
+
+              }
+            );
+
+      }
+
+
+      /* =========================
+         EMPTY SLOTS
+      ========================= */
+
+      for (
+        let i = 0;
+
+        i < NUMBERS_PER_ROUND;
+
+        i++
+      ) {
+
+        const slot =
+          document.createElement(
+            "div"
+          );
+
+
+        slot.className =
+          "selected-slot";
+
+
+        slot.textContent =
+          "—";
+
+
+        selectedOrder.appendChild(
+          slot
+        );
+
+      }
+
+
+      /* =========================
+         NUMBER BUTTONS
+      ========================= */
+
+      currentNumbers.forEach(
+        function (number) {
+
+          const box =
+            document.createElement(
+              "button"
+            );
+
+
+          box.type =
+            "button";
+
+
+          box.className =
+            "number-box";
+
+
+          /* ENGLISH NUMBER */
+
+          box.textContent =
+            String(number);
+
+
+          box.dataset.number =
+            String(number);
+
+
+          box.addEventListener(
+            "click",
+
+            function () {
+
+              selectNumber(
+                number,
+                box
+              );
+
+            }
+          );
+
+
+          numberBoard.appendChild(
+            box
+          );
+
+        }
+      );
+
+
+      updateGameInfo();
+
+    }
+
+
+    /* =========================
+       SELECT NUMBER
+    ========================= */
+
+    function selectNumber(
+      number,
+      box
+    ) {
+
+      if (
+        roundLocked
+      ) {
+        return;
+      }
+
+
+      if (
+        box.classList.contains(
+          "selected"
+        )
+      ) {
+        return;
+      }
+
+
+      const currentPosition =
+        selectedNumbers.length;
+
+
+      const expectedNumber =
+        correctOrder[
+          currentPosition
+        ];
+
+
+      /* =========================
+         WRONG ANSWER
+      ========================= */
+
+      if (
+        number !==
+        expectedNumber
+      ) {
+
+        wrongCount++;
+
+
+        box.classList.add(
+          "wrong"
+        );
+
+
+        playAudio(
+          wrongSound
+        );
+
+
+        showAnswerPopup(
+          "wrong"
+        );
+
+
+        message.textContent =
+          modeData[
+            currentMode
+          ].wrongMessage;
+
+
+        message.className =
+          "message error";
+
+
+        updateGameInfo();
+
+
+        setTimeout(
+          function () {
+
+            box.classList.remove(
+              "wrong"
+            );
+
+          },
+
+          700
+        );
+
+
+        return;
+
+      }
+
+
+      /* =========================
+         CORRECT NEXT NUMBER
+      ========================= */
+
+      selectedNumbers.push(
+        number
+      );
+
+
+      box.classList.add(
+        "selected"
+      );
+
+
+      box.disabled =
+        true;
+
+
+      const slots =
+        selectedOrder.querySelectorAll(
+          ".selected-slot"
+        );
+
+
+      const slot =
+        slots[
+          selectedNumbers.length - 1
+        ];
+
+
+      /* ENGLISH NUMBER */
+
+      slot.textContent =
+        String(number);
+
+
+      slot.classList.add(
+        "filled"
+      );
+
+
+      message.textContent =
+        "સાચું, હવે આગળની પૂર્ણાંક સંખ્યા પસંદ કરો.";
+
+
+      message.className =
+        "message success";
+
+
+      /* =========================
+         ROUND COMPLETE
+      ========================= */
+
+      if (
+        selectedNumbers.length ===
+        NUMBERS_PER_ROUND
+      ) {
+
+        roundLocked =
+          true;
+
+
+        correctCount++;
+
+
+        const allBoxes =
+          numberBoard.querySelectorAll(
+            ".number-box"
+          );
+
+
+        allBoxes.forEach(
+          function (button) {
+
+            button.classList.remove(
+              "selected"
+            );
+
+
+            button.classList.add(
+              "correct"
+            );
+
+
+            button.disabled =
+              true;
+
+          }
+        );
+
+
+        playAudio(
+          correctSound
+        );
+
+
+        showAnswerPopup(
+          "correct"
+        );
+
+
+        message.textContent =
+          "ખૂબ સરસ! તમે સાચો ક્રમ બનાવ્યો.";
+
+
+        message.className =
+          "message success";
+
+
+        updateGameInfo();
+
+
+        /* LAST ROUND */
+
+        if (
+          currentRound >=
+          TOTAL_ROUNDS
+        ) {
+
+          nextRoundTimer =
+            setTimeout(
+              showResult,
+
+              1200
+            );
+
+        }
+
+
+        /* NEXT ROUND */
+
+        else {
+
+          nextRoundTimer =
+            setTimeout(
+              function () {
+
+                currentRound++;
+
+
+                createRound();
+
+              },
+
+              1200
+            );
+
+        }
+
+      }
+
+    }
+
+
+    /* =========================
+       UPDATE GAME INFO
+    ========================= */
+
+    function updateGameInfo() {
+
+      const data =
+        modeData[currentMode];
+
+
+      modeName.textContent =
+        data.name;
+
+
+      /* ENGLISH NUMBERS */
+
+      roundScore.textContent =
+        currentRound +
+        " / " +
+        TOTAL_ROUNDS;
+
+
+      correctScore.textContent =
+        correctCount;
+
+
+      wrongScore.textContent =
+        wrongCount;
+
+
+      const completedRounds =
+        Math.max(
+          0,
+          currentRound - 1
+        );
+
+
+      progressText.textContent =
+        completedRounds +
+        " / " +
+        TOTAL_ROUNDS;
+
+
+      progressFill.style.width =
+        (
+          completedRounds /
+          TOTAL_ROUNDS *
+          100
+        ) +
+        "%";
+
+    }
+
+
+    /* =========================
+       SHOW RESULT
+    ========================= */
+
+    function showResult() {
+
+      hideAnswerPopups();
+
+
+      correctSound.pause();
+
+      correctSound.currentTime =
+        0;
+
+
+      const data =
+        modeData[currentMode];
+
+
+      finalMode.textContent =
+        data.name;
+
+
+      finalCorrect.textContent =
+        correctCount;
+
+
+      finalWrong.textContent =
+        wrongCount;
+
+
+      progressText.textContent =
+        TOTAL_ROUNDS +
+        " / " +
+        TOTAL_ROUNDS;
+
+
+      progressFill.style.width =
+        "100%";
+
+
+      resultOverlay.classList.add(
+        "show"
+      );
+
+
+      playAudio(
+        completeSound
+      );
+
+    }
+
+
+    /* =========================
+       MODE BUTTONS
+    ========================= */
+
+    modeButtons.forEach(
+      function (button) {
+
+        button.addEventListener(
+          "click",
+
+          function () {
+
+            modeButtons.forEach(
+              function (btn) {
+
+                btn.classList.remove(
+                  "active"
+                );
+
+              }
+            );
+
+
+            button.classList.add(
+              "active"
+            );
+
+
+            currentMode =
+              button.dataset.mode;
+
+
+            startNewGame();
+
+          }
+        );
+
+      }
+    );
+
+
+    /* =========================
+       NEW GAME
+    ========================= */
+
+    document
+      .getElementById(
+        "newGameBtn"
+      )
+      .addEventListener(
+        "click",
+
+        function () {
+
+          startNewGame();
+
+        }
+      );
+
+
+    /* =========================
+       PLAY AGAIN
+    ========================= */
+
+    document
+      .getElementById(
+        "playAgainBtn"
+      )
+      .addEventListener(
+        "click",
+
+        function () {
+
+          startNewGame();
+
+        }
+      );
+
+
+    /* =========================
+       START GAME
+    ========================= */
+
+    startNewGame();
+
+  </script>
+
+</body>
+</html>
