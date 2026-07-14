@@ -131,13 +131,15 @@ export const gameData = [
       {
         title: "ગુજરાતી",
         slug: "gujarati",
-        games: [{
-  slug: "word-builder",
-  title: "3 અને 4 અક્ષરના શબ્દો બનાવો",
-  type: "Word Builder",
-  isActive: true,
-},],
-        
+        games: [
+          {
+            title: "3 અને 4 અક્ષરના શબ્દો બનાવો",
+            slug: "word-builder",
+            type: "Word Builder",
+            thumbnail: "",
+            isActive: true,
+          },
+        ],
       },
       {
         title: "ગણિત",
@@ -250,7 +252,22 @@ export const gameData = [
       {
         title: "ગણિત",
         slug: "mathematics",
-        games: [],
+        games: [
+          {
+            title: "સંખ્યા પેટર્ન શોધો",
+            slug: "number-pattern",
+            type: "pattern",
+            thumbnail: "",
+            isActive: true,
+          },
+          {
+            title: "ખૂણાઓ સાથે રમો",
+            slug: "angle-game",
+            type: "interactive",
+            thumbnail: "",
+            isActive: true,
+          },
+        ],
       },
       {
         title: "વિજ્ઞાન",
@@ -340,10 +357,26 @@ export const gameData = [
         games: [],
       },
       {
-        title: "ગણિત",
-        slug: "mathematics",
-        games: [],
-      },
+  title: "ગણિત",
+  slug: "mathematics",
+  games: [
+    {
+      title: "વર્ગ અને વર્ગમૂળ",
+      slug: "square-square-root",
+      type: "interactive",
+      thumbnail: "",
+      isActive: true,
+    },
+    {
+      title: "ઘન અને ઘનમૂળ",
+      slug: "cube-cube-root",
+      type: "interactive",
+      thumbnail: "",
+      isActive: true,
+    },
+  ],
+},
+      
       {
         title: "વિજ્ઞાન",
         slug: "science",

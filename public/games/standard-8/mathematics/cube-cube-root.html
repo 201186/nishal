@@ -1,0 +1,2225 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>ઘન અને ઘનમૂળ | ધોરણ 8 ગણિત</title>
+
+  <style>
+    /* =====================================================
+       RESET
+    ====================================================== */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      width: 100%;
+      min-height: 100%;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      width: 100%;
+      min-height: 100vh;
+      overflow-x: hidden;
+
+      font-family:
+        "Noto Sans Gujarati",
+        "Shruti",
+        Arial,
+        sans-serif;
+
+      background: #ffffff;
+      color: #172033;
+    }
+
+    button {
+      font-family: inherit;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+
+    /* =====================================================
+       MAIN CONTAINER
+    ====================================================== */
+
+    .container {
+      width: min(1180px, 96%);
+      margin: 0 auto;
+      padding: 12px 0 28px;
+    }
+
+
+    /* =====================================================
+       MODE BUTTONS
+    ====================================================== */
+
+    .mode-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .mode-btn {
+      min-height: 54px;
+      padding: 10px 12px;
+
+      border: 2px solid #dbe3ef;
+      border-radius: 14px;
+
+      background: #ffffff;
+      color: #334155;
+
+      font-size: 16px;
+      font-weight: 800;
+
+      cursor: pointer;
+      touch-action: manipulation;
+
+      transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    .mode-btn:hover {
+      border-color: #2563eb;
+      transform: translateY(-1px);
+    }
+
+    .mode-btn.active {
+      background: #2563eb;
+      border-color: #2563eb;
+      color: #ffffff;
+    }
+
+
+    /* =====================================================
+       STATS
+    ====================================================== */
+
+    .stats {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .stat-box {
+      min-height: 68px;
+      padding: 8px 10px;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      background: #f8fafc;
+
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+
+      text-align: center;
+    }
+
+    .stat-label {
+      margin-bottom: 3px;
+
+      color: #64748b;
+
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .stat-value {
+      color: #111827;
+
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .stat-value.blue {
+      color: #2563eb;
+    }
+
+
+    /* =====================================================
+       GAME AREA
+       NO OUTER CARD
+    ====================================================== */
+
+    .game-area {
+      width: 100%;
+      padding: 0 0 20px;
+
+      background: transparent;
+      border: none;
+      box-shadow: none;
+    }
+
+
+    /* =====================================================
+       INSTRUCTION
+    ====================================================== */
+
+    .instruction {
+      width: 100%;
+
+      margin-bottom: 12px;
+      padding: 11px 16px;
+
+      background: #eff6ff;
+
+      border: 1px solid #bfdbfe;
+      border-radius: 13px;
+
+      color: #1d4ed8;
+
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1.6;
+
+      text-align: center;
+    }
+
+
+    /* =====================================================
+       QUESTION AREA
+       NO CARD
+    ====================================================== */
+
+    .question-area {
+      width: 100%;
+      margin: 0 auto 18px;
+      padding: 18px 10px 22px;
+
+      background: transparent;
+      border: none;
+
+      text-align: center;
+      overflow: visible;
+    }
+
+    .question-label {
+      display: block;
+
+      margin-bottom: 10px;
+
+      color: #64748b;
+
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .question {
+      width: 100%;
+      min-height: 100px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      overflow: visible;
+
+      color: #172033;
+
+      font-family:
+        Arial,
+        "Noto Sans Gujarati",
+        sans-serif;
+
+      font-size: clamp(48px, 7vw, 82px);
+      font-weight: 900;
+      line-height: 1.4;
+
+      padding: 12px 24px;
+
+      white-space: nowrap;
+    }
+
+    .question sup {
+      position: relative;
+      top: -0.12em;
+
+      margin-left: 2px;
+
+      font-size: 0.55em;
+      line-height: 1;
+    }
+
+    .equals-symbol {
+      margin-left: 12px;
+      margin-right: 2px;
+    }
+
+    .question-mark {
+      margin-left: 10px;
+      color: #2563eb;
+    }
+
+
+    /* =====================================================
+       PROPER CUBE ROOT SYMBOL
+    ====================================================== */
+
+    .cube-root-expression {
+      display: inline-flex;
+      align-items: flex-start;
+      justify-content: center;
+
+      white-space: nowrap;
+      line-height: 1;
+    }
+
+    .cube-root-symbol {
+      display: inline-block;
+
+      font-family:
+        "Cambria Math",
+        "Times New Roman",
+        serif;
+
+      font-size: 1.12em;
+      font-weight: 400;
+      line-height: 0.95;
+
+      margin-right: -2px;
+    }
+
+    .cube-root-number {
+      display: inline-block;
+
+      padding: 2px 8px 0 5px;
+
+      border-top: 5px solid #172033;
+
+      font-family: Arial, sans-serif;
+
+      font-size: 1em;
+      font-weight: 900;
+      line-height: 0.95;
+    }
+
+
+    /* =====================================================
+       ANSWERS
+    ====================================================== */
+
+    .answers-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+      gap: 12px;
+
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .answer-btn {
+      min-height: 68px;
+      padding: 12px 10px;
+
+      background: #ffffff;
+
+      border: 2px solid #dbe3ef;
+      border-radius: 15px;
+
+      color: #172033;
+
+      font-family:
+        Arial,
+        "Noto Sans Gujarati",
+        sans-serif;
+
+      font-size: 25px;
+      font-weight: 900;
+
+      cursor: pointer;
+      touch-action: manipulation;
+
+      transition:
+        transform 0.15s ease,
+        border-color 0.15s ease,
+        background 0.15s ease,
+        color 0.15s ease;
+    }
+
+    .answer-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      border-color: #60a5fa;
+    }
+
+    .answer-btn.correct {
+      background: #dcfce7;
+      border-color: #22c55e;
+      color: #15803d;
+    }
+
+    .answer-btn.wrong {
+      background: #fee2e2;
+      border-color: #ef4444;
+      color: #b91c1c;
+    }
+
+    .answer-btn:disabled {
+      cursor: default;
+    }
+
+
+    /* =====================================================
+       FEEDBACK
+    ====================================================== */
+
+    .feedback {
+      min-height: 42px;
+      margin-top: 12px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      text-align: center;
+
+      font-size: 17px;
+      font-weight: 900;
+      line-height: 1.5;
+    }
+
+    .feedback.success {
+      color: #15803d;
+    }
+
+    .feedback.error {
+      color: #dc2626;
+    }
+
+
+    /* =====================================================
+       ANSWER POPUP
+       NO BLACK BACKGROUND
+    ====================================================== */
+
+    .answer-popup {
+      position: fixed;
+
+      top: 50%;
+      left: 50%;
+
+      z-index: 5000;
+
+      width: min(350px, 88%);
+      padding: 27px 22px;
+
+      border-radius: 22px;
+
+      color: #ffffff;
+
+      text-align: center;
+
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+
+      transform:
+        translate(-50%, -50%)
+        scale(0.72);
+
+      transition:
+        opacity 0.18s ease,
+        transform 0.18s ease,
+        visibility 0.18s ease;
+
+      box-shadow:
+        0 24px 60px
+        rgba(15, 23, 42, 0.28);
+    }
+
+    .answer-popup.show {
+      opacity: 1;
+      visibility: visible;
+
+      transform:
+        translate(-50%, -50%)
+        scale(1);
+    }
+
+    .correct-popup {
+      background:
+        linear-gradient(
+          135deg,
+          #22c55e,
+          #15803d
+        );
+    }
+
+    .wrong-popup {
+      background:
+        linear-gradient(
+          135deg,
+          #ef4444,
+          #b91c1c
+        );
+    }
+
+    .popup-icon {
+      width: 68px;
+      height: 68px;
+
+      margin: 0 auto 12px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background:
+        rgba(255, 255, 255, 0.2);
+
+      border-radius: 50%;
+
+      font-size: 42px;
+      font-weight: 900;
+    }
+
+    .popup-title {
+      display: block;
+
+      font-size: 25px;
+      font-weight: 900;
+    }
+
+    .popup-text {
+      display: block;
+
+      margin-top: 6px;
+
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+
+    /* =====================================================
+       RESULT
+       NO BLACK BACKGROUND
+    ====================================================== */
+
+    .result-overlay {
+      position: fixed;
+      inset: 0;
+
+      z-index: 6000;
+
+      display: none;
+      align-items: center;
+      justify-content: center;
+
+      padding: 20px;
+
+      background: transparent;
+
+      pointer-events: none;
+    }
+
+    .result-overlay.show {
+      display: flex;
+    }
+
+    .result-card {
+      width: min(450px, 100%);
+      padding: 30px 24px;
+
+      background: #ffffff;
+
+      border: 1px solid #e2e8f0;
+      border-radius: 22px;
+
+      text-align: center;
+
+      pointer-events: auto;
+
+      box-shadow:
+        0 25px 65px
+        rgba(0, 0, 0, 0.22);
+    }
+
+    .result-icon {
+      width: 76px;
+      height: 76px;
+
+      margin: 0 auto 15px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background: #dcfce7;
+
+      border-radius: 50%;
+
+      color: #15803d;
+
+      font-size: 40px;
+      font-weight: 900;
+    }
+
+    .result-card h2 {
+      margin-bottom: 8px;
+
+      color: #15803d;
+
+      font-size: 29px;
+      font-weight: 900;
+    }
+
+    .result-card p {
+      margin-bottom: 20px;
+
+      color: #64748b;
+
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .result-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+
+      margin-bottom: 20px;
+    }
+
+    .result-stat {
+      padding: 16px 10px;
+
+      background: #f8fafc;
+
+      border-radius: 13px;
+    }
+
+    .result-stat span {
+      display: block;
+
+      margin-bottom: 5px;
+
+      color: #64748b;
+
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .result-stat strong {
+      color: #111827;
+
+      font-size: 28px;
+      font-weight: 900;
+    }
+
+    .play-again-btn {
+      width: 100%;
+      min-height: 52px;
+
+      border: none;
+      border-radius: 13px;
+
+      background: #2563eb;
+      color: #ffffff;
+
+      font-size: 17px;
+      font-weight: 900;
+
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+
+    .play-again-btn:hover {
+      background: #1d4ed8;
+    }
+
+
+    /* =====================================================
+       SHORT DESKTOP / LAPTOP
+    ====================================================== */
+
+    @media
+    (min-width: 801px)
+    and
+    (max-height: 820px) {
+
+      .container {
+        padding-top: 6px;
+      }
+
+      .mode-tabs {
+        margin-bottom: 8px;
+      }
+
+      .mode-btn {
+        min-height: 44px;
+      }
+
+      .stats {
+        margin-bottom: 8px;
+      }
+
+      .stat-box {
+        min-height: 56px;
+      }
+
+      .instruction {
+        margin-bottom: 6px;
+        padding: 7px 12px;
+      }
+
+      .question-area {
+        margin-bottom: 8px;
+        padding: 8px 10px 12px;
+      }
+
+      .question-label {
+        margin-bottom: 3px;
+      }
+
+      .question {
+        min-height: 72px;
+
+        padding: 4px 20px;
+
+        font-size: 58px;
+      }
+
+      .answer-btn {
+        min-height: 56px;
+        font-size: 22px;
+      }
+
+      .feedback {
+        min-height: 30px;
+        margin-top: 6px;
+      }
+    }
+
+
+    /* =====================================================
+       TABLET
+    ====================================================== */
+
+    @media
+    (min-width: 601px)
+    and
+    (max-width: 900px) {
+
+      .answers-grid {
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
+      }
+
+      .answer-btn {
+        min-height: 68px;
+      }
+    }
+
+
+    /* =====================================================
+       MOBILE
+    ====================================================== */
+
+    @media (max-width: 600px) {
+
+      .container {
+        width: 94%;
+        padding: 8px 0 18px;
+      }
+
+      .mode-tabs {
+        grid-template-columns: 1fr;
+        gap: 7px;
+
+        margin-bottom: 8px;
+      }
+
+      .mode-btn {
+        min-height: 45px;
+        padding: 8px;
+
+        font-size: 14px;
+      }
+
+      .stats {
+        grid-template-columns:
+          repeat(3, 1fr);
+
+        gap: 6px;
+
+        margin-bottom: 8px;
+      }
+
+      .stat-box {
+        min-height: 57px;
+        padding: 6px 4px;
+      }
+
+      .stat-label {
+        font-size: 10px;
+      }
+
+      .stat-value {
+        font-size: 16px;
+      }
+
+      .instruction {
+        margin-bottom: 5px;
+        padding: 8px 7px;
+
+        font-size: 13px;
+      }
+
+      .question-area {
+        margin-bottom: 8px;
+        padding: 12px 5px;
+      }
+
+      .question-label {
+        margin-bottom: 4px;
+
+        font-size: 12px;
+      }
+
+      .question {
+        min-height: 75px;
+
+        padding: 6px 5px;
+
+        font-size: 43px;
+        line-height: 1.45;
+      }
+
+      .cube-root-symbol {
+        line-height: 1.3;
+      }
+
+      .answers-grid {
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
+
+        gap: 8px;
+      }
+
+      .answer-btn {
+        min-height: 57px;
+        padding: 8px 5px;
+
+        font-size: 21px;
+      }
+
+      .feedback {
+        min-height: 35px;
+        margin-top: 7px;
+
+        font-size: 14px;
+      }
+    }
+
+
+    /* =====================================================
+       SMART BOARD / LARGE SCREEN
+    ====================================================== */
+
+    @media
+    (min-width: 1500px)
+    and
+    (min-height: 900px) {
+
+      .container {
+        width: min(1450px, 94%);
+        padding-top: 18px;
+      }
+
+      .mode-btn {
+        min-height: 66px;
+        font-size: 21px;
+      }
+
+      .stat-box {
+        min-height: 82px;
+      }
+
+      .stat-label {
+        font-size: 16px;
+      }
+
+      .stat-value {
+        font-size: 30px;
+      }
+
+      .instruction {
+        padding: 15px;
+        font-size: 21px;
+      }
+
+      .question-area {
+        padding: 28px 20px 32px;
+      }
+
+      .question-label {
+        font-size: 19px;
+      }
+
+      .question {
+        min-height: 140px;
+        font-size: 100px;
+      }
+
+      .answers-grid {
+        max-width: 1100px;
+        gap: 16px;
+      }
+
+      .answer-btn {
+        min-height: 88px;
+        font-size: 32px;
+      }
+
+      .feedback {
+        font-size: 21px;
+      }
+    }
+  </style>
+</head>
+
+
+<body>
+
+  <main class="container">
+
+    <!-- MODE BUTTONS -->
+
+    <div class="mode-tabs">
+
+      <button
+        class="mode-btn active"
+        data-mode="cube"
+        type="button"
+      >
+        ઘન શોધો
+      </button>
+
+      <button
+        class="mode-btn"
+        data-mode="cubeRoot"
+        type="button"
+      >
+        ઘનમૂળ શોધો
+      </button>
+
+      <button
+        class="mode-btn"
+        data-mode="perfectCube"
+        type="button"
+      >
+        પૂર્ણઘન ઓળખો
+      </button>
+
+    </div>
+
+
+    <!-- STATS -->
+
+    <div class="stats">
+
+      <div class="stat-box">
+
+        <span class="stat-label">
+          હાલનો પ્રકાર
+        </span>
+
+        <span
+          class="stat-value blue"
+          id="modeName"
+        >
+          ઘન શોધો
+        </span>
+
+      </div>
+
+
+      <div class="stat-box">
+
+        <span class="stat-label">
+          સાચા
+        </span>
+
+        <span
+          class="stat-value"
+          id="correctCount"
+        >
+          0
+        </span>
+
+      </div>
+
+
+      <div class="stat-box">
+
+        <span class="stat-label">
+          પ્રશ્ન
+        </span>
+
+        <span
+          class="stat-value"
+          id="questionNumber"
+        >
+          1 / 10
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- GAME AREA -->
+
+    <section class="game-area">
+
+      <div
+        class="instruction"
+        id="instruction"
+      >
+        આપેલી સંખ્યાનો ઘન શોધો.
+      </div>
+
+
+      <div class="question-area">
+
+        <span class="question-label">
+          સાચો જવાબ પસંદ કરો
+        </span>
+
+        <div
+          class="question"
+          id="question"
+        >
+        </div>
+
+      </div>
+
+
+      <div
+        class="answers-grid"
+        id="answersGrid"
+      >
+      </div>
+
+
+      <div
+        class="feedback"
+        id="feedback"
+        aria-live="polite"
+      >
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- CORRECT POPUP -->
+
+  <div
+    class="answer-popup correct-popup"
+    id="correctPopup"
+  >
+
+    <div class="popup-icon">
+      ✓
+    </div>
+
+    <span class="popup-title">
+      ખૂબ સરસ!
+    </span>
+
+    <span
+      class="popup-text"
+      id="correctPopupText"
+    >
+      સાચો જવાબ
+    </span>
+
+  </div>
+
+
+  <!-- WRONG POPUP -->
+
+  <div
+    class="answer-popup wrong-popup"
+    id="wrongPopup"
+  >
+
+    <div class="popup-icon">
+      ×
+    </div>
+
+    <span class="popup-title">
+      ફરી પ્રયત્ન કરો
+    </span>
+
+    <span
+      class="popup-text"
+      id="wrongPopupText"
+    >
+      જવાબ ફરી તપાસો
+    </span>
+
+  </div>
+
+
+  <!-- RESULT -->
+
+  <div
+    class="result-overlay"
+    id="resultOverlay"
+  >
+
+    <div class="result-card">
+
+      <div class="result-icon">
+        ✓
+      </div>
+
+      <h2>
+        રમત પૂર્ણ
+      </h2>
+
+      <p id="resultDescription">
+        તમે 10 પ્રશ્ન પૂર્ણ કર્યા.
+      </p>
+
+
+      <div class="result-stats">
+
+        <div class="result-stat">
+
+          <span>
+            સાચા
+          </span>
+
+          <strong id="resultCorrect">
+            0
+          </strong>
+
+        </div>
+
+
+        <div class="result-stat">
+
+          <span>
+            કુલ પ્રશ્ન
+          </span>
+
+          <strong>
+            10
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <button
+        class="play-again-btn"
+        id="playAgainBtn"
+        type="button"
+      >
+        ફરીથી રમો
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- SOUNDS -->
+
+  <audio
+    id="correctSound"
+    src="/sounds/correct.mp3"
+    preload="auto"
+  ></audio>
+
+  <audio
+    id="wrongSound"
+    src="/sounds/wrong.mp3"
+    preload="auto"
+  ></audio>
+
+  <audio
+    id="completeSound"
+    src="/sounds/complete.mp3"
+    preload="auto"
+  ></audio>
+
+
+  <script>
+
+    /* =====================================================
+       ELEMENTS
+    ====================================================== */
+
+    const modeButtons =
+      document.querySelectorAll(".mode-btn");
+
+    const modeName =
+      document.getElementById("modeName");
+
+    const correctCountElement =
+      document.getElementById("correctCount");
+
+    const questionNumberElement =
+      document.getElementById("questionNumber");
+
+    const instruction =
+      document.getElementById("instruction");
+
+    const questionElement =
+      document.getElementById("question");
+
+    const answersGrid =
+      document.getElementById("answersGrid");
+
+    const feedback =
+      document.getElementById("feedback");
+
+    const correctPopup =
+      document.getElementById("correctPopup");
+
+    const wrongPopup =
+      document.getElementById("wrongPopup");
+
+    const correctPopupText =
+      document.getElementById("correctPopupText");
+
+    const wrongPopupText =
+      document.getElementById("wrongPopupText");
+
+    const resultOverlay =
+      document.getElementById("resultOverlay");
+
+    const resultDescription =
+      document.getElementById("resultDescription");
+
+    const resultCorrect =
+      document.getElementById("resultCorrect");
+
+    const correctSound =
+      document.getElementById("correctSound");
+
+    const wrongSound =
+      document.getElementById("wrongSound");
+
+    const completeSound =
+      document.getElementById("completeSound");
+
+
+    /* =====================================================
+       GAME STATE
+    ====================================================== */
+
+    const TOTAL_QUESTIONS = 10;
+
+    let currentMode = "cube";
+
+    let questionNumber = 1;
+
+    let correctCount = 0;
+
+    let currentCorrectAnswer = null;
+
+    let currentQuestionData = null;
+
+    let answered = false;
+
+    let popupTimer = null;
+
+    let previousQuestionKey = "";
+
+
+    /* =====================================================
+       MODE INFORMATION
+    ====================================================== */
+
+    const modeInfo = {
+
+      cube: {
+        name: "ઘન શોધો",
+        instruction:
+          "આપેલી સંખ્યાનો ઘન શોધો."
+      },
+
+      cubeRoot: {
+        name: "ઘનમૂળ શોધો",
+        instruction:
+          "આપેલી પૂર્ણઘન સંખ્યાનું ઘનમૂળ શોધો."
+      },
+
+      perfectCube: {
+        name: "પૂર્ણઘન ઓળખો",
+        instruction:
+          "આપેલા વિકલ્પોમાંથી પૂર્ણઘન સંખ્યા પસંદ કરો."
+      }
+
+    };
+
+
+    /* =====================================================
+       AUDIO
+    ====================================================== */
+
+    function playAudio(audio) {
+
+      if (!audio) {
+        return;
+      }
+
+      audio.pause();
+
+      audio.currentTime = 0;
+
+      audio.play().catch(
+        function () {
+          // Audio blocked હોય તો game ચાલુ રહેશે.
+        }
+      );
+
+    }
+
+
+    function playCorrectSound() {
+      playAudio(correctSound);
+    }
+
+
+    function playWrongSound() {
+      playAudio(wrongSound);
+    }
+
+
+    function playCompleteSound() {
+      playAudio(completeSound);
+    }
+
+
+    /* =====================================================
+       POPUPS
+    ====================================================== */
+
+    function hidePopups() {
+
+      correctPopup.classList.remove("show");
+
+      wrongPopup.classList.remove("show");
+
+    }
+
+
+    function showPopup(type, text) {
+
+      clearTimeout(popupTimer);
+
+      hidePopups();
+
+
+      const popup =
+        type === "correct"
+          ? correctPopup
+          : wrongPopup;
+
+
+      if (type === "correct") {
+
+        correctPopupText.textContent =
+          text;
+
+      } else {
+
+        wrongPopupText.textContent =
+          text;
+
+      }
+
+
+      void popup.offsetWidth;
+
+
+      popup.classList.add("show");
+
+
+      popupTimer =
+        setTimeout(
+          function () {
+
+            popup.classList.remove("show");
+
+          },
+          950
+        );
+
+    }
+
+
+    /* =====================================================
+       RANDOM HELPERS
+    ====================================================== */
+
+    function randomInteger(min, max) {
+
+      return Math.floor(
+        Math.random() *
+        (
+          max -
+          min +
+          1
+        )
+      ) + min;
+
+    }
+
+
+    function shuffleArray(array) {
+
+      const copiedArray =
+        [...array];
+
+
+      for (
+        let i =
+          copiedArray.length - 1;
+
+        i > 0;
+
+        i--
+      ) {
+
+        const j =
+          Math.floor(
+            Math.random() *
+            (i + 1)
+          );
+
+
+        [
+          copiedArray[i],
+          copiedArray[j]
+        ] =
+        [
+          copiedArray[j],
+          copiedArray[i]
+        ];
+
+      }
+
+
+      return copiedArray;
+
+    }
+
+
+    function uniqueNumbers(values) {
+
+      return [
+        ...new Set(values)
+      ];
+
+    }
+
+
+    /* =====================================================
+       CUBE QUESTION
+    ====================================================== */
+
+    function generateCubeQuestion() {
+
+      let number;
+      let key;
+
+
+      do {
+
+        number =
+          randomInteger(
+            2,
+            20
+          );
+
+        key =
+          "cube-" +
+          number;
+
+      } while (
+        key ===
+        previousQuestionKey
+      );
+
+
+      previousQuestionKey =
+        key;
+
+
+      const correct =
+        number *
+        number *
+        number;
+
+
+      let options = [
+        correct,
+
+        number * number,
+
+        (number + 1) *
+        (number + 1) *
+        (number + 1),
+
+        Math.max(
+          1,
+          (number - 1) *
+          (number - 1) *
+          (number - 1)
+        ),
+
+        correct + number,
+
+        Math.max(
+          1,
+          correct - number
+        )
+      ];
+
+
+      options =
+        uniqueNumbers(options);
+
+
+      while (
+        options.length < 6
+      ) {
+
+        const extra =
+          correct +
+          randomInteger(
+            -100,
+            100
+          );
+
+
+        if (
+          extra > 0 &&
+          !options.includes(extra)
+        ) {
+
+          options.push(extra);
+
+        }
+
+      }
+
+
+      return {
+
+        html:
+          number +
+          "<sup>3</sup>" +
+          "<span class='equals-symbol'>=</span>" +
+          "<span class='question-mark'>?</span>",
+
+        correct:
+          correct,
+
+        options:
+          shuffleArray(
+            options.slice(
+              0,
+              6
+            )
+          ),
+
+        successText:
+          number +
+          " નો ઘન " +
+          correct +
+          " છે.",
+
+        explanation:
+          number +
+          " × " +
+          number +
+          " × " +
+          number +
+          " = " +
+          correct
+
+      };
+
+    }
+
+
+    /* =====================================================
+       CUBE ROOT QUESTION
+    ====================================================== */
+
+    function generateCubeRootQuestion() {
+
+      let root;
+      let cube;
+      let key;
+
+
+      do {
+
+        root =
+          randomInteger(
+            2,
+            20
+          );
+
+        cube =
+          root *
+          root *
+          root;
+
+        key =
+          "cubeRoot-" +
+          cube;
+
+      } while (
+        key ===
+        previousQuestionKey
+      );
+
+
+      previousQuestionKey =
+        key;
+
+
+      let options = [
+        root,
+        root + 1,
+        root - 1,
+        root + 2,
+        Math.max(
+          1,
+          root - 2
+        ),
+        root + 3
+      ];
+
+
+      options =
+        uniqueNumbers(options);
+
+
+      while (
+        options.length < 6
+      ) {
+
+        const extra =
+          randomInteger(
+            2,
+            25
+          );
+
+
+        if (
+          !options.includes(extra)
+        ) {
+
+          options.push(extra);
+
+        }
+
+      }
+
+
+      return {
+
+        html:
+          "<span class='cube-root-expression'>" +
+            "<span class='cube-root-symbol'>∛</span>" +
+            "<span class='cube-root-number'>" +
+              cube +
+            "</span>" +
+          "</span>" +
+          "<span class='equals-symbol'>=</span>" +
+          "<span class='question-mark'>?</span>",
+
+        correct:
+          root,
+
+        options:
+          shuffleArray(
+            options.slice(
+              0,
+              6
+            )
+          ),
+
+        successText:
+          cube +
+          " નું ઘનમૂળ " +
+          root +
+          " છે.",
+
+        explanation:
+          root +
+          " × " +
+          root +
+          " × " +
+          root +
+          " = " +
+          cube
+
+      };
+
+    }
+
+
+    /* =====================================================
+       PERFECT CUBE QUESTION
+    ====================================================== */
+
+    function generatePerfectCubeQuestion() {
+
+      let base;
+      let correct;
+      let key;
+
+
+      do {
+
+        base =
+          randomInteger(
+            2,
+            20
+          );
+
+        correct =
+          base *
+          base *
+          base;
+
+        key =
+          "perfectCube-" +
+          correct;
+
+      } while (
+        key ===
+        previousQuestionKey
+      );
+
+
+      previousQuestionKey =
+        key;
+
+
+      const perfectCubes =
+        new Set();
+
+
+      for (
+        let i = 1;
+        i <= 25;
+        i++
+      ) {
+
+        perfectCubes.add(
+          i * i * i
+        );
+
+      }
+
+
+      let options = [
+        correct
+      ];
+
+
+      while (
+        options.length < 6
+      ) {
+
+        const offset =
+          randomInteger(
+            -100,
+            100
+          );
+
+
+        const candidate =
+          correct +
+          offset;
+
+
+        if (
+          candidate > 1 &&
+          !perfectCubes.has(candidate) &&
+          !options.includes(candidate)
+        ) {
+
+          options.push(candidate);
+
+        }
+
+      }
+
+
+      return {
+
+        html:
+          "પૂર્ણઘન સંખ્યા પસંદ કરો",
+
+        correct:
+          correct,
+
+        options:
+          shuffleArray(options),
+
+        successText:
+          correct +
+          " પૂર્ણઘન સંખ્યા છે.",
+
+        explanation:
+          base +
+          " × " +
+          base +
+          " × " +
+          base +
+          " = " +
+          correct
+
+      };
+
+    }
+
+
+    /* =====================================================
+       GENERATE QUESTION
+    ====================================================== */
+
+    function generateQuestionData() {
+
+      if (
+        currentMode ===
+        "cube"
+      ) {
+
+        return generateCubeQuestion();
+
+      }
+
+
+      if (
+        currentMode ===
+        "cubeRoot"
+      ) {
+
+        return generateCubeRootQuestion();
+
+      }
+
+
+      return generatePerfectCubeQuestion();
+
+    }
+
+
+    /* =====================================================
+       CREATE QUESTION
+    ====================================================== */
+
+    function createQuestion() {
+
+      answered = false;
+
+
+      feedback.textContent = "";
+
+      feedback.className = "feedback";
+
+
+      currentQuestionData =
+        generateQuestionData();
+
+
+      currentCorrectAnswer =
+        currentQuestionData.correct;
+
+
+      questionElement.innerHTML =
+        currentQuestionData.html;
+
+
+      correctCountElement.textContent =
+        correctCount;
+
+
+      questionNumberElement.textContent =
+        questionNumber +
+        " / " +
+        TOTAL_QUESTIONS;
+
+
+      modeName.textContent =
+        modeInfo[
+          currentMode
+        ].name;
+
+
+      instruction.textContent =
+        modeInfo[
+          currentMode
+        ].instruction;
+
+
+      renderAnswers(
+        currentQuestionData.options
+      );
+
+    }
+
+
+    /* =====================================================
+       RENDER ANSWERS
+    ====================================================== */
+
+    function renderAnswers(options) {
+
+      answersGrid.innerHTML = "";
+
+
+      options.forEach(
+        function (option) {
+
+          const button =
+            document.createElement(
+              "button"
+            );
+
+
+          button.type = "button";
+
+
+          button.className =
+            "answer-btn";
+
+
+          button.textContent =
+            option;
+
+
+          button.addEventListener(
+            "click",
+            function () {
+
+              checkAnswer(
+                option,
+                button
+              );
+
+            }
+          );
+
+
+          answersGrid.appendChild(
+            button
+          );
+
+        }
+      );
+
+    }
+
+
+    /* =====================================================
+       CHECK ANSWER
+    ====================================================== */
+
+    function checkAnswer(
+      selectedAnswer,
+      selectedButton
+    ) {
+
+      if (answered) {
+        return;
+      }
+
+
+      if (
+        selectedAnswer ===
+        currentCorrectAnswer
+      ) {
+
+        answered = true;
+
+
+        correctCount++;
+
+
+        correctCountElement.textContent =
+          correctCount;
+
+
+        selectedButton.classList.add(
+          "correct"
+        );
+
+
+        disableAllAnswers();
+
+
+        feedback.textContent =
+          currentQuestionData.explanation;
+
+
+        feedback.className =
+          "feedback success";
+
+
+        playCorrectSound();
+
+
+        showPopup(
+          "correct",
+          currentQuestionData.successText
+        );
+
+
+        setTimeout(
+          function () {
+
+            if (
+              questionNumber >=
+              TOTAL_QUESTIONS
+            ) {
+
+              showResult();
+
+              return;
+
+            }
+
+
+            questionNumber++;
+
+
+            createQuestion();
+
+          },
+          1250
+        );
+
+      } else {
+
+        selectedButton.classList.add(
+          "wrong"
+        );
+
+
+        feedback.textContent =
+          "આ જવાબ ખોટો છે. ફરી પ્રયત્ન કરો.";
+
+
+        feedback.className =
+          "feedback error";
+
+
+        playWrongSound();
+
+
+        showPopup(
+          "wrong",
+          "બીજો જવાબ પસંદ કરો."
+        );
+
+
+        selectedButton.disabled =
+          true;
+
+      }
+
+    }
+
+
+    /* =====================================================
+       DISABLE ANSWERS
+    ====================================================== */
+
+    function disableAllAnswers() {
+
+      const buttons =
+        answersGrid.querySelectorAll(
+          ".answer-btn"
+        );
+
+
+      buttons.forEach(
+        function (button) {
+
+          button.disabled =
+            true;
+
+        }
+      );
+
+    }
+
+
+    /* =====================================================
+       MODE CHANGE
+    ====================================================== */
+
+    modeButtons.forEach(
+      function (button) {
+
+        button.addEventListener(
+          "click",
+          function () {
+
+            const selectedMode =
+              button.dataset.mode;
+
+
+            if (
+              selectedMode ===
+              currentMode
+            ) {
+
+              return;
+
+            }
+
+
+            currentMode =
+              selectedMode;
+
+
+            modeButtons.forEach(
+              function (modeButton) {
+
+                modeButton.classList.remove(
+                  "active"
+                );
+
+              }
+            );
+
+
+            button.classList.add(
+              "active"
+            );
+
+
+            resetGame();
+
+          }
+        );
+
+      }
+    );
+
+
+    /* =====================================================
+       RESULT
+    ====================================================== */
+
+    function showResult() {
+
+      resultCorrect.textContent =
+        correctCount;
+
+
+      resultDescription.textContent =
+        modeInfo[
+          currentMode
+        ].name +
+        " ના " +
+        TOTAL_QUESTIONS +
+        " પ્રશ્ન પૂર્ણ થયા.";
+
+
+      resultOverlay.classList.add(
+        "show"
+      );
+
+
+      playCompleteSound();
+
+    }
+
+
+    /* =====================================================
+       RESET GAME
+    ====================================================== */
+
+    function resetGame() {
+
+      questionNumber = 1;
+
+      correctCount = 0;
+
+      answered = false;
+
+      previousQuestionKey = "";
+
+
+      resultOverlay.classList.remove(
+        "show"
+      );
+
+
+      hidePopups();
+
+
+      createQuestion();
+
+    }
+
+
+    /* =====================================================
+       PLAY AGAIN
+    ====================================================== */
+
+    document
+      .getElementById(
+        "playAgainBtn"
+      )
+      .addEventListener(
+        "click",
+        function () {
+
+          resetGame();
+
+        }
+      );
+
+
+    /* =====================================================
+       START GAME
+    ====================================================== */
+
+    createQuestion();
+
+  </script>
+
+</body>
+</html>

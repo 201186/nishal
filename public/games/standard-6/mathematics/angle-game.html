@@ -1,0 +1,3508 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>ખૂણાઓ સાથે રમો | ધોરણ 6 ગણિત</title>
+
+  <style>
+    /* =====================================================
+       RESET
+    ====================================================== */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      width: 100%;
+      min-height: 100%;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      width: 100%;
+      min-height: 100vh;
+
+      overflow-x: hidden;
+
+      font-family:
+        "Noto Sans Gujarati",
+        "Shruti",
+        Arial,
+        sans-serif;
+
+      background: #ffffff;
+      color: #1f2937;
+    }
+
+    button {
+      font-family: inherit;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* =====================================================
+       MAIN CONTAINER
+    ====================================================== */
+
+    .container {
+      width: min(1200px, 96%);
+      margin: 0 auto;
+      padding: 14px 0 24px;
+    }
+
+    /* =====================================================
+       MODE TABS
+    ====================================================== */
+
+    .mode-tabs {
+      display: grid;
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+      gap: 10px;
+
+      max-width: 700px;
+
+      margin:
+        0 auto 14px;
+    }
+
+    .mode-btn {
+      min-height: 52px;
+
+      padding: 10px 14px;
+
+      border: 2px solid #dbe3ef;
+      border-radius: 14px;
+
+      background: #ffffff;
+      color: #334155;
+
+      font-size: 17px;
+      font-weight: 800;
+
+      cursor: pointer;
+      touch-action: manipulation;
+
+      transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    .mode-btn:hover {
+      border-color: #3b82f6;
+      transform: translateY(-1px);
+    }
+
+    .mode-btn.active {
+      background: #2563eb;
+      border-color: #2563eb;
+      color: #ffffff;
+    }
+
+    /* =====================================================
+       PANELS
+    ====================================================== */
+
+    .mode-panel {
+      display: none;
+    }
+
+    .mode-panel.active {
+      display: block;
+    }
+
+    /* =====================================================
+       TOP INFO
+    ====================================================== */
+
+    .top-info {
+      display: grid;
+
+      grid-template-columns:
+        2fr 1fr 1fr;
+
+      gap: 10px;
+
+      margin-bottom: 12px;
+    }
+
+    .info-box {
+      min-height: 68px;
+
+      padding: 8px 10px;
+
+      display: flex;
+      flex-direction: column;
+
+      align-items: center;
+      justify-content: center;
+
+      background: #f8fafc;
+
+      border: 1px solid #e2e8f0;
+      border-radius: 13px;
+
+      text-align: center;
+    }
+
+    .info-label {
+      margin-bottom: 2px;
+
+      color: #64748b;
+
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .info-value {
+      color: #111827;
+
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .info-value.blue {
+      color: #2563eb;
+    }
+
+    /* =====================================================
+       GAME CARD
+    ====================================================== */
+
+    .game-card {
+      padding: 16px;
+
+      background: #ffffff;
+
+      border: 1px solid #e2e8f0;
+      border-radius: 18px;
+
+      box-shadow:
+        0 8px 28px
+        rgba(15, 23, 42, 0.05);
+    }
+
+    .instruction {
+      margin-bottom: 12px;
+
+      padding: 10px 14px;
+
+      background: #eff6ff;
+
+      border: 1px solid #bfdbfe;
+      border-radius: 12px;
+
+      color: #1d4ed8;
+
+      font-size: 15px;
+      font-weight: 800;
+      line-height: 1.6;
+
+      text-align: center;
+    }
+
+    /* =====================================================
+       BUILDER LAYOUT
+    ====================================================== */
+
+    .builder-layout {
+      display: grid;
+
+      grid-template-columns:
+        minmax(0, 1.7fr)
+        minmax(240px, 0.75fr);
+
+      gap: 14px;
+
+      align-items: stretch;
+    }
+
+    /* =====================================================
+       ANGLE STAGE
+    ====================================================== */
+
+    .angle-stage {
+      min-height: 360px;
+
+      position: relative;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      overflow: hidden;
+
+      background:
+        linear-gradient(
+          180deg,
+          #fbfdff,
+          #f8fafc
+        );
+
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+
+      touch-action: none;
+      user-select: none;
+    }
+
+    .angle-svg {
+      width: 100%;
+      height: 100%;
+
+      min-height: 360px;
+
+      display: block;
+
+      touch-action: none;
+    }
+
+    .base-ray {
+      stroke: #334155;
+
+      stroke-width: 8;
+
+      stroke-linecap: round;
+    }
+
+    .moving-ray {
+      stroke: #2563eb;
+
+      stroke-width: 9;
+
+      stroke-linecap: round;
+    }
+
+    .angle-arc {
+      fill: none;
+
+      stroke: #60a5fa;
+
+      stroke-width: 5;
+
+      stroke-linecap: round;
+    }
+
+    .vertex-circle {
+      fill: #111827;
+    }
+
+    .drag-handle-outer {
+      fill: rgba(37, 99, 235, 0.15);
+
+      stroke: #93c5fd;
+
+      stroke-width: 3;
+    }
+
+    .drag-handle {
+      fill: #2563eb;
+
+      stroke: #ffffff;
+
+      stroke-width: 5;
+
+      cursor: grab;
+
+      touch-action: none;
+    }
+
+    .drag-handle:active {
+      cursor: grabbing;
+    }
+
+    .degree-text {
+      fill: #1d4ed8;
+
+      font-family:
+        Arial,
+        sans-serif;
+
+      font-size: 34px;
+
+      font-weight: 900;
+    }
+
+    .drag-label {
+      fill: #64748b;
+
+      font-family:
+        "Noto Sans Gujarati",
+        "Shruti",
+        Arial,
+        sans-serif;
+
+      font-size: 20px;
+
+      font-weight: 700;
+    }
+
+    /* =====================================================
+       BUILDER SIDE
+    ====================================================== */
+
+    .builder-side {
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 9px;
+    }
+
+    .target-card,
+    .current-card {
+      padding: 14px 12px;
+
+      border-radius: 15px;
+
+      text-align: center;
+    }
+
+    .target-card {
+      background: #eff6ff;
+
+      border: 1px solid #bfdbfe;
+    }
+
+    .current-card {
+      background: #f8fafc;
+
+      border: 1px solid #e2e8f0;
+    }
+
+    .target-card span,
+    .current-card span {
+      display: block;
+
+      margin-bottom: 4px;
+
+      color: #64748b;
+
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .target-card strong {
+      display: block;
+
+      color: #1d4ed8;
+
+      font-size: 38px;
+      font-weight: 900;
+    }
+
+    .current-card strong {
+      display: block;
+
+      color: #111827;
+
+      font-size: 34px;
+      font-weight: 900;
+    }
+
+    .tolerance-note {
+      padding: 9px;
+
+      background: #fffbeb;
+
+      border: 1px solid #fde68a;
+      border-radius: 12px;
+
+      color: #92400e;
+
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.6;
+
+      text-align: center;
+    }
+
+    /* =====================================================
+       BUTTONS
+    ====================================================== */
+
+    .primary-btn,
+    .secondary-btn {
+      width: 100%;
+
+      min-height: 48px;
+
+      padding: 10px 14px;
+
+      border: none;
+      border-radius: 12px;
+
+      font-size: 15px;
+      font-weight: 900;
+
+      cursor: pointer;
+
+      touch-action: manipulation;
+    }
+
+    .primary-btn {
+      background: #2563eb;
+
+      color: #ffffff;
+    }
+
+    .primary-btn:hover {
+      background: #1d4ed8;
+    }
+
+    .secondary-btn {
+      background: #111827;
+
+      color: #ffffff;
+    }
+
+    .secondary-btn:hover {
+      background: #000000;
+    }
+
+    /* =====================================================
+       FEEDBACK
+    ====================================================== */
+
+    .feedback {
+      min-height: 42px;
+
+      margin-top: 8px;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      text-align: center;
+
+      font-size: 16px;
+      font-weight: 900;
+      line-height: 1.5;
+    }
+
+    .feedback.success {
+      color: #15803d;
+    }
+
+    .feedback.error {
+      color: #dc2626;
+    }
+
+    /* =====================================================
+       IDENTIFY MODE
+    ====================================================== */
+
+    .identify-wrap {
+      max-width: 1000px;
+
+      margin: 0 auto;
+    }
+
+    .question-number {
+      margin-bottom: 8px;
+
+      text-align: center;
+
+      color: #64748b;
+
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .degree-question {
+      margin-bottom: 12px;
+
+      padding: 14px 16px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #eff6ff,
+          #f8fafc
+        );
+
+      border: 1px solid #bfdbfe;
+      border-radius: 18px;
+
+      text-align: center;
+    }
+
+    .degree-question span {
+      display: block;
+
+      margin-bottom: 2px;
+
+      color: #64748b;
+
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .degree-question strong {
+      display: block;
+
+      color: #1d4ed8;
+
+      font-size: 48px;
+      font-weight: 900;
+    }
+
+    /* =====================================================
+       ANGLE PREVIEW
+    ====================================================== */
+
+    .angle-preview {
+      width: min(460px, 100%);
+
+      height: 190px;
+
+      margin:
+        0 auto 12px;
+
+      background: #fbfdff;
+
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+    }
+
+    .preview-svg {
+      width: 100%;
+      height: 100%;
+
+      display: block;
+    }
+
+    /* =====================================================
+       ANSWERS
+    ====================================================== */
+
+    .answer-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+      gap: 10px;
+    }
+
+    .answer-btn {
+      min-height: 56px;
+
+      padding: 10px;
+
+      background: #ffffff;
+
+      border: 2px solid #dbe3ef;
+      border-radius: 13px;
+
+      color: #334155;
+
+      font-size: 17px;
+      font-weight: 900;
+
+      cursor: pointer;
+
+      touch-action: manipulation;
+
+      transition:
+        transform 0.15s ease,
+        border-color 0.15s ease,
+        background 0.15s ease,
+        color 0.15s ease;
+    }
+
+    .answer-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+
+      border-color: #60a5fa;
+    }
+
+    .answer-btn.correct-answer {
+      background: #dcfce7;
+
+      border-color: #22c55e;
+
+      color: #15803d;
+    }
+
+    .answer-btn.wrong-answer {
+      background: #fee2e2;
+
+      border-color: #ef4444;
+
+      color: #b91c1c;
+    }
+
+    /* =====================================================
+       ANSWER POPUP
+    ====================================================== */
+
+    .answer-popup {
+      position: fixed;
+
+      top: 50%;
+      left: 50%;
+
+      z-index: 5000;
+
+      width: min(340px, 88%);
+
+      padding: 26px 22px;
+
+      border-radius: 22px;
+
+      color: #ffffff;
+
+      text-align: center;
+
+      opacity: 0;
+
+      visibility: hidden;
+
+      pointer-events: none;
+
+      transform:
+        translate(-50%, -50%)
+        scale(0.72);
+
+      transition:
+        opacity 0.18s ease,
+        transform 0.18s ease,
+        visibility 0.18s ease;
+
+      box-shadow:
+        0 22px 55px
+        rgba(15, 23, 42, 0.28);
+    }
+
+    .answer-popup.show {
+      opacity: 1;
+
+      visibility: visible;
+
+      transform:
+        translate(-50%, -50%)
+        scale(1);
+    }
+
+    .correct-popup {
+      background:
+        linear-gradient(
+          135deg,
+          #22c55e,
+          #15803d
+        );
+    }
+
+    .wrong-popup {
+      background:
+        linear-gradient(
+          135deg,
+          #ef4444,
+          #b91c1c
+        );
+    }
+
+    .popup-icon {
+      width: 68px;
+      height: 68px;
+
+      margin:
+        0 auto 12px;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      background:
+        rgba(255, 255, 255, 0.2);
+
+      border-radius: 50%;
+
+      font-size: 42px;
+      font-weight: 900;
+    }
+
+    .popup-title {
+      display: block;
+
+      font-size: 25px;
+      font-weight: 900;
+    }
+
+    .popup-text {
+      display: block;
+
+      margin-top: 6px;
+
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    /* =====================================================
+       RESULT MODAL
+    ====================================================== */
+
+    /* =====================================================
+   RESULT MODAL - NO BLUR, NO DARK BACKGROUND
+====================================================== */
+
+.result-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 6000;
+
+  display: none;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  /* પાછળની game normal જ દેખાશે */
+  background: transparent;
+
+  /* કોઈ blur નહીં */
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.result-overlay.show {
+  display: flex;
+}
+
+.result-card {
+  width: min(440px, 94%);
+
+  padding: 30px 24px;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 22px;
+
+  text-align: center;
+
+  box-shadow:
+    0 20px 60px rgba(15, 23, 42, 0.18);
+}
+
+    .result-card {
+      width: min(440px, 100%);
+
+      padding: 30px 24px;
+
+      background: #ffffff;
+
+      border-radius: 22px;
+
+      text-align: center;
+
+      box-shadow:
+        0 24px 60px
+        rgba(0, 0, 0, 0.2);
+    }
+
+    .result-icon {
+      width: 72px;
+      height: 72px;
+
+      margin:
+        0 auto 15px;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      background: #dcfce7;
+
+      border-radius: 50%;
+
+      color: #15803d;
+
+      font-size: 38px;
+      font-weight: 900;
+    }
+
+    .result-card h2 {
+      margin-bottom: 8px;
+
+      color: #15803d;
+
+      font-size: 28px;
+      font-weight: 900;
+    }
+
+    .result-card p {
+      margin-bottom: 20px;
+
+      color: #64748b;
+
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .result-stats {
+      display: grid;
+
+      grid-template-columns:
+        repeat(2, 1fr);
+
+      gap: 12px;
+
+      margin-bottom: 20px;
+    }
+
+    .result-stat {
+      padding: 16px 10px;
+
+      background: #f8fafc;
+
+      border-radius: 12px;
+    }
+
+    .result-stat span {
+      display: block;
+
+      margin-bottom: 5px;
+
+      color: #64748b;
+
+      font-size: 13px;
+    }
+
+    .result-stat strong {
+      color: #111827;
+
+      font-size: 27px;
+      font-weight: 900;
+    }
+
+    /* =====================================================
+       SHORT LAPTOP / DESKTOP
+    ====================================================== */
+
+    @media
+    (min-width: 901px)
+    and
+    (max-height: 850px) {
+
+      .container {
+        padding-top: 10px;
+      }
+
+      .mode-tabs {
+        margin-bottom: 10px;
+      }
+
+      .mode-btn {
+        min-height: 46px;
+      }
+
+      .top-info {
+        margin-bottom: 9px;
+      }
+
+      .info-box {
+        min-height: 58px;
+      }
+
+      .game-card {
+        padding: 12px;
+      }
+
+      .instruction {
+        margin-bottom: 9px;
+
+        padding: 8px 12px;
+      }
+
+      .angle-stage,
+      .angle-svg {
+        min-height: 310px;
+      }
+
+      .degree-question {
+        padding: 10px 14px;
+
+        margin-bottom: 9px;
+      }
+
+      .degree-question strong {
+        font-size: 42px;
+      }
+
+      .angle-preview {
+        height: 160px;
+
+        margin-bottom: 9px;
+      }
+
+      .answer-btn {
+        min-height: 50px;
+      }
+    }
+
+    /* =====================================================
+       SMART BOARD / LARGE SCREEN
+    ====================================================== */
+
+    @media
+    (min-width: 1440px)
+    and
+    (min-height: 900px) {
+
+      .container {
+        width: min(1450px, 94%);
+
+        padding-top: 20px;
+      }
+
+      .mode-tabs {
+        max-width: 850px;
+
+        margin-bottom: 18px;
+      }
+
+      .mode-btn {
+        min-height: 62px;
+
+        font-size: 20px;
+      }
+
+      .top-info {
+        gap: 14px;
+
+        margin-bottom: 16px;
+      }
+
+      .info-box {
+        min-height: 78px;
+      }
+
+      .info-label {
+        font-size: 15px;
+      }
+
+      .info-value {
+        font-size: 28px;
+      }
+
+      .game-card {
+        padding: 22px;
+      }
+
+      .instruction {
+        padding: 14px;
+
+        font-size: 19px;
+      }
+
+      .angle-stage,
+      .angle-svg {
+        min-height: 470px;
+      }
+
+      .target-card strong {
+        font-size: 52px;
+      }
+
+      .current-card strong {
+        font-size: 46px;
+      }
+
+      .primary-btn,
+      .secondary-btn {
+        min-height: 60px;
+
+        font-size: 19px;
+      }
+
+      .degree-question strong {
+        font-size: 64px;
+      }
+
+      .angle-preview {
+        width: min(600px, 100%);
+
+        height: 260px;
+      }
+
+      .answer-btn {
+        min-height: 70px;
+
+        font-size: 21px;
+      }
+    }
+
+    /* =====================================================
+       TABLET
+    ====================================================== */
+
+    @media
+    (min-width: 701px)
+    and
+    (max-width: 900px) {
+
+      .container {
+        width: 96%;
+      }
+
+      .builder-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .angle-stage,
+      .angle-svg {
+        min-height: 380px;
+      }
+
+      .builder-side {
+        display: grid;
+
+        grid-template-columns:
+          repeat(2, 1fr);
+      }
+
+      .tolerance-note,
+      .primary-btn,
+      .secondary-btn {
+        grid-column:
+          1 / -1;
+      }
+    }
+
+    /* =====================================================
+       MOBILE
+    ====================================================== */
+
+    @media (max-width: 700px) {
+
+      .container {
+        width: 95%;
+
+        padding:
+          10px 0 20px;
+      }
+
+      .mode-tabs {
+        gap: 7px;
+
+        margin-bottom: 10px;
+      }
+
+      .mode-btn {
+        min-height: 50px;
+
+        padding: 8px 5px;
+
+        font-size: 14px;
+      }
+
+      .top-info {
+        grid-template-columns:
+          repeat(3, 1fr);
+
+        gap: 6px;
+
+        margin-bottom: 9px;
+      }
+
+      .info-box {
+        min-height: 58px;
+
+        padding: 6px 4px;
+      }
+
+      .info-label {
+        font-size: 11px;
+      }
+
+      .info-value {
+        font-size: 18px;
+      }
+
+      .game-card {
+        padding: 9px;
+
+        border-radius: 14px;
+      }
+
+      .instruction {
+        padding: 9px 8px;
+
+        margin-bottom: 9px;
+
+        font-size: 14px;
+      }
+
+      .builder-layout {
+        grid-template-columns: 1fr;
+
+        gap: 10px;
+      }
+
+      .angle-stage,
+      .angle-svg {
+        min-height: 300px;
+      }
+
+      .builder-side {
+        display: grid;
+
+        grid-template-columns:
+          repeat(2, 1fr);
+
+        gap: 7px;
+      }
+
+      .target-card,
+      .current-card {
+        padding: 10px 6px;
+      }
+
+      .target-card strong {
+        font-size: 30px;
+      }
+
+      .current-card strong {
+        font-size: 28px;
+      }
+
+      .tolerance-note,
+      .primary-btn,
+      .secondary-btn {
+        grid-column:
+          1 / -1;
+      }
+
+      .degree-question {
+        padding: 12px 8px;
+
+        margin-bottom: 9px;
+      }
+
+      .degree-question strong {
+        font-size: 44px;
+      }
+
+      .angle-preview {
+        height: 190px;
+
+        margin-bottom: 9px;
+      }
+
+      .answer-grid {
+        grid-template-columns: 1fr;
+
+        gap: 7px;
+      }
+
+      .answer-btn {
+        min-height: 50px;
+      }
+    }
+
+    @media (max-width: 380px) {
+
+      .mode-btn {
+        font-size: 13px;
+      }
+
+      .angle-stage,
+      .angle-svg {
+        min-height: 280px;
+      }
+    }
+  </style>
+</head>
+
+
+<body>
+
+  <main class="container">
+
+    <!-- =====================================================
+         MODE TABS
+    ====================================================== -->
+
+    <div class="mode-tabs">
+
+      <button
+        class="mode-btn active"
+        id="builderModeBtn"
+        type="button"
+      >
+        ખૂણો બનાવો
+      </button>
+
+
+      <button
+        class="mode-btn"
+        id="identifyModeBtn"
+        type="button"
+      >
+        ખૂણાનો પ્રકાર ઓળખો
+      </button>
+
+    </div>
+
+
+    <!-- =====================================================
+         MODE 1: ANGLE BUILDER
+    ====================================================== -->
+
+    <section
+      class="mode-panel active"
+      id="builderPanel"
+    >
+
+      <div class="top-info">
+
+        <div class="info-box">
+
+          <span class="info-label">
+            લક્ષ્ય
+          </span>
+
+          <span
+            class="info-value blue"
+            id="builderTargetTop"
+          >
+            60°
+          </span>
+
+        </div>
+
+
+        <div class="info-box">
+
+          <span class="info-label">
+            સાચા
+          </span>
+
+          <span
+            class="info-value"
+            id="builderCorrect"
+          >
+            0
+          </span>
+
+        </div>
+
+
+        <div class="info-box">
+
+          <span class="info-label">
+            પ્રશ્ન
+          </span>
+
+          <span
+            class="info-value"
+            id="builderQuestion"
+          >
+            1 / 10
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="game-card">
+
+        <div class="instruction">
+
+          વાદળી બિંદુને ખેંચીને
+
+          <strong
+            id="builderInstructionTarget"
+          >
+            60°
+          </strong>
+
+          નો ખૂણો બનાવો.
+
+        </div>
+
+
+        <div class="builder-layout">
+
+          <!-- ANGLE AREA -->
+
+          <div
+            class="angle-stage"
+            id="angleStage"
+          >
+
+            <svg
+              class="angle-svg"
+              id="angleSvg"
+              viewBox="0 0 700 500"
+              preserveAspectRatio="xMidYMid meet"
+            >
+
+              <!-- BASE RAY -->
+
+              <line
+                class="base-ray"
+                x1="220"
+                y1="360"
+                x2="590"
+                y2="360"
+              />
+
+
+              <!-- ANGLE ARC -->
+
+              <path
+                id="angleArc"
+                class="angle-arc"
+                d=""
+              />
+
+
+              <!-- MOVING RAY -->
+
+              <line
+                id="movingRay"
+                class="moving-ray"
+                x1="220"
+                y1="360"
+                x2="420"
+                y2="200"
+              />
+
+
+              <!-- VERTEX -->
+
+              <circle
+                class="vertex-circle"
+                cx="220"
+                cy="360"
+                r="11"
+              />
+
+
+              <!-- OUTER TOUCH AREA -->
+
+              <circle
+                id="dragHandleOuter"
+                class="drag-handle-outer"
+                cx="420"
+                cy="200"
+                r="30"
+              />
+
+
+              <!-- HANDLE -->
+
+              <circle
+                id="dragHandle"
+                class="drag-handle"
+                cx="420"
+                cy="200"
+                r="18"
+              />
+
+
+              <!-- CURRENT DEGREE -->
+
+              <text
+                id="svgDegreeText"
+                class="degree-text"
+                x="305"
+                y="320"
+              >
+                40°
+              </text>
+
+
+              <!-- HELP -->
+
+              <text
+                class="drag-label"
+                x="350"
+                y="455"
+                text-anchor="middle"
+              >
+                વાદળી બિંદુને ખેંચો
+              </text>
+
+            </svg>
+
+          </div>
+
+
+          <!-- SIDE PANEL -->
+
+          <div class="builder-side">
+
+            <div class="target-card">
+
+              <span>
+                બનાવવાનો ખૂણો
+              </span>
+
+              <strong
+                id="builderTarget"
+              >
+                60°
+              </strong>
+
+            </div>
+
+
+            <div class="current-card">
+
+              <span>
+                તમારો ખૂણો
+              </span>
+
+              <strong
+                id="currentAngle"
+              >
+                40°
+              </strong>
+
+            </div>
+
+
+            <div class="tolerance-note">
+
+              લક્ષ્યથી 2° સુધીનો તફાવત સ્વીકારવામાં આવશે.
+
+            </div>
+
+
+            <button
+              class="primary-btn"
+              id="checkAngleBtn"
+              type="button"
+            >
+              જવાબ તપાસો
+            </button>
+
+
+            <button
+              class="secondary-btn"
+              id="newBuilderQuestionBtn"
+              type="button"
+            >
+              નવો ખૂણો
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <div
+          class="feedback"
+          id="builderFeedback"
+          aria-live="polite"
+        ></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         MODE 2: IDENTIFY ANGLE
+    ====================================================== -->
+
+    <section
+      class="mode-panel"
+      id="identifyPanel"
+    >
+
+      <div class="top-info">
+
+        <div class="info-box">
+
+          <span class="info-label">
+            હાલનું માપ
+          </span>
+
+          <span
+            class="info-value blue"
+            id="identifyDegreeTop"
+          >
+            120°
+          </span>
+
+        </div>
+
+
+        <div class="info-box">
+
+          <span class="info-label">
+            સાચા
+          </span>
+
+          <span
+            class="info-value"
+            id="identifyCorrect"
+          >
+            0
+          </span>
+
+        </div>
+
+
+        <div class="info-box">
+
+          <span class="info-label">
+            પ્રશ્ન
+          </span>
+
+          <span
+            class="info-value"
+            id="identifyQuestion"
+          >
+            1 / 10
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="game-card identify-wrap">
+
+        <div class="question-number">
+
+          આપેલા ખૂણાનો સાચો પ્રકાર પસંદ કરો.
+
+        </div>
+
+
+        <div class="degree-question">
+
+          <span>
+            ખૂણાનું માપ
+          </span>
+
+          <strong
+            id="identifyDegree"
+          >
+            120°
+          </strong>
+
+        </div>
+
+
+        <!-- ANGLE PREVIEW -->
+
+        <div class="angle-preview">
+
+          <svg
+            class="preview-svg"
+            id="previewSvg"
+            viewBox="0 0 600 300"
+            preserveAspectRatio="xMidYMid meet"
+          >
+
+            <line
+              class="base-ray"
+              x1="200"
+              y1="220"
+              x2="500"
+              y2="220"
+            />
+
+
+            <path
+              id="previewArc"
+              class="angle-arc"
+              d=""
+            />
+
+
+            <line
+              id="previewMovingRay"
+              class="moving-ray"
+              x1="200"
+              y1="220"
+              x2="100"
+              y2="100"
+            />
+
+
+            <circle
+              class="vertex-circle"
+              cx="200"
+              cy="220"
+              r="10"
+            />
+
+          </svg>
+
+        </div>
+
+
+        <!-- ANSWERS -->
+
+        <div class="answer-grid">
+
+          <button
+            class="answer-btn"
+            data-answer="acute"
+            type="button"
+          >
+            લઘુકોણ
+          </button>
+
+
+          <button
+            class="answer-btn"
+            data-answer="right"
+            type="button"
+          >
+            કાટકોણ
+          </button>
+
+
+          <button
+            class="answer-btn"
+            data-answer="obtuse"
+            type="button"
+          >
+            ગુરુકોણ
+          </button>
+
+        </div>
+
+
+        <div
+          class="feedback"
+          id="identifyFeedback"
+          aria-live="polite"
+        ></div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =====================================================
+       CORRECT POPUP
+  ====================================================== -->
+
+  <div
+    class="answer-popup correct-popup"
+    id="correctPopup"
+  >
+
+    <div class="popup-icon">
+      ✓
+    </div>
+
+    <span class="popup-title">
+      ખૂબ સરસ!
+    </span>
+
+    <span
+      class="popup-text"
+      id="correctPopupText"
+    >
+      સાચો જવાબ
+    </span>
+
+  </div>
+
+
+  <!-- =====================================================
+       WRONG POPUP
+  ====================================================== -->
+
+  <div
+    class="answer-popup wrong-popup"
+    id="wrongPopup"
+  >
+
+    <div class="popup-icon">
+      ×
+    </div>
+
+    <span class="popup-title">
+      ફરી પ્રયત્ન કરો
+    </span>
+
+    <span
+      class="popup-text"
+      id="wrongPopupText"
+    >
+      જવાબ ફરી તપાસો
+    </span>
+
+  </div>
+
+
+  <!-- =====================================================
+       RESULT
+  ====================================================== -->
+
+  <div
+    class="result-overlay"
+    id="resultOverlay"
+  >
+
+    <div class="result-card">
+
+      <div class="result-icon">
+        ✓
+      </div>
+
+
+      <h2>
+        રમત પૂર્ણ
+      </h2>
+
+
+      <p
+        id="resultDescription"
+      >
+        તમે 10 પ્રશ્ન પૂર્ણ કર્યા.
+      </p>
+
+
+      <div class="result-stats">
+
+        <div class="result-stat">
+
+          <span>
+            સાચા
+          </span>
+
+          <strong
+            id="resultCorrect"
+          >
+            0
+          </strong>
+
+        </div>
+
+
+        <div class="result-stat">
+
+          <span>
+            કુલ પ્રશ્ન
+          </span>
+
+          <strong>
+            10
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <button
+        class="primary-btn"
+        id="playAgainBtn"
+        type="button"
+      >
+        ફરીથી રમો
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       SOUNDS
+  ====================================================== -->
+
+  <audio
+    id="correctSound"
+    src="/sounds/correct.mp3"
+    preload="auto"
+  ></audio>
+
+
+  <audio
+    id="wrongSound"
+    src="/sounds/wrong.mp3"
+    preload="auto"
+  ></audio>
+
+
+  <audio
+    id="completeSound"
+    src="/sounds/complete.mp3"
+    preload="auto"
+  ></audio>
+
+
+  <script>
+
+    /* =====================================================
+       COMMON ELEMENTS
+    ====================================================== */
+
+    const builderModeBtn =
+      document.getElementById(
+        "builderModeBtn"
+      );
+
+    const identifyModeBtn =
+      document.getElementById(
+        "identifyModeBtn"
+      );
+
+    const builderPanel =
+      document.getElementById(
+        "builderPanel"
+      );
+
+    const identifyPanel =
+      document.getElementById(
+        "identifyPanel"
+      );
+
+    const correctPopup =
+      document.getElementById(
+        "correctPopup"
+      );
+
+    const wrongPopup =
+      document.getElementById(
+        "wrongPopup"
+      );
+
+    const correctPopupText =
+      document.getElementById(
+        "correctPopupText"
+      );
+
+    const wrongPopupText =
+      document.getElementById(
+        "wrongPopupText"
+      );
+
+    const resultOverlay =
+      document.getElementById(
+        "resultOverlay"
+      );
+
+    const resultDescription =
+      document.getElementById(
+        "resultDescription"
+      );
+
+    const resultCorrect =
+      document.getElementById(
+        "resultCorrect"
+      );
+
+    const correctSound =
+      document.getElementById(
+        "correctSound"
+      );
+
+    const wrongSound =
+      document.getElementById(
+        "wrongSound"
+      );
+
+    const completeSound =
+      document.getElementById(
+        "completeSound"
+      );
+
+
+    let currentMode =
+      "builder";
+
+    let popupTimer =
+      null;
+
+
+    /* =====================================================
+       AUDIO
+    ====================================================== */
+
+    function playAudio(
+      audio
+    ) {
+
+      if (!audio) {
+        return;
+      }
+
+      audio.pause();
+
+      audio.currentTime =
+        0;
+
+      audio.play().catch(
+        function () {
+
+          // Browser audio block કરે તો game ચાલુ રહેશે.
+
+        }
+      );
+
+    }
+
+
+    function playCorrectSound() {
+
+      playAudio(
+        correctSound
+      );
+
+    }
+
+
+    function playWrongSound() {
+
+      playAudio(
+        wrongSound
+      );
+
+    }
+
+
+    function playCompleteSound() {
+
+      playAudio(
+        completeSound
+      );
+
+    }
+
+
+    /* =====================================================
+       POPUPS
+    ====================================================== */
+
+    function hidePopups() {
+
+      correctPopup.classList.remove(
+        "show"
+      );
+
+      wrongPopup.classList.remove(
+        "show"
+      );
+
+    }
+
+
+    function showPopup(
+      type,
+      text
+    ) {
+
+      clearTimeout(
+        popupTimer
+      );
+
+      hidePopups();
+
+
+      const popup =
+        type === "correct"
+          ? correctPopup
+          : wrongPopup;
+
+
+      if (
+        type === "correct"
+      ) {
+
+        correctPopupText.textContent =
+          text;
+
+      } else {
+
+        wrongPopupText.textContent =
+          text;
+
+      }
+
+
+      void popup.offsetWidth;
+
+
+      popup.classList.add(
+        "show"
+      );
+
+
+      popupTimer =
+        setTimeout(
+          function () {
+
+            popup.classList.remove(
+              "show"
+            );
+
+          },
+          950
+        );
+
+    }
+
+
+    /* =====================================================
+       MODE SWITCHING
+    ====================================================== */
+
+    function switchMode(
+      mode
+    ) {
+
+      currentMode =
+        mode;
+
+
+      resultOverlay.classList.remove(
+        "show"
+      );
+
+
+      if (
+        mode === "builder"
+      ) {
+
+        builderModeBtn.classList.add(
+          "active"
+        );
+
+        identifyModeBtn.classList.remove(
+          "active"
+        );
+
+        builderPanel.classList.add(
+          "active"
+        );
+
+        identifyPanel.classList.remove(
+          "active"
+        );
+
+      } else {
+
+        identifyModeBtn.classList.add(
+          "active"
+        );
+
+        builderModeBtn.classList.remove(
+          "active"
+        );
+
+        identifyPanel.classList.add(
+          "active"
+        );
+
+        builderPanel.classList.remove(
+          "active"
+        );
+
+      }
+
+    }
+
+
+    builderModeBtn.addEventListener(
+      "click",
+      function () {
+
+        switchMode(
+          "builder"
+        );
+
+      }
+    );
+
+
+    identifyModeBtn.addEventListener(
+      "click",
+      function () {
+
+        switchMode(
+          "identify"
+        );
+
+      }
+    );
+
+
+    /* =====================================================
+       BUILDER ELEMENTS
+    ====================================================== */
+
+    const angleSvg =
+      document.getElementById(
+        "angleSvg"
+      );
+
+    const movingRay =
+      document.getElementById(
+        "movingRay"
+      );
+
+    const angleArc =
+      document.getElementById(
+        "angleArc"
+      );
+
+    const dragHandle =
+      document.getElementById(
+        "dragHandle"
+      );
+
+    const dragHandleOuter =
+      document.getElementById(
+        "dragHandleOuter"
+      );
+
+    const svgDegreeText =
+      document.getElementById(
+        "svgDegreeText"
+      );
+
+    const builderTargetTop =
+      document.getElementById(
+        "builderTargetTop"
+      );
+
+    const builderTarget =
+      document.getElementById(
+        "builderTarget"
+      );
+
+    const builderInstructionTarget =
+      document.getElementById(
+        "builderInstructionTarget"
+      );
+
+    const currentAngleElement =
+      document.getElementById(
+        "currentAngle"
+      );
+
+    const builderCorrectElement =
+      document.getElementById(
+        "builderCorrect"
+      );
+
+    const builderQuestionElement =
+      document.getElementById(
+        "builderQuestion"
+      );
+
+    const builderFeedback =
+      document.getElementById(
+        "builderFeedback"
+      );
+
+
+    /* =====================================================
+       BUILDER SETTINGS
+    ====================================================== */
+
+    const vertexX =
+      220;
+
+    const vertexY =
+      360;
+
+    const rayLength =
+      260;
+
+
+    const builderTargets = [
+      30,
+      45,
+      60,
+      75,
+      90,
+      105,
+      120,
+      135,
+      150
+    ];
+
+
+    let builderTargetAngle =
+      60;
+
+    let currentAngle =
+      40;
+
+    let builderQuestionNumber =
+      1;
+
+    let builderCorrectCount =
+      0;
+
+    let isDragging =
+      false;
+
+    let builderAnswered =
+      false;
+
+    let previousBuilderTarget =
+      null;
+
+
+    /* =====================================================
+       SVG POINTER POSITION
+    ====================================================== */
+
+    function getSvgPoint(
+      event
+    ) {
+
+      const point =
+        angleSvg.createSVGPoint();
+
+
+      point.x =
+        event.clientX;
+
+      point.y =
+        event.clientY;
+
+
+      const matrix =
+        angleSvg.getScreenCTM();
+
+
+      if (!matrix) {
+
+        return {
+          x: vertexX,
+          y: vertexY
+        };
+
+      }
+
+
+      return point.matrixTransform(
+        matrix.inverse()
+      );
+
+    }
+
+
+    /* =====================================================
+       ANGLE TO POINT
+    ====================================================== */
+
+    function getPointFromAngle(
+      angle,
+      length
+    ) {
+
+      const radians =
+        angle *
+        Math.PI /
+        180;
+
+
+      return {
+
+        x:
+          vertexX +
+          Math.cos(
+            radians
+          ) *
+          length,
+
+        y:
+          vertexY -
+          Math.sin(
+            radians
+          ) *
+          length
+
+      };
+
+    }
+
+
+    /* =====================================================
+       ARC PATH
+    ====================================================== */
+
+    function createArcPath(
+      angle
+    ) {
+
+      const radius =
+        82;
+
+
+      const startX =
+        vertexX +
+        radius;
+
+      const startY =
+        vertexY;
+
+
+      const radians =
+        angle *
+        Math.PI /
+        180;
+
+
+      const endX =
+        vertexX +
+        Math.cos(
+          radians
+        ) *
+        radius;
+
+
+      const endY =
+        vertexY -
+        Math.sin(
+          radians
+        ) *
+        radius;
+
+
+      return (
+        "M " +
+        startX +
+        " " +
+        startY +
+        " A " +
+        radius +
+        " " +
+        radius +
+        " 0 0 0 " +
+        endX +
+        " " +
+        endY
+      );
+
+    }
+
+
+    /* =====================================================
+       UPDATE BUILDER
+    ====================================================== */
+
+    function updateBuilderDrawing() {
+
+      const point =
+        getPointFromAngle(
+          currentAngle,
+          rayLength
+        );
+
+
+      movingRay.setAttribute(
+        "x2",
+        point.x
+      );
+
+      movingRay.setAttribute(
+        "y2",
+        point.y
+      );
+
+
+      dragHandle.setAttribute(
+        "cx",
+        point.x
+      );
+
+      dragHandle.setAttribute(
+        "cy",
+        point.y
+      );
+
+
+      dragHandleOuter.setAttribute(
+        "cx",
+        point.x
+      );
+
+      dragHandleOuter.setAttribute(
+        "cy",
+        point.y
+      );
+
+
+      angleArc.setAttribute(
+        "d",
+        createArcPath(
+          currentAngle
+        )
+      );
+
+
+      const labelAngle =
+        Math.max(
+          15,
+          Math.min(
+            currentAngle / 2,
+            75
+          )
+        );
+
+
+      const labelPoint =
+        getPointFromAngle(
+          labelAngle,
+          125
+        );
+
+
+      svgDegreeText.setAttribute(
+        "x",
+        labelPoint.x
+      );
+
+      svgDegreeText.setAttribute(
+        "y",
+        labelPoint.y
+      );
+
+
+      svgDegreeText.textContent =
+        currentAngle +
+        "°";
+
+
+      currentAngleElement.textContent =
+        currentAngle +
+        "°";
+
+    }
+
+
+    /* =====================================================
+       POINTER TO ANGLE
+    ====================================================== */
+
+    function updateAngleFromPointer(
+      event
+    ) {
+
+      const point =
+        getSvgPoint(
+          event
+        );
+
+
+      const dx =
+        point.x -
+        vertexX;
+
+
+      const dy =
+        vertexY -
+        point.y;
+
+
+      let angle =
+        Math.atan2(
+          dy,
+          dx
+        ) *
+        180 /
+        Math.PI;
+
+
+      angle =
+        Math.max(
+          5,
+          Math.min(
+            175,
+            angle
+          )
+        );
+
+
+      currentAngle =
+        Math.round(
+          angle
+        );
+
+
+      builderAnswered =
+        false;
+
+
+      builderFeedback.textContent =
+        "";
+
+      builderFeedback.className =
+        "feedback";
+
+
+      updateBuilderDrawing();
+
+    }
+
+
+    /* =====================================================
+       POINTER EVENTS
+       MOUSE + TOUCH + STYLUS + SMART BOARD
+    ====================================================== */
+
+    angleSvg.addEventListener(
+      "pointerdown",
+      function (
+        event
+      ) {
+
+        isDragging =
+          true;
+
+
+        try {
+
+          angleSvg.setPointerCapture(
+            event.pointerId
+          );
+
+        } catch (error) {
+
+          // Ignore unsupported pointer capture.
+
+        }
+
+
+        updateAngleFromPointer(
+          event
+        );
+
+
+        event.preventDefault();
+
+      }
+    );
+
+
+    angleSvg.addEventListener(
+      "pointermove",
+      function (
+        event
+      ) {
+
+        if (
+          !isDragging
+        ) {
+
+          return;
+
+        }
+
+
+        updateAngleFromPointer(
+          event
+        );
+
+
+        event.preventDefault();
+
+      }
+    );
+
+
+    function stopDragging() {
+
+      isDragging =
+        false;
+
+    }
+
+
+    angleSvg.addEventListener(
+      "pointerup",
+      stopDragging
+    );
+
+
+    angleSvg.addEventListener(
+      "pointercancel",
+      stopDragging
+    );
+
+
+    /* =====================================================
+       RANDOM BUILDER TARGET
+    ====================================================== */
+
+    function getRandomBuilderTarget() {
+
+      let newTarget =
+        builderTargets[
+          Math.floor(
+            Math.random() *
+            builderTargets.length
+          )
+        ];
+
+
+      while (
+        newTarget ===
+        previousBuilderTarget
+      ) {
+
+        newTarget =
+          builderTargets[
+            Math.floor(
+              Math.random() *
+              builderTargets.length
+            )
+          ];
+
+      }
+
+
+      previousBuilderTarget =
+        newTarget;
+
+
+      return newTarget;
+
+    }
+
+
+    /* =====================================================
+       NEW BUILDER QUESTION
+    ====================================================== */
+
+    function createBuilderQuestion() {
+
+      builderAnswered =
+        false;
+
+
+      builderTargetAngle =
+        getRandomBuilderTarget();
+
+
+      do {
+
+        currentAngle =
+          Math.floor(
+            Math.random() *
+            140
+          ) +
+          20;
+
+      } while (
+        Math.abs(
+          currentAngle -
+          builderTargetAngle
+        ) <= 5
+      );
+
+
+      builderTargetTop.textContent =
+        builderTargetAngle +
+        "°";
+
+
+      builderTarget.textContent =
+        builderTargetAngle +
+        "°";
+
+
+      builderInstructionTarget.textContent =
+        builderTargetAngle +
+        "°";
+
+
+      builderQuestionElement.textContent =
+        builderQuestionNumber +
+        " / 10";
+
+
+      builderCorrectElement.textContent =
+        builderCorrectCount;
+
+
+      builderFeedback.textContent =
+        "";
+
+
+      builderFeedback.className =
+        "feedback";
+
+
+      updateBuilderDrawing();
+
+    }
+
+
+    /* =====================================================
+       CHECK BUILDER ANSWER
+    ====================================================== */
+
+    document
+      .getElementById(
+        "checkAngleBtn"
+      )
+      .addEventListener(
+        "click",
+        function () {
+
+          if (
+            builderAnswered
+          ) {
+
+            return;
+
+          }
+
+
+          const difference =
+            Math.abs(
+              currentAngle -
+              builderTargetAngle
+            );
+
+
+          if (
+            difference <= 2
+          ) {
+
+            builderAnswered =
+              true;
+
+
+            builderCorrectCount++;
+
+
+            builderCorrectElement.textContent =
+              builderCorrectCount;
+
+
+            builderFeedback.textContent =
+              "સાચું! તમે " +
+              currentAngle +
+              "° નો ખૂણો બનાવ્યો.";
+
+
+            builderFeedback.className =
+              "feedback success";
+
+
+            playCorrectSound();
+
+
+            showPopup(
+              "correct",
+              builderTargetAngle +
+              "° નો ખૂણો સાચો બનાવ્યો."
+            );
+
+
+            setTimeout(
+              function () {
+
+                if (
+                  builderQuestionNumber >=
+                  10
+                ) {
+
+                  showResult(
+                    "builder",
+                    builderCorrectCount
+                  );
+
+                  return;
+
+                }
+
+
+                builderQuestionNumber++;
+
+
+                createBuilderQuestion();
+
+              },
+              1200
+            );
+
+          } else {
+
+            builderFeedback.textContent =
+              "લક્ષ્ય " +
+              builderTargetAngle +
+              "° છે અને તમારો ખૂણો " +
+              currentAngle +
+              "° છે.";
+
+
+            builderFeedback.className =
+              "feedback error";
+
+
+            playWrongSound();
+
+
+            showPopup(
+              "wrong",
+              "લક્ષ્યની વધુ નજીક ખૂણો બનાવો."
+            );
+
+          }
+
+        }
+      );
+
+
+    /* =====================================================
+       NEW BUILDER QUESTION BUTTON
+    ====================================================== */
+
+    document
+      .getElementById(
+        "newBuilderQuestionBtn"
+      )
+      .addEventListener(
+        "click",
+        function () {
+
+          createBuilderQuestion();
+
+        }
+      );
+
+
+    /* =====================================================
+       IDENTIFY ELEMENTS
+    ====================================================== */
+
+    const identifyDegreeTop =
+      document.getElementById(
+        "identifyDegreeTop"
+      );
+
+    const identifyDegree =
+      document.getElementById(
+        "identifyDegree"
+      );
+
+    const identifyCorrectElement =
+      document.getElementById(
+        "identifyCorrect"
+      );
+
+    const identifyQuestionElement =
+      document.getElementById(
+        "identifyQuestion"
+      );
+
+    const identifyFeedback =
+      document.getElementById(
+        "identifyFeedback"
+      );
+
+    const previewMovingRay =
+      document.getElementById(
+        "previewMovingRay"
+      );
+
+    const previewArc =
+      document.getElementById(
+        "previewArc"
+      );
+
+    const answerButtons =
+      document.querySelectorAll(
+        ".answer-btn"
+      );
+
+
+    const identifyAngles = [
+      20,
+      30,
+      40,
+      45,
+      55,
+      60,
+      70,
+      80,
+
+      90,
+
+      100,
+      110,
+      120,
+      125,
+      135,
+      145,
+      150,
+      160,
+      170
+    ];
+
+
+    let identifyCurrentAngle =
+      120;
+
+    let identifyQuestionNumber =
+      1;
+
+    let identifyCorrectCount =
+      0;
+
+    let identifyAnswered =
+      false;
+
+    let previousIdentifyAngle =
+      null;
+
+
+    /* =====================================================
+       GET ANGLE TYPE
+    ====================================================== */
+
+    function getAngleType(
+      angle
+    ) {
+
+      if (
+        angle < 90
+      ) {
+
+        return "acute";
+
+      }
+
+
+      if (
+        angle === 90
+      ) {
+
+        return "right";
+
+      }
+
+
+      return "obtuse";
+
+    }
+
+
+    /* =====================================================
+       GUJARATI ANGLE NAME
+    ====================================================== */
+
+    function getAngleGujaratiName(
+      type
+    ) {
+
+      if (
+        type === "acute"
+      ) {
+
+        return "લઘુકોણ";
+
+      }
+
+
+      if (
+        type === "right"
+      ) {
+
+        return "કાટકોણ";
+
+      }
+
+
+      return "ગુરુકોણ";
+
+    }
+
+
+    /* =====================================================
+       UPDATE PREVIEW
+    ====================================================== */
+
+    function updatePreviewDrawing() {
+
+      const vertexPreviewX =
+        200;
+
+      const vertexPreviewY =
+        220;
+
+      const length =
+        210;
+
+
+      const radians =
+        identifyCurrentAngle *
+        Math.PI /
+        180;
+
+
+      const x =
+        vertexPreviewX +
+        Math.cos(
+          radians
+        ) *
+        length;
+
+
+      const y =
+        vertexPreviewY -
+        Math.sin(
+          radians
+        ) *
+        length;
+
+
+      previewMovingRay.setAttribute(
+        "x2",
+        x
+      );
+
+      previewMovingRay.setAttribute(
+        "y2",
+        y
+      );
+
+
+      const radius =
+        70;
+
+
+      const startX =
+        vertexPreviewX +
+        radius;
+
+      const startY =
+        vertexPreviewY;
+
+
+      const endX =
+        vertexPreviewX +
+        Math.cos(
+          radians
+        ) *
+        radius;
+
+
+      const endY =
+        vertexPreviewY -
+        Math.sin(
+          radians
+        ) *
+        radius;
+
+
+      const path =
+        "M " +
+        startX +
+        " " +
+        startY +
+        " A " +
+        radius +
+        " " +
+        radius +
+        " 0 0 0 " +
+        endX +
+        " " +
+        endY;
+
+
+      previewArc.setAttribute(
+        "d",
+        path
+      );
+
+    }
+
+
+    /* =====================================================
+       RANDOM IDENTIFY ANGLE
+    ====================================================== */
+
+    function getRandomIdentifyAngle() {
+
+      let newAngle =
+        identifyAngles[
+          Math.floor(
+            Math.random() *
+            identifyAngles.length
+          )
+        ];
+
+
+      while (
+        newAngle ===
+        previousIdentifyAngle
+      ) {
+
+        newAngle =
+          identifyAngles[
+            Math.floor(
+              Math.random() *
+              identifyAngles.length
+            )
+          ];
+
+      }
+
+
+      previousIdentifyAngle =
+        newAngle;
+
+
+      return newAngle;
+
+    }
+
+
+    /* =====================================================
+       NEW IDENTIFY QUESTION
+    ====================================================== */
+
+    function createIdentifyQuestion() {
+
+      identifyAnswered =
+        false;
+
+
+      identifyCurrentAngle =
+        getRandomIdentifyAngle();
+
+
+      identifyDegreeTop.textContent =
+        identifyCurrentAngle +
+        "°";
+
+
+      identifyDegree.textContent =
+        identifyCurrentAngle +
+        "°";
+
+
+      identifyQuestionElement.textContent =
+        identifyQuestionNumber +
+        " / 10";
+
+
+      identifyCorrectElement.textContent =
+        identifyCorrectCount;
+
+
+      identifyFeedback.textContent =
+        "";
+
+
+      identifyFeedback.className =
+        "feedback";
+
+
+      answerButtons.forEach(
+        function (
+          button
+        ) {
+
+          button.disabled =
+            false;
+
+
+          button.classList.remove(
+            "correct-answer",
+            "wrong-answer"
+          );
+
+        }
+      );
+
+
+      updatePreviewDrawing();
+
+    }
+
+
+    /* =====================================================
+       IDENTIFY ANSWERS
+    ====================================================== */
+
+    answerButtons.forEach(
+      function (
+        button
+      ) {
+
+        button.addEventListener(
+          "click",
+          function () {
+
+            if (
+              identifyAnswered
+            ) {
+
+              return;
+
+            }
+
+
+            const selectedAnswer =
+              button.dataset.answer;
+
+
+            const correctAnswer =
+              getAngleType(
+                identifyCurrentAngle
+              );
+
+
+            if (
+              selectedAnswer ===
+              correctAnswer
+            ) {
+
+              identifyAnswered =
+                true;
+
+
+              identifyCorrectCount++;
+
+
+              identifyCorrectElement.textContent =
+                identifyCorrectCount;
+
+
+              button.classList.add(
+                "correct-answer"
+              );
+
+
+              answerButtons.forEach(
+                function (
+                  answerButton
+                ) {
+
+                  answerButton.disabled =
+                    true;
+
+                }
+              );
+
+
+              const correctName =
+                getAngleGujaratiName(
+                  correctAnswer
+                );
+
+
+              identifyFeedback.textContent =
+                identifyCurrentAngle +
+                "° એ " +
+                correctName +
+                " છે.";
+
+
+              identifyFeedback.className =
+                "feedback success";
+
+
+              playCorrectSound();
+
+
+              showPopup(
+                "correct",
+                identifyCurrentAngle +
+                "° એ " +
+                correctName +
+                " છે."
+              );
+
+
+              setTimeout(
+                function () {
+
+                  if (
+                    identifyQuestionNumber >=
+                    10
+                  ) {
+
+                    showResult(
+                      "identify",
+                      identifyCorrectCount
+                    );
+
+                    return;
+
+                  }
+
+
+                  identifyQuestionNumber++;
+
+
+                  createIdentifyQuestion();
+
+                },
+                1200
+              );
+
+            } else {
+
+              button.classList.add(
+                "wrong-answer"
+              );
+
+
+              identifyFeedback.textContent =
+                "આ જવાબ ખોટો છે. ફરી પ્રયત્ન કરો.";
+
+
+              identifyFeedback.className =
+                "feedback error";
+
+
+              playWrongSound();
+
+
+              showPopup(
+                "wrong",
+                "ખૂણાનું માપ ફરી જુઓ."
+              );
+
+
+              setTimeout(
+                function () {
+
+                  button.classList.remove(
+                    "wrong-answer"
+                  );
+
+                },
+                700
+              );
+
+            }
+
+          }
+        );
+
+      }
+    );
+
+
+    /* =====================================================
+       RESULT
+    ====================================================== */
+
+    function showResult(
+      mode,
+      correct
+    ) {
+
+      resultCorrect.textContent =
+        correct;
+
+
+      if (
+        mode === "builder"
+      ) {
+
+        resultDescription.textContent =
+          "તમે ખૂણો બનાવવાના 10 પ્રશ્ન પૂર્ણ કર્યા.";
+
+      } else {
+
+        resultDescription.textContent =
+          "તમે ખૂણાનો પ્રકાર ઓળખવાના 10 પ્રશ્ન પૂર્ણ કર્યા.";
+
+      }
+
+
+      resultOverlay.classList.add(
+        "show"
+      );
+
+
+      playCompleteSound();
+
+    }
+
+
+    /* =====================================================
+       PLAY AGAIN
+    ====================================================== */
+
+    document
+      .getElementById(
+        "playAgainBtn"
+      )
+      .addEventListener(
+        "click",
+        function () {
+
+          resultOverlay.classList.remove(
+            "show"
+          );
+
+
+          if (
+            currentMode ===
+            "builder"
+          ) {
+
+            builderQuestionNumber =
+              1;
+
+            builderCorrectCount =
+              0;
+
+            createBuilderQuestion();
+
+          } else {
+
+            identifyQuestionNumber =
+              1;
+
+            identifyCorrectCount =
+              0;
+
+            createIdentifyQuestion();
+
+          }
+
+        }
+      );
+
+
+    /* =====================================================
+       START GAME
+    ====================================================== */
+
+    createBuilderQuestion();
+
+    createIdentifyQuestion();
+
+  </script>
+
+</body>
+</html>

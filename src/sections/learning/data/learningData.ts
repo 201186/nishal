@@ -201,11 +201,13 @@ export const learningData: LearningStandard[] = [
         activities: [],
       },
       {
-        id: "maths",
-        name: "ગણિત",
-        icon: "🔢",
-        activities: [],
-      },
+  id: "maths",
+  name: "ગણિત",
+  icon: "🔢",
+  activities: [
+    
+  ],
+},
       {
         id: "english",
         name: "English",
